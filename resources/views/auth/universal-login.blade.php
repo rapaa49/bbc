@@ -6,14 +6,14 @@
     <title>Login - Bakso Bunderan Ciomas</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@500;600;700;800&family=Pacifico&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
         tailwind.config = {
             theme: {
                 extend: {
-                    fontFamily: { sans: ['Inter', 'sans-serif'] },
+                    fontFamily: { sans: ['Inter', 'sans-serif'], display: ['Outfit', 'sans-serif'], attractive: ['Pacifico', 'cursive'] },
                     colors: {
                         brand: { DEFAULT: '#8B0000', dark: '#6B0000', light: '#fef2f2' },
                         gold: '#DAA520',
@@ -33,20 +33,31 @@
     <style>
         /* Custom styles that Tailwind CDN can't easily handle */
         .field-input:focus { outline: none !important; box-shadow: none !important; ring: 0; }
-        input::-webkit-creden`  1tials-auto-fill-button,
+        input::-webkit-credentials-auto-fill-button,
         input::-webkit-contacts-auto-fill-button { visibility: hidden; display: none !important; pointer-events: none; }
         input::-ms-reveal, input::-ms-clear { display: none !important; }
         .field-input:not(:placeholder-shown) ~ .toggle-password { opacity: 1; pointer-events: auto; }
         .field-input:focus:not(:placeholder-shown) ~ .toggle-password { color: #8B0000; }
         .field-input:focus ~ .input-icon { color: #8B0000; }
-        .btn-submit::before { content:''; position:absolute; top:0; left:-100%; width:100%; height:100%; background:linear-gradient(90deg,transparent,rgba(255,255,255,.1),transparent); transition:left .5s ease; }
-        .btn-submit:hover::before { left:100%; }
+        .btn-submit { 
+            background: linear-gradient(to right, #700000 50%, #8B0000 50%) !important;
+            background-size: 200% 100% !important;
+            background-position: right bottom !important;
+            transition: all 0.4s ease-out !important;
+            position: relative;
+            overflow: hidden;
+        }
+        .btn-submit:hover { 
+            background-position: left bottom !important;
+            box-shadow: 0 10px 20px -5px rgba(139, 0, 0, 0.3);
+        }
+        .btn-submit:active { opacity: 0.9; }
 
         @media (max-width: 480px) {
             body { padding: 12px; }
             .auth-card { padding: 24px 18px !important; border-radius: 20px !important; }
             .auth-logo { width: 100px !important; margin-bottom: 6px !important; }
-            .auth-tagline { font-size: 11px !important; }
+            .auth-tagline { font-size: 18px !important; }
             .auth-tabs button { padding: 8px 0 !important; font-size: 12px !important; }
             .auth-subtitle { font-size: 12px !important; margin-bottom: 16px !important; }
             .auth-divider { margin-bottom: 16px !important; }
@@ -69,10 +80,10 @@
 
             <!-- Logo -->
             <div class="text-center mb-6">
-                <div class="auth-logo w-[180px] mx-auto mb-3 hover:scale-[1.03] transition-transform duration-300">
+                <div class="auth-logo w-[180px] mx-auto mb-3">
                     <img src="{{ asset('logo.jpeg') }}" alt="BBC Logo" class="w-full h-auto object-contain">
                 </div>
-                <div class="auth-tagline text-[13px] font-medium text-stone-500 tracking-wide">Bakso Bunderan Ciomas</div>
+                <div class="auth-tagline text-[22px] font-attractive font-normal text-brand tracking-wide">Bakso Bunderan Ciomas</div>
             </div>
 
             <!-- Tabs -->
@@ -132,7 +143,7 @@
                     <a href="{{ route('password.request') }}" class="text-brand font-medium hover:text-brand-dark hover:underline underline-offset-2 transition-colors duration-200">Lupa password?</a>
                 </div>
 
-                <button type="submit" class="btn-submit w-full py-3.5 bg-brand text-white border-none rounded-xl text-sm font-semibold cursor-pointer transition-all duration-300 tracking-wide relative overflow-hidden hover:bg-brand-dark hover:-translate-y-0.5 hover:shadow-lg active:translate-y-0 max-sm:py-3 max-sm:text-[13.5px]">Masuk</button>
+                <button type="submit" class="btn-submit w-full py-3.5 bg-brand text-white border-none rounded-xl text-sm font-semibold cursor-pointer tracking-wide relative overflow-hidden">Masuk</button>
 
                 <p class="text-center text-[13px] text-stone-500 mt-6 font-medium">Belum punya akun? <a href="{{ route('user.register') }}" class="text-brand font-semibold hover:text-brand-dark hover:underline underline-offset-2 transition-colors duration-200">Daftar sekarang</a></p>
             </form>
@@ -168,7 +179,7 @@
                     <a href="{{ route('admin.password.request') }}" class="text-brand font-medium hover:text-brand-dark hover:underline underline-offset-2 transition-colors duration-200">Lupa password?</a>
                 </div>
 
-                <button type="submit" class="btn-submit w-full py-3.5 bg-brand text-white border-none rounded-xl text-sm font-semibold cursor-pointer transition-all duration-300 tracking-wide relative overflow-hidden hover:bg-brand-dark hover:-translate-y-0.5 hover:shadow-lg active:translate-y-0 max-sm:py-3 max-sm:text-[13.5px]">Masuk sebagai Admin</button>
+                <button type="submit" class="btn-submit w-full py-3.5 bg-brand text-white border-none rounded-xl text-sm font-semibold cursor-pointer tracking-wide relative overflow-hidden">Masuk sebagai Admin</button>
             </form>
 
         </div>

@@ -6,14 +6,14 @@
     <title>Lupa Password - Bakso Bunderan Ciomas</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@500;600;700;800&family=Pacifico&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
         tailwind.config = {
             theme: {
                 extend: {
-                    fontFamily: { sans: ['Inter', 'sans-serif'] },
+                    fontFamily: { sans: ['Inter', 'sans-serif'], display: ['Outfit', 'sans-serif'], attractive: ['Pacifico', 'cursive'] },
                     colors: { brand: { DEFAULT: '#8B0000', dark: '#6B0000', light: '#fef2f2' } },
                     keyframes: {
                         cardEntry: { from: { opacity: '0', transform: 'translateY(16px)' }, to: { opacity: '1', transform: 'translateY(0)' } },
@@ -33,17 +33,31 @@
         input::-webkit-contacts-auto-fill-button { visibility: hidden; display: none !important; pointer-events: none; }
         input::-ms-reveal, input::-ms-clear { display: none !important; }
         .field-input:focus ~ .input-icon { color: #8B0000; }
-        .btn-submit::before { content:''; position:absolute; top:0; left:-100%; width:100%; height:100%; background:linear-gradient(90deg,transparent,rgba(255,255,255,.1),transparent); transition:left .5s ease; }
-        .btn-submit:hover::before { left:100%; }
+        .btn-submit { 
+            background: linear-gradient(to right, #700000 50%, #8B0000 50%) !important;
+            background-size: 200% 100% !important;
+            background-position: right bottom !important;
+            transition: all 0.4s ease-out !important;
+            position: relative;
+            overflow: hidden;
+        }
+        .btn-submit:hover { 
+            background-position: left bottom !important;
+            box-shadow: 0 10px 20px -5px rgba(139, 0, 0, 0.3);
+        }
+        .btn-submit:active { opacity: 0.9; }
 
         @media (max-width: 480px) {
             body { padding: 12px; }
             .auth-card { padding: 24px 18px !important; border-radius: 20px !important; }
             .auth-logo { width: 100px !important; margin-bottom: 6px !important; }
-            .auth-tagline { font-size: 11px !important; }
+            .auth-tagline { font-size: 18px !important; }
             .auth-title { font-size: 20px !important; }
             .auth-subtitle { font-size: 12px !important; margin-bottom: 16px !important; }
             .auth-divider { margin-bottom: 16px !important; }
+            .auth-steps { gap: 24px !important; margin-bottom: 16px !important; }
+            .auth-step-num { width: 32px !important; height: 32px !important; font-size: 12px !important; }
+            .auth-step-label { font-size: 10px !important; }
             .auth-field { margin-bottom: 16px !important; }
             .auth-label { font-size: 10px !important; }
             .field-input { padding-top: 8px !important; padding-bottom: 8px !important; font-size: 13px !important; }
@@ -60,14 +74,26 @@
 
             <!-- Logo -->
             <div class="text-center mb-6">
-                <div class="auth-logo w-[180px] mx-auto mb-3 hover:scale-[1.03] transition-transform duration-300">
+                <div class="auth-logo w-[180px] mx-auto mb-3">
                     <img src="{{ asset('logo.jpeg') }}" alt="BBC Logo" class="w-full h-auto object-contain">
                 </div>
-                <div class="auth-tagline text-[13px] font-medium text-stone-500 tracking-wide">Bakso Bunderan Ciomas</div>
+                <div class="auth-tagline text-[22px] font-attractive font-normal text-brand tracking-wide">Bakso Bunderan Ciomas</div>
+            </div>
+
+            <!-- Steps -->
+            <div class="auth-steps flex justify-center gap-8 mb-6 relative">
+                <div class="absolute top-[18px] left-1/2 -translate-x-1/2 w-[60px] h-0.5 bg-stone-200 z-0"></div>
+                <div class="flex flex-col items-center gap-1.5 relative z-10">
+                    <div class="auth-step-num w-9 h-9 rounded-full bg-brand text-white flex items-center justify-center text-[13px] font-semibold shadow-md shadow-brand/15">1</div>
+                    <span class="auth-step-label text-[11px] text-stone-500 font-medium tracking-wide">Email</span>
+                </div>
+                <div class="flex flex-col items-center gap-1.5 relative z-10">
+                    <div class="auth-step-num w-9 h-9 rounded-full bg-stone-100 text-stone-400 flex items-center justify-center text-[13px] font-semibold border-[1.5px] border-stone-200">2</div>
+                    <span class="auth-step-label text-[11px] text-stone-500 font-medium tracking-wide">Verifikasi</span>
+                </div>
             </div>
 
             <!-- Title -->
-            <h1 class="auth-title text-[26px] font-bold text-stone-900 text-center mb-1.5 -tracking-wide">Lupa Password?</h1>
             <p class="auth-subtitle text-[13.5px] text-stone-500 text-center mb-6">Masukkan email untuk menerima kode OTP</p>
 
             <div class="auth-divider h-px bg-gradient-to-r from-transparent via-stone-200 to-transparent mb-6"></div>
@@ -105,7 +131,7 @@
                     </div>
                 </div>
 
-                <button type="submit" class="btn-submit w-full py-3.5 bg-brand text-white border-none rounded-xl text-sm font-semibold cursor-pointer transition-all duration-300 tracking-wide relative overflow-hidden hover:bg-brand-dark hover:-translate-y-0.5 hover:shadow-lg active:translate-y-0">Kirim Kode OTP</button>
+                <button type="submit" class="btn-submit w-full py-3.5 bg-brand text-white border-none rounded-xl text-sm font-semibold cursor-pointer tracking-wide relative overflow-hidden">Kirim Kode OTP</button>
             </form>
 
             <a href="{{ route('login') }}" class="auth-back flex items-center justify-center gap-2 mt-6 text-[13px] text-stone-500 no-underline font-medium hover:text-brand transition-colors duration-200">
