@@ -28,9 +28,11 @@ Route::post('/universal-login', [AuthController::class, 'universalLoginSubmit'])
 
 Route::post('/admin/logout', [AuthController::class, 'adminLogout'])->name('admin.logout');
 
-// Forgot Password (langsung reset)
+// Forgot Password (verifikasi via email OTP)
 Route::get('/forgot-password', [AuthController::class, 'showForgotPassword'])->name('password.request');
-Route::post('/forgot-password', [AuthController::class, 'resetPasswordDirect'])->name('password.email');
+Route::post('/forgot-password', [AuthController::class, 'sendUserOtp'])->name('password.email');
+Route::get('/forgot-password/verify', [AuthController::class, 'showUserOtpVerify'])->name('password.verify');
+Route::post('/forgot-password/verify', [AuthController::class, 'verifyUserOtp'])->name('password.verify.post');
 
 // Admin Forgot Password (verifikasi via email OTP)
 Route::get('/forgot-password-admin', [AuthController::class, 'showAdminForgotPassword'])->name('admin.password.request');

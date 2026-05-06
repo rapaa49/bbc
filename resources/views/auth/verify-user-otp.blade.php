@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Lupa Password Admin - Bakso Bunderan Ciomas</title>
+    <title>Verifikasi OTP - Bakso Bunderan Ciomas</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
@@ -32,6 +32,8 @@
         input::-webkit-credentials-auto-fill-button,
         input::-webkit-contacts-auto-fill-button { visibility: hidden; display: none !important; pointer-events: none; }
         input::-ms-reveal, input::-ms-clear { display: none !important; }
+        .field-input:not(:placeholder-shown) ~ .toggle-password { opacity: 1; pointer-events: auto; }
+        .field-input:focus:not(:placeholder-shown) ~ .toggle-password { color: #8B0000; }
         .field-input:focus ~ .input-icon { color: #8B0000; }
         .btn-submit::before { content:''; position:absolute; top:0; left:-100%; width:100%; height:100%; background:linear-gradient(90deg,transparent,rgba(255,255,255,.1),transparent); transition:left .5s ease; }
         .btn-submit:hover::before { left:100%; }
@@ -42,7 +44,8 @@
             .auth-logo { width: 100px !important; margin-bottom: 6px !important; }
             .auth-tagline { font-size: 11px !important; }
             .auth-title { font-size: 20px !important; }
-            .auth-subtitle { font-size: 12px !important; margin-bottom: 16px !important; }
+            .auth-subtitle { font-size: 12px !important; }
+            .auth-email { font-size: 12px !important; margin-bottom: 16px !important; }
             .auth-divider { margin-bottom: 16px !important; }
             .auth-field { margin-bottom: 16px !important; }
             .auth-label { font-size: 10px !important; }
@@ -51,6 +54,7 @@
             .auth-step-label { font-size: 10px !important; }
             .field-input { padding-top: 8px !important; padding-bottom: 8px !important; font-size: 13px !important; }
             .input-icon { font-size: 13px !important; }
+            .toggle-password { font-size: 13px !important; }
             .btn-submit { padding: 10px !important; font-size: 13px !important; border-radius: 12px !important; }
             .auth-back { font-size: 12px !important; margin-top: 16px !important; }
             .auth-alert { font-size: 12px !important; padding: 10px 12px !important; margin-bottom: 14px !important; }
@@ -66,25 +70,26 @@
                 <div class="auth-logo w-[180px] mx-auto mb-3 hover:scale-[1.03] transition-transform duration-300">
                     <img src="{{ asset('logo.jpeg') }}" alt="BBC Logo" class="w-full h-auto object-contain">
                 </div>
-                <div class="auth-tagline text-[13px] font-medium text-stone-500 tracking-wide">Admin Portal</div>
+                <div class="auth-tagline text-[13px] font-medium text-stone-500 tracking-wide">Bakso Bunderan Ciomas</div>
             </div>
 
             <!-- Steps -->
             <div class="auth-steps flex justify-center gap-8 mb-6 relative">
                 <div class="absolute top-[18px] left-1/2 -translate-x-1/2 w-[60px] h-0.5 bg-stone-200 z-0"></div>
                 <div class="flex flex-col items-center gap-1.5 relative z-10">
-                    <div class="auth-step-num w-9 h-9 rounded-full bg-brand text-white flex items-center justify-center text-[13px] font-semibold shadow-md shadow-brand/15">1</div>
+                    <div class="auth-step-num w-9 h-9 rounded-full bg-stone-100 text-stone-400 flex items-center justify-center text-[13px] font-semibold border-[1.5px] border-stone-200">1</div>
                     <span class="auth-step-label text-[11px] text-stone-500 font-medium tracking-wide">Email</span>
                 </div>
                 <div class="flex flex-col items-center gap-1.5 relative z-10">
-                    <div class="auth-step-num w-9 h-9 rounded-full bg-stone-100 text-stone-400 flex items-center justify-center text-[13px] font-semibold border-[1.5px] border-stone-200">2</div>
+                    <div class="auth-step-num w-9 h-9 rounded-full bg-brand text-white flex items-center justify-center text-[13px] font-semibold shadow-md shadow-brand/15">2</div>
                     <span class="auth-step-label text-[11px] text-stone-500 font-medium tracking-wide">Verifikasi</span>
                 </div>
             </div>
 
             <!-- Title -->
-            <h1 class="auth-title text-[26px] font-bold text-stone-900 text-center mb-1.5 -tracking-wide">Lupa Password?</h1>
-            <p class="auth-subtitle text-[13.5px] text-stone-500 text-center mb-6">Masukkan email admin Anda</p>
+            <h1 class="auth-title text-[26px] font-bold text-stone-900 text-center mb-1.5 -tracking-wide">Verifikasi Kode</h1>
+            <p class="auth-subtitle text-[13.5px] text-stone-500 text-center mb-1.5">Masukkan kode OTP yang dikirim ke</p>
+            <p class="auth-email text-[13px] text-stone-600 text-center mb-6 font-medium break-all">{{ session('user_reset_email') }}</p>
 
             <div class="auth-divider h-px bg-gradient-to-r from-transparent via-stone-200 to-transparent mb-6"></div>
 
@@ -109,23 +114,43 @@
             @endif
 
             <!-- Form -->
-            <form action="{{ route('admin.password.send-otp') }}" method="POST">
+            <form action="{{ route('password.verify.post') }}" method="POST">
                 @csrf
 
                 <div class="auth-field mb-6">
-                    <label class="auth-label block text-xs font-semibold text-stone-700 mb-1 tracking-wide uppercase">Email Admin</label>
+                    <label class="auth-label block text-xs font-semibold text-stone-700 mb-1 tracking-wide uppercase">Kode OTP</label>
                     <div class="relative">
-                        <input type="email" name="email" class="field-input w-full py-3 pl-8 border-0 border-b-2 border-stone-200 bg-transparent text-sm text-stone-900 transition-all duration-300 focus:outline-none focus:border-b-brand placeholder:text-stone-400" required placeholder="admin@email.com" autocomplete="off" readonly onfocus="this.removeAttribute('readonly')">
-                        <i class="fas fa-envelope input-icon absolute left-1 top-1/2 -translate-y-1/2 text-stone-400 text-[15px] transition-colors duration-300"></i>
+                        <input type="text" name="otp" class="field-input otp-input w-full py-3 pl-8 border-0 border-b-2 border-stone-200 bg-transparent text-lg font-semibold text-stone-900 text-center tracking-[8px] transition-all duration-300 focus:outline-none focus:border-b-brand placeholder:text-stone-400" required placeholder="------" maxlength="6" autocomplete="off">
+                        <i class="fas fa-key input-icon absolute left-1 top-1/2 -translate-y-1/2 text-stone-400 text-[15px] transition-colors duration-300"></i>
                     </div>
                 </div>
 
-                <button type="submit" class="btn-submit w-full py-3.5 bg-brand text-white border-none rounded-xl text-sm font-semibold cursor-pointer transition-all duration-300 tracking-wide relative overflow-hidden hover:bg-brand-dark hover:-translate-y-0.5 hover:shadow-lg active:translate-y-0">Kirim Kode Verifikasi</button>
+                <div class="auth-field mb-6">
+                    <label class="auth-label block text-xs font-semibold text-stone-700 mb-1 tracking-wide uppercase">Password Baru</label>
+                    <div class="relative">
+                        <input type="password" name="password" id="password" class="field-input w-full py-3 pr-8 border-0 border-b-2 border-stone-200 bg-transparent text-sm text-stone-900 transition-all duration-300 focus:outline-none focus:border-b-brand placeholder:text-stone-400" required minlength="6" placeholder="Minimal 6 karakter" autocomplete="new-password">
+                        <button type="button" class="toggle-password absolute right-1 top-1/2 -translate-y-1/2 bg-transparent border-none text-stone-400 cursor-pointer p-1 text-sm transition-all duration-300 opacity-0 pointer-events-none hover:text-stone-600" onclick="togglePassword('password', this)">
+                            <i class="far fa-eye-slash"></i>
+                        </button>
+                    </div>
+                </div>
+
+                <div class="auth-field mb-6">
+                    <label class="auth-label block text-xs font-semibold text-stone-700 mb-1 tracking-wide uppercase">Konfirmasi Password</label>
+                    <div class="relative">
+                        <input type="password" name="password_confirmation" id="password_confirmation" class="field-input w-full py-3 pr-8 border-0 border-b-2 border-stone-200 bg-transparent text-sm text-stone-900 transition-all duration-300 focus:outline-none focus:border-b-brand placeholder:text-stone-400" required placeholder="Ulangi password" autocomplete="new-password">
+                        <button type="button" class="toggle-password absolute right-1 top-1/2 -translate-y-1/2 bg-transparent border-none text-stone-400 cursor-pointer p-1 text-sm transition-all duration-300 opacity-0 pointer-events-none hover:text-stone-600" onclick="togglePassword('password_confirmation', this)">
+                            <i class="far fa-eye-slash"></i>
+                        </button>
+                    </div>
+                </div>
+
+                <button type="submit" class="btn-submit w-full py-3.5 bg-brand text-white border-none rounded-xl text-sm font-semibold cursor-pointer transition-all duration-300 tracking-wide relative overflow-hidden hover:bg-brand-dark hover:-translate-y-0.5 hover:shadow-lg active:translate-y-0">Simpan Password Baru</button>
             </form>
 
-            <a href="{{ route('login') }}" class="auth-back flex items-center justify-center gap-2 mt-6 text-[13px] text-stone-500 no-underline font-medium hover:text-brand transition-colors duration-200">
+            <a href="{{ route('password.request') }}" class="auth-back flex items-center justify-center gap-2 mt-6 text-[13px] text-stone-500 no-underline font-medium hover:text-brand transition-colors duration-200">
                 <i class="fas fa-arrow-left"></i>
-                Kembali ke Login
+                Kembali
             </a>
 
         </div>
@@ -136,6 +161,14 @@
             const alert = document.getElementById('alertMsg');
             if (alert) { alert.style.opacity = '0'; alert.style.transition = 'opacity 0.5s ease'; setTimeout(() => alert.remove(), 500); }
         }, 3000);
+        document.querySelector('.otp-input').addEventListener('input', function(e) { this.value = this.value.toUpperCase(); });
+        function togglePassword(inputId, button) {
+            const input = document.getElementById(inputId);
+            if (!input) return;
+            const icon = button.querySelector('i');
+            if (input.type === 'password') { input.type = 'text'; icon.className = 'far fa-eye'; }
+            else { input.type = 'password'; icon.className = 'far fa-eye-slash'; }
+        }
     </script>
 </body>
 </html>

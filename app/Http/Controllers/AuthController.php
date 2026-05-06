@@ -223,25 +223,99 @@ class AuthController extends Controller
         return view('auth.forgot-password');
     }
 
-    public function resetPasswordDirect(Request $request)
+    public function sendUserOtp(Request $request)
     {
         $request->validate([
-            'email'                 => 'required|email',
-            'password'              => 'required|string|min:6|confirmed',
+            'email' => 'required|email',
         ]);
 
         $email = $request->input('email');
+
+        // Cek apakah email terdaftar sebagai user
+        $isUser = User::where('email', $email)->where('role', 'user')->exists();
+
+        if (!$isUser) {
+            return back()->with('error', 'Email tidak terdaftar. Silakan periksa kembali atau daftar akun baru.');
+        }
+
+        // Hapus OTP lama untuk email ini
+        PasswordReset::where('email', $email)->where('role', 'user')->delete();
+
+        // Generate OTP 6 digit
+        $otp = strtoupper(substr(bin2hex(random_bytes(3)), 0, 6));
+
+        // Simpan ke database
+        PasswordReset::create([
+            'email'      => $email,
+            'role'       => 'user',
+            'token'      => bin2hex(random_bytes(16)),
+            'otp'        => $otp,
+            'expires_at' => now()->addMinutes(15),
+        ]);
+
+        // Kirim email dengan error handling
+        try {
+            Mail::to($email)->send(new \App\Mail\UserOtpMail($otp, 15));
+            \Illuminate\Support\Facades\Log::info('User OTP email sent to: ' . $email . ' with OTP: ' . $otp);
+        } catch (\Exception $e) {
+            \Illuminate\Support\Facades\Log::error('Failed to send OTP email: ' . $e->getMessage());
+            return back()->with('error', 'Gagal mengirim email: ' . $e->getMessage());
+        }
+
+        // Simpan email di session untuk step 2
+        session(['user_reset_email' => $email]);
+
+        return redirect()->route('password.verify')
+            ->with('success', 'Kode verifikasi telah dikirim ke ' . $email . '. Cek inbox atau spam folder.');
+    }
+
+    public function showUserOtpVerify()
+    {
+        if (!session('user_reset_email')) {
+            return redirect()->route('password.request');
+        }
+        return view('auth.verify-user-otp');
+    }
+
+    public function verifyUserOtp(Request $request)
+    {
+        $request->validate([
+            'otp'      => 'required|string|size:6',
+            'password' => 'required|string|min:6|confirmed',
+        ]);
+
+        $email = session('user_reset_email');
+        $otp = strtoupper($request->input('otp'));
         $newPassword = bcrypt($request->input('password'));
 
+        if (!$email) {
+            return redirect()->route('password.request')
+                ->with('error', 'Sesi telah expired. Silakan ulangi dari awal.');
+        }
+
+        // Cari record OTP
+        $record = PasswordReset::where('email', $email)
+            ->where('role', 'user')
+            ->where('otp', $otp)
+            ->first();
+
+        if (!$record || $record->isExpired() || $record->isUsed()) {
+            return back()->with('error', 'Kode verifikasi tidak valid atau sudah expired.');
+        }
+
         $user = User::where('email', $email)->where('role', 'user')->first();
+
         if ($user) {
             $user->password = $newPassword;
             $user->save();
         }
 
-        // Generic message to avoid leaking whether email exists
+        // Tandai sebagai used
+        $record->update(['used_at' => now()]);
+        session()->forget('user_reset_email');
+
         return redirect()->route('showLogin')
-            ->with('success', 'Jika email terdaftar, password berhasil diubah. Silakan masuk dengan password baru Anda.');
+            ->with('success', 'Password berhasil diubah. Silakan masuk dengan password baru Anda.');
     }
 
     /* ───────── Admin Change Password (dari dashboard) ───────── */
@@ -302,8 +376,7 @@ class AuthController extends Controller
             || User::where('email', $email)->where('role', 'admin')->exists();
 
         if (!$isAdmin) {
-            // Pesan generik untuk keamanan
-            return back()->with('success', 'Jika email terdaftar, kode verifikasi telah dikirim.');
+            return back()->with('error', 'Email tidak terdaftar sebagai admin. Silakan periksa kembali.');
         }
 
         // Hapus OTP lama untuk email ini
