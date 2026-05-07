@@ -7,7 +7,7 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&family=Playfair+Display:wght@400;700;900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&amp;family=Plus+Jakarta+Sans:wght@400;500;600;700;800&amp;family=Inter:wght@300;400;500;600;700;800&family=Playfair+Display:wght@400;700;900&family=Montserrat:wght@700;800&family=Pinyon+Script&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <script>
         tailwind.config = {
@@ -37,6 +37,11 @@
             border-color: rgba(180, 35, 24, 0.2);
         }
     </style>
+
+    <style>
+        .auth-tagline, .auth-subtitle, h5, h6 { font-family: "Poppins", sans-serif !important; }
+        h1, h2, h3, h4 { font-family: "Inter", sans-serif !important; }
+    </style>
 </head>
 <body class="bg-[#EFE1D1] text-[#2D3748] font-poppins">
     @include('partials.navbar')
@@ -44,8 +49,9 @@
     <main class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12">
         <div class="mb-8">
             <span class="text-red-700 font-bold tracking-widest text-xs sm:text-sm uppercase mb-1 block font-poppins text-center sm:text-left">Riwayat</span>
-            <h1 class="text-3xl sm:text-4xl font-black text-[#26180f] tracking-tight font-playfair text-center sm:text-left">
-                Pesanan <span class="text-red-700 italic">Saya</span>
+            <h1 class="text-3xl sm:text-4xl font-bold text-[#26180f] tracking-tight font-bold text-center sm:text-left flex flex-wrap justify-center sm:justify-start gap-x-4">
+                Pesanan
+                Saya
             </h1>
         </div>
 
@@ -106,11 +112,11 @@
                             <div class="min-w-0 flex-1">
                                 <div class="flex items-start justify-between gap-3">
                                     <div class="min-w-0">
-                                        <div class="text-sm sm:text-base font-extrabold uppercase truncate">{{ $order->order_id }}</div>
+                                        <div class="text-sm sm:text-base font-bold uppercase truncate">{{ $order->order_id }}</div>
                                         <div class="text-xs text-[#3a2a1a]/70 mt-1">{{ optional($order->created_at)->format('d M Y, H:i') }}</div>
                                     </div>
                                     <div class="text-right shrink-0">
-                                        <div class="text-sm sm:text-base font-extrabold text-[#b42318]">Rp {{ number_format((float) $order->total_price, 0, ',', '.') }}</div>
+                                        <div class="text-sm sm:text-base font-bold text-[#b42318]">Rp {{ number_format((float) $order->total_price, 0, ',', '.') }}</div>
                                         <span class="mt-2 inline-flex items-center px-3 py-1 rounded-full text-[10px] font-semibold uppercase tracking-wider {{ $statusColor }}">{{ $statusLabel }}</span>
                                     </div>
                                 </div>
@@ -289,6 +295,10 @@
 </script>
 </body>
 </html>
+
+
+
+
 
 
 

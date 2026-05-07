@@ -253,6 +253,10 @@
             <i class="fas fa-user-cog"></i>
             <span>Kelola Admin</span>
         </a>
+        <a href="{{ route('admin.change-password') }}" class="menu-item {{ $activeMenu === 'password' ? 'active' : '' }}">
+            <i class="fas fa-lock"></i>
+            <span>Ganti Password</span>
+        </a>
     </nav>
 
     <div class="user-info">

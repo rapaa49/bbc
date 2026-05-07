@@ -35,15 +35,29 @@
         <div class="hidden md:flex items-center justify-end gap-2 md:min-w-[112px]">
             @auth
             <div class="action-items-group relative inline-flex items-center gap-3 px-1 py-1">
-                <button type="button" class="nav-action-btn relative px-2.5 py-0.5 text-[13px] font-semibold text-[#3a2a1a] hover:text-[#1f1410]" onclick="window.location.href='{{ route('my-orders') }}'">
-                    <i class="fas fa-clipboard-list"></i>
-                    <span class="hidden sm:inline ml-2 action-text">Pesanan<span class="action-underline {{ request()->routeIs('my-orders') ? 'action-underline-active' : '' }}"></span></span>
-                </button>
-                <button type="button" class="nav-action-btn relative px-2.5 py-0.5 text-[13px] font-semibold text-[#3a2a1a] hover:text-[#1f1410]" onclick="window.location.href='{{ route('cart.index') }}'">
-                    <i class="fas fa-shopping-cart"></i>
-                    <span class="hidden sm:inline ml-2 action-text">Keranjang<span class="action-underline {{ request()->routeIs('cart.index') ? 'action-underline-active' : '' }}"></span></span>
-                    <span id="cartCount" class="absolute -top-2 -right-2 bg-yellow-400 text-red-600 text-[10px] w-5 h-5 rounded-full flex items-center justify-center font-bold">0</span>
-                </button>
+                <div class="relative inline-flex items-center" id="userDropdownWrap">
+                    <button type="button" id="userDropdownBtn" class="relative flex items-center justify-center w-8 h-8 rounded-full bg-red-600/10 text-red-700 hover:bg-red-600 hover:text-white transition-all duration-300" aria-label="Menu pengguna">
+                        <i class="fas fa-user text-xs"></i>
+                        <span id="cartCount" class="absolute -top-1.5 -right-1.5 bg-yellow-400 text-red-600 text-[9px] w-4 h-4 rounded-full flex items-center justify-center font-bold">0</span>
+                    </button>
+                    <div id="userDropdownMenu" class="hidden absolute right-0 top-full mt-2 w-44 bg-white/95 backdrop-blur-xl rounded-xl shadow-lg shadow-black/10 border border-white/40 py-2 z-50">
+                        <div class="px-3 py-1.5 border-b border-gray-100">
+                            <p class="text-[11px] text-gray-500 font-medium truncate">{{ auth()->user()->name ?? 'Pengguna' }}</p>
+                        </div>
+                        <a href="{{ route('my-orders') }}" class="flex items-center gap-2 px-3 py-2 text-[12px] text-[#3a2a1a] hover:bg-red-50 hover:text-red-700 transition">
+                            <i class="fas fa-clipboard-list text-[10px]"></i> Pesanan Saya
+                        </a>
+                        <a href="{{ route('cart.index') }}" class="flex items-center gap-2 px-3 py-2 text-[12px] text-[#3a2a1a] hover:bg-red-50 hover:text-red-700 transition">
+                            <i class="fas fa-shopping-cart text-[10px]"></i> Keranjang
+                        </a>
+                        <form action="{{ route('logout') }}" method="POST" class="block">
+                            @csrf
+                            <button type="submit" class="w-full text-left flex items-center gap-2 px-3 py-2 text-[12px] text-red-700 hover:bg-red-50 transition">
+                                <i class="fas fa-sign-out-alt text-[10px]"></i> Keluar
+                            </button>
+                        </form>
+                    </div>
+                </div>
             </div>
             @else
             <button type="button" class="nav-action-btn bg-red-600 text-white px-[18px] py-0.5 rounded-full text-[13px] font-semibold hover:bg-red-700 transition-all duration-300" onclick="window.location.href='{{ route('login') }}'">MASUK</button>
@@ -67,6 +81,21 @@
             <a href="{{ route('pages.lokasi_kontak') }}" class="mobile-nav-link px-1 py-2 text-sm font-semibold {{ request()->routeIs('pages.lokasi_kontak') ? 'mobile-nav-link-active' : '' }}">LOKASI DAN KONTAK</a>
 
             @auth
+            <div class="border-t border-white/20 pt-2 mt-1">
+                <p class="text-[11px] text-[#5c4637] font-medium px-1 py-1 truncate">{{ auth()->user()->name ?? 'Pengguna' }}</p>
+                <a href="{{ route('my-orders') }}" class="mobile-nav-link {{ request()->routeIs('my-orders') ? 'mobile-nav-link-active' : '' }}">
+                    <i class="fas fa-clipboard-list mr-1.5 text-[11px]"></i>Pesanan Saya
+                </a>
+                <a href="{{ route('cart.index') }}" class="mobile-nav-link {{ request()->routeIs('cart.index') ? 'mobile-nav-link-active' : '' }}">
+                    <i class="fas fa-shopping-cart mr-1.5 text-[11px]"></i>Keranjang
+                </a>
+                <form action="{{ route('logout') }}" method="POST" class="mt-1">
+                    @csrf
+                    <button type="submit" class="w-full text-left mobile-action-btn mobile-action-btn-login flex items-center gap-2 bg-red-700 hover:bg-red-800">
+                        <i class="fas fa-sign-out-alt text-[11px]"></i> Keluar
+                    </button>
+                </form>
+            </div>
             @else
             <a href="{{ route('login') }}" class="mobile-action-btn mobile-action-btn-login">MASUK</a>
             @endauth
@@ -489,6 +518,22 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     refreshCartCount();
+
+    // Desktop user dropdown toggle
+    const userDropdownBtn = document.getElementById('userDropdownBtn');
+    const userDropdownMenu = document.getElementById('userDropdownMenu');
+    const userDropdownWrap = document.getElementById('userDropdownWrap');
+    if (userDropdownBtn && userDropdownMenu && userDropdownWrap) {
+        userDropdownBtn.addEventListener('click', function(e) {
+            e.stopPropagation();
+            userDropdownMenu.classList.toggle('hidden');
+        });
+        document.addEventListener('click', function(e) {
+            if (!userDropdownWrap.contains(e.target)) {
+                userDropdownMenu.classList.add('hidden');
+            }
+        });
+    }
 
     window.addEventListener('resize', () => {
         if (window.innerWidth >= 768) {

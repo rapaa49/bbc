@@ -6,7 +6,9 @@
     <title>Tentang BBC - Bakso Bunderan Ciomas</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&family=Playfair+Display:wght@400;700;900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&amp;family=Plus+Jakarta+Sans:wght@400;500;600;700;800&amp;family=Inter:wght@300;400;500;600;700;800&family=Playfair+Display:wght@400;700;900&family=Montserrat:wght@700;800&family=Pinyon+Script&display=swap" rel="stylesheet">
+    <style>
+    </style>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <meta name="csrf-token" content="{{ csrf_token() }}">
@@ -14,7 +16,7 @@
         body, h1, h2, h3, h4, h5, h6, p, span, a, li, ul, ol, button, input, textarea, div {
             font-family: 'Poppins', sans-serif !important;
         }
-        .font-playfair { font-family: 'Poppins', sans-serif !important; }
+        . { font-family: 'Poppins', sans-serif !important; }
 
         .fade-up {
             opacity: 1;
@@ -408,6 +410,11 @@
             }
         }
     </style>
+
+    <style>
+        .auth-tagline, .auth-subtitle, h5, h6 { font-family: "Poppins", sans-serif !important; }
+        h1, h2, h3, h4 { font-family: "Inter", sans-serif !important; }
+    </style>
 </head>
 <body class="js font-poppins bg-[#EFE1D1] text-[#3a2a1a] overflow-x-hidden">
     @include('partials.navbar')
@@ -422,10 +429,11 @@
                     <div class="md:col-span-5 lg:col-span-4">
                         <div class="mb-4">
                             <span class="text-red-700 font-bold tracking-widest text-sm uppercase mb-2 block font-poppins"><i class="fas fa-store mr-1"></i> Tentang Kami</span>
-                            <h3 class="text-4xl md:text-5xl font-black text-[#26180f] tracking-tight font-playfair mb-4">
-                                Bakso Bunderan <span class="text-red-700 italic">Ciomas</span>
+                            <h3 class="text-4xl md:text-5xl font-bold text-[#26180f] tracking-tight font-bold mb-4 flex flex-wrap justify-center md:justify-start gap-x-4">
+                                Bakso
+                                Bunderan
+                                Ciomas
                             </h3>
-                            <div class="w-16 md:w-24 h-1 bg-red-600 rounded-full mt-4"></div>
                         </div>
                     </div>
                     <div class="md:col-span-7 lg:col-span-8 flex flex-col justify-center">
@@ -435,15 +443,15 @@
                         <!-- Metrics Grid - Clean -->
                         <div class="grid grid-cols-2 lg:grid-cols-3 gap-6 border-t border-[#d8c3ae] pt-5">
                             <div>
-                                <div class="text-xl md:text-2xl font-extrabold text-red-800 leading-none mb-1">2025</div>
+                                <div class="text-xl md:text-2xl font-bold text-red-800 leading-none mb-1">2025</div>
                                 <div class="text-xs md:text-sm text-[#6a5244] font-medium leading-relaxed">Berdiri melayani pelanggan.</div>
                             </div>
                             <div>
-                                <div class="text-xl md:text-2xl font-extrabold text-red-800 leading-none mb-1">100%</div>
+                                <div class="text-xl md:text-2xl font-bold text-red-800 leading-none mb-1">100%</div>
                                 <div class="text-xs md:text-sm text-[#6a5244] font-medium leading-relaxed">Dimasak fresh dan bersih.</div>
                             </div>
                             <div class="col-span-2 lg:col-span-1">
-                                <div class="text-xl md:text-2xl font-extrabold text-red-800 leading-none mb-1">Rasa</div>
+                                <div class="text-xl md:text-2xl font-bold text-red-800 leading-none mb-1">Rasa</div>
                                 <div class="text-xs md:text-sm text-[#6a5244] font-medium leading-relaxed">Gurih & tekstur konsisten.</div>
                             </div>
                         </div>
@@ -486,10 +494,10 @@
                     <div class="md:col-span-5 lg:col-span-4 lg:order-2">
                         <div class="mb-4">
                             <span class="text-red-700 font-bold tracking-widest text-sm uppercase mb-2 block font-poppins"><i class="fas fa-award mr-1"></i> Kenapa BBC</span>
-                            <h3 class="text-4xl md:text-5xl font-black text-[#26180f] tracking-tight font-playfair mb-4">
-                                Layak <span class="text-red-700 italic">Direkomendasikan</span>
+                            <h3 class="text-4xl md:text-5xl font-bold text-[#26180f] tracking-tight font-bold mb-4 flex flex-wrap justify-center md:justify-start gap-x-4">
+                                Layak
+                                Direkomendasikan
                             </h3>
-                            <div class="w-16 md:w-24 h-1 bg-red-600 rounded-full mt-4"></div>
                         </div>
                     </div>
                     <div class="md:col-span-7 lg:col-span-8 lg:order-1 flex flex-col justify-center">
@@ -563,17 +571,16 @@
     <section class="py-24 md:py-32 bg-[#EFE1D1]">
         <div class="max-w-7xl mx-auto px-6">
             <h3 class="text-center md:text-left text-red-700 font-bold tracking-widest text-sm uppercase mb-2 block font-poppins">Ulasan Video</h3>
-            <h3 class="text-4xl md:text-5xl font-black text-[#26180f] tracking-tight font-playfair mb-10 text-center md:text-left">
-                Review <span class="text-red-700 italic">Sosial Media</span>
+            <h3 class="text-4xl md:text-5xl font-bold text-[#26180f] tracking-tight font-bold mb-10 text-center md:text-left">
+                Review Sosial Media
             </h3>
 
             <div class="mt-10">
                 <div class="text-center mb-8">
                     <span class="text-red-700 font-bold tracking-widest text-sm uppercase mb-2 block font-poppins">Video Review</span>
-                    <h3 class="text-3xl md:text-5xl font-black text-[#26180f] tracking-tight font-playfair mb-4">
-                        Testimoni <span class="text-red-700 italic">Influencer</span>
+                    <h3 class="text-3xl md:text-5xl font-bold text-[#26180f] tracking-tight font-bold mb-4">
+                        Testimoni Influencer
                     </h3>
-                    <div class="w-16 md:w-24 h-1 bg-red-600 mx-auto rounded-full mt-6"></div>
                 </div>
 
                 <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8 mt-8">
@@ -625,10 +632,9 @@
             <div class="mt-14">
                 <div class="text-center mb-12">
                     <span class="text-red-700 font-bold tracking-widest text-sm uppercase mb-2 block font-poppins">Ulasan Pelanggan</span>
-                    <h4 class="text-3xl md:text-5xl font-black text-[#26180f] tracking-tight font-playfair mb-4">
-                        Apa Kata <span class="text-red-700 italic">Mereka?</span>
-                    </h4>
-                    <div class="w-16 md:w-24 h-1 bg-red-600 mx-auto rounded-full mt-6"></div>
+                    <h3 class="text-3xl md:text-5xl font-bold text-[#26180f] tracking-tight mb-4 text-center">
+                        Apa Kata Mereka?
+                    </h3>
                 </div>
 
                 @include('partials.testimonial-carousel', ['testimonials' => $testimonials ?? collect()])
@@ -659,3 +665,8 @@
     </script>
 </body>
 </html>
+
+
+
+
+

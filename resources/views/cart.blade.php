@@ -7,8 +7,9 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&amp;family=Plus+Jakarta+Sans:wght@400;500;600;700;800&amp;family=Inter:wght@300;400;500;600;700;800&family=Montserrat:wght@700;800&family=Pinyon+Script&display=swap" rel="stylesheet">
+    <style>
+    </style>
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <script>
         tailwind.config = {
@@ -21,6 +22,11 @@
             }
         }
     </script>
+
+    <style>
+        .auth-tagline, .auth-subtitle, h5, h6 { font-family: "Poppins", sans-serif !important; }
+        h1, h2, h3, h4 { font-family: "Inter", sans-serif !important; }
+    </style>
 </head>
 <body class="bg-[#EFE1D1] text-[#2D3748] font-poppins">
     @include('partials.navbar')
@@ -28,10 +34,9 @@
     <main class="max-w-7xl mx-auto px-4 sm:px-6 py-10">
         <div class="text-center mb-12">
             <span class="text-red-700 font-bold tracking-widest text-sm uppercase mb-2 block font-poppins">Pesanan Anda</span>
-            <h1 class="text-4xl md:text-5xl font-black text-[#26180f] tracking-tight font-playfair mb-4">
-                Keranjang <span class="text-red-700 italic">Pesanan</span>
+            <h1 class="text-4xl md:text-5xl font-bold text-[#26180f] tracking-tight font-bold mb-4">
+                Keranjang Belanja
             </h1>
-            <div class="w-16 md:w-24 h-1 bg-red-600 mx-auto rounded-full mt-4 mb-6"></div>
             <p class="text-sm sm:text-base text-gray-600 mt-1 font-poppins font-medium">Pastikan pesanan kamu sudah sesuai sebelum lanjut ke pembayaran.</p>
         </div>
 
@@ -60,7 +65,7 @@
                         <div class="inline-flex items-center justify-center w-24 h-24 rounded-full bg-red-50 text-red-600 text-4xl mb-6 shadow-inner">
                             <i class="fas fa-shopping-basket"></i>
                         </div>
-                        <h2 class="text-2xl font-extrabold text-gray-800 mb-2">Keranjang Kamu Masih Kosong</h2>
+                        <h2 class="text-2xl font-bold text-gray-800 mb-2">Keranjang Kamu Masih Kosong</h2>
                         <p class="text-gray-500 mb-8 max-w-md mx-auto">Sepertinya kamu belum memilih hidangan apapun. Yuk, jelajahi menu lezat kami dan temukan favoritmu!</p>
                         <div class="flex justify-center gap-4">
                             <a href="{{ route('home') }}#paket" class="inline-flex items-center justify-center gap-2 bg-red-700 text-white px-8 py-3.5 rounded-xl font-bold shadow-[0_8px_20px_rgba(185,28,28,0.25)] hover:bg-red-800 hover:-translate-y-1 transition-all duration-300">
@@ -97,7 +102,7 @@
                                                     {{ strtoupper($item['type'] ?? '') }}
                                                 </span>
                                             </div>
-                                            <h3 class="text-lg font-extrabold text-gray-800 leading-snug truncate group-hover:text-red-700 transition-colors">{{ $item['name'] }}</h3>
+                                            <h3 class="text-lg font-bold text-gray-800 leading-snug truncate group-hover:text-red-700 transition-colors">{{ $item['name'] }}</h3>
                                             <div class="text-sm font-bold text-red-600 mt-1">Rp {{ number_format((float) ($item['price'] ?? 0), 0, ',', '.') }}</div>
                                         </div>
 
@@ -117,7 +122,7 @@
                                         <!-- Line Total -->
                                         <div class="text-right">
                                             <div class="text-xs text-gray-500 font-medium mb-1">Subtotal Item</div>
-                                            <div class="font-extrabold text-gray-800 text-lg">Rp {{ number_format((float) $lineTotal, 0, ',', '.') }}</div>
+                                            <div class="font-bold text-gray-800 text-lg">Rp {{ number_format((float) $lineTotal, 0, ',', '.') }}</div>
                                         </div>
                                     </div>
                                 </div>
@@ -130,7 +135,7 @@
             <!-- Sidebar Summary -->
             <aside class="lg:col-span-1">
                 <div class="bg-white rounded-[1.5rem] shadow-lg shadow-gray-200/50 border border-gray-100 p-6 sm:p-8 sticky top-24">
-                    <h2 class="text-xl font-extrabold text-gray-800 border-b border-gray-100 pb-4 mb-6">Ringkasan Pesanan</h2>
+                    <h2 class="text-xl font-bold text-gray-800 border-b border-gray-100 pb-4 mb-6">Ringkasan Pesanan</h2>
                     
                     <div class="space-y-4 text-sm font-medium">
                         <div class="flex items-center justify-between text-gray-600">
@@ -144,14 +149,14 @@
                         
                         <div class="pt-4 mt-2 border-t border-gray-100 border-dashed">
                             <div class="flex items-center justify-between">
-                                <span class="text-base text-gray-800 font-extrabold">Total Pembayaran</span>
-                                <span class="text-xl font-black text-red-700">Rp {{ number_format((float) $subtotal, 0, ',', '.') }}</span>
+                                <span class="text-base text-gray-800 font-bold">Total Pembayaran</span>
+                                <span class="text-xl font-bold text-red-700">Rp {{ number_format((float) $subtotal, 0, ',', '.') }}</span>
                             </div>
                         </div>
                     </div>
 
                     <div class="mt-8 space-y-3">
-                        <a href="{{ route('checkout.index') }}" class="w-full inline-flex items-center justify-center gap-2 bg-red-700 text-white px-5 py-4 rounded-xl font-extrabold shadow-[0_8px_20px_rgba(185,28,28,0.25)] hover:bg-red-800 hover:-translate-y-1 transition-all duration-300">
+                        <a href="{{ route('checkout.index') }}" class="w-full inline-flex items-center justify-center gap-2 bg-red-700 text-white px-5 py-4 rounded-xl font-bold shadow-[0_8px_20px_rgba(185,28,28,0.25)] hover:bg-red-800 hover:-translate-y-1 transition-all duration-300">
                             Lanjut Pembayaran <i class="fas fa-arrow-right"></i>
                         </a>
                         <a href="{{ route('home') }}#menu" class="w-full inline-flex items-center justify-center bg-gray-50 text-gray-700 hover:text-gray-900 border border-gray-200 px-5 py-3.5 rounded-xl font-bold hover:bg-gray-100 transition-all duration-300">
@@ -243,3 +248,7 @@
     </script>
 </body>
 </html>
+
+
+
+

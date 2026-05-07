@@ -22,10 +22,10 @@
              <div class="flex-1 flex flex-col p-5 sm:p-6 bg-white z-10 relative">
                  <!-- Price Tag -> moved out of image for cleanliness -->
                  <div class="flex justify-between items-start mb-2">
-                     <h4 class="text-xl font-extrabold text-[#2a1a10] leading-tight group-hover:text-red-800 transition-colors line-clamp-2 pr-2">
+                     <h4 class="text-xl font-bold text-[#2a1a10] leading-tight group-hover:text-red-800 transition-colors line-clamp-2 pr-2">
                          {{ $menu->name }}
                      </h4>
-                     <span class="text-lg font-black text-red-700 whitespace-nowrap">
+                     <span class="text-lg font-bold text-red-700 whitespace-nowrap">
                          Rp {{ number_format((float) $menu->price, 0, ',', '.') }}
                      </span>
                  </div>

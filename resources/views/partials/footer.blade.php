@@ -13,16 +13,16 @@
                         <img src="{{ asset('logo.jpeg') }}" onerror="this.onerror=null;this.src='https://placehold.co/150x150/8B0000/ffffff?text=BBC';" alt="Bakso Bunderan Ciomas" class="w-full h-full object-contain" />
                     </div>
                     <div class="leading-none text-left font-poppins pt-2">
-                        <div class="text-xl font-black tracking-widest text-[#EFE1D1] uppercase">Bakso</div>
-                        <div class="text-xl font-black tracking-widest text-[#EFE1D1] uppercase">Bunderan</div>
-                        <div class="text-xl font-black tracking-widest text-red-600 uppercase">Ciomas</div>
+                        <div class="text-xl font-bold tracking-widest text-[#EFE1D1] uppercase">Bakso</div>
+                        <div class="text-xl font-bold tracking-widest text-[#EFE1D1] uppercase">Bunderan</div>
+                        <div class="text-xl font-bold tracking-widest text-red-600 uppercase">Ciomas</div>
                     </div>
                 </div>
             </div>
 
             <!-- Alamat -->
             <div class="lg:col-span-3 flex flex-col items-center sm:items-start text-center sm:text-left">
-                <h4 class="text-white font-extrabold text-sm tracking-widest uppercase mb-6 flex items-center gap-3">
+                <h4 class="text-white font-bold text-sm tracking-widest uppercase mb-6 flex items-center gap-3">
                     <div class="w-8 h-8 rounded-full bg-red-500/20 text-red-500 flex items-center justify-center">
                         <i class="fas fa-map-marker-alt"></i>
                     </div>
@@ -38,7 +38,7 @@
 
             <!-- Kontak -->
             <div class="lg:col-span-3 flex flex-col items-center sm:items-start text-center sm:text-left">
-                <h4 class="text-white font-extrabold text-sm tracking-widest uppercase mb-6 flex items-center gap-3">
+                <h4 class="text-white font-bold text-sm tracking-widest uppercase mb-6 flex items-center gap-3">
                     <div class="w-8 h-8 rounded-full bg-red-500/20 text-red-500 flex items-center justify-center">
                         <i class="fas fa-phone-alt"></i>
                     </div>
@@ -60,7 +60,7 @@
 
             <!-- Media Sosial -->
             <div class="lg:col-span-2 flex flex-col items-center sm:items-start text-center sm:text-left">
-                <h4 class="text-white font-extrabold text-sm tracking-widest uppercase mb-6 flex items-center gap-3">
+                <h4 class="text-white font-bold text-sm tracking-widest uppercase mb-6 flex items-center gap-3">
                     <div class="w-8 h-8 rounded-full bg-red-500/20 text-red-500 flex items-center justify-center">
                         <i class="fas fa-users"></i>
                     </div>

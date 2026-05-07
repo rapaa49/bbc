@@ -6,7 +6,9 @@
     <title>Menu - Bakso Bunderan Ciomas</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&family=Playfair+Display:wght@400;700;900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&amp;family=Plus+Jakarta+Sans:wght@400;500;600;700;800&amp;family=Inter:wght@300;400;500;600;700;800&family=Playfair+Display:wght@400;700;900&family=Montserrat:wght@700;800&family=Pinyon+Script&display=swap" rel="stylesheet">
+    <style>
+    </style>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <meta name="csrf-token" content="{{ csrf_token() }}">
@@ -194,6 +196,11 @@
             }
         }
     </style>
+
+    <style>
+        .auth-tagline, .auth-subtitle, h5, h6 { font-family: "Poppins", sans-serif !important; }
+        h1, h2, h3, h4 { font-family: "Inter", sans-serif !important; }
+    </style>
 </head>
 <body class="font-poppins bg-[#EFE1D1] text-[#3a2a1a] overflow-x-hidden" style="font-family: 'Poppins', sans-serif;">
     @include('partials.navbar')
@@ -202,10 +209,10 @@
         <div class="menu-shell px-4 sm:px-6">
             <div class="text-center mb-10">
                 <span class="text-red-700 font-bold tracking-widest text-sm uppercase mb-2 block font-poppins">Kelezatan Tiada Tara</span>
-                <h2 class="text-4xl md:text-5xl font-black text-[#26180f] tracking-tight font-playfair mb-4">
-                    Menu <span class="text-red-700 italic">Spesial</span>
-                </h2>
-                <div class="w-16 md:w-24 h-1 bg-red-600 mx-auto rounded-full mt-4 mb-6"></div>
+                <h1 class="text-4xl md:text-5xl font-bold text-[#26180f] tracking-tight font-bold mb-4 text-center">
+                    Menu
+                    Spesial
+                </h1>
                 <p class="text-base md:text-lg text-gray-700 max-w-2xl mx-auto font-medium font-poppins">Temukan hidangan favorit Anda dari berbagai varian bakso dan mie ayam autentik yang diolah dengan bahan-bahan pilihan terbaik.</p>
             </div>
 
@@ -375,3 +382,7 @@
     </script>
 </body>
 </html>
+
+
+
+

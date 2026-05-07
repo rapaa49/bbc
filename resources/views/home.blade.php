@@ -7,7 +7,9 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link rel="icon" href="data:image/webp;base64,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">
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&family=Playfair+Display:wght@400;700;900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&amp;family=Plus+Jakarta+Sans:wght@400;500;600;700;800&amp;family=Inter:wght@300;400;500;600;700;800&family=Playfair+Display:wght@400;700;900&family=Montserrat:wght@700;800&family=Pinyon+Script&display=swap" rel="stylesheet">
+    <style>
+    </style>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <meta name="csrf-token" content="{{ csrf_token() }}">
@@ -18,6 +20,7 @@
                     fontFamily: {
                         'poppins': ['Poppins', 'sans-serif'],
                         'playfair': ['Playfair Display', 'serif'],
+                        'montserrat': ['Montserrat', 'sans-serif'],
                     },
                     colors: {
                         'primary': '#8B0000',
@@ -564,42 +567,6 @@
             100% { transform: rotate(360deg); }
         }
         
-        /* Mobile Responsive Styles */
-        @media (max-width: 768px) {
-            .package-media {
-                height: 130px;
-            }
-            
-            .package-content {
-                height: calc(100% - 130px);
-            }
-
-            .package-name {
-                font-size: 0.98rem;
-            }
-
-            .package-price {
-                font-size: 1.5rem;
-            }
-        }
-
-        @media (max-width: 640px) {
-            .package-media {
-                height: 120px;
-            }
-            
-            .package-content {
-                height: calc(100% - 120px);
-            }
-
-            .package-name {
-                font-size: 0.9rem;
-            }
-
-            .package-price {
-                font-size: 1.35rem;
-            }
-        }
     /* Background Selector Dots */
         .bg-slide {
             position: absolute;
@@ -746,12 +713,15 @@
 
         .package-trust-chip {
             color: #5a1f18;
-            padding: 0.22rem 0.1rem;
+            padding: 0.35rem 0.75rem;
             font-size: 0.78rem;
             font-weight: 600;
             display: inline-flex;
             align-items: center;
-            gap: 0.45rem;
+            gap: 0.5rem;
+            background: rgba(180, 35, 24, 0.06);
+            border-radius: 999px;
+            border: 1px solid rgba(180, 35, 24, 0.1);
         }
 
         .package-carousel-shell {
@@ -762,177 +732,192 @@
         }
 
         .package-card {
-            background: transparent;
-            border: 1px solid rgba(135, 70, 58, 0.16);
-            border-radius: 1.35rem;
-            box-shadow: 0 10px 26px rgba(84, 40, 27, 0.1);
-            transition: transform 0.35s ease, opacity 0.25s ease, box-shadow 0.3s ease;
-            will-change: transform;
+            background: #ffffff;
+            border: 1px solid rgba(0, 0, 0, 0.05);
+            border-radius: 1.25rem;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.03), 0 1px 2px rgba(0, 0, 0, 0.02);
+            transition: all 0.3s ease;
             overflow: hidden;
             min-height: 100%;
-            perspective: 1200px;
-            transform-style: preserve-3d;
-        }
-
-        .package-card::before {
-            content: '';
-            position: absolute;
-            inset: 0;
-            background: linear-gradient(135deg, rgba(255,255,255,0.08) 0%, transparent 50%, rgba(0,0,0,0.06) 100%);
-            pointer-events: none;
-            border-radius: inherit;
-            z-index: 1;
+            position: relative;
+            display: flex;
+            flex-direction: column;
         }
 
         .package-card:hover {
-            transform: translateY(-6px);
-            box-shadow: 0 18px 34px rgba(84, 40, 27, 0.16);
+            transform: translateY(-12px) scale(1.02);
+            box-shadow: 0 20px 40px -10px rgba(0, 0, 0, 0.12), 0 10px 20px -5px rgba(139, 0, 0, 0.1);
+            border-color: rgba(139, 0, 0, 0.3);
+            z-index: 10;
         }
 
-        .package-card-featured {
-            border-color: rgba(180, 35, 24, 0.42);
-            box-shadow: 0 20px 36px rgba(130, 35, 25, 0.2);
-        }
+        /* Featured styles removed as per request */
 
         .package-media {
-            height: 150px;
-            background: transparent;
+            height: 180px;
+            position: relative;
             overflow: hidden;
+        }
+
+        .package-media::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(to top, rgba(0, 0, 0, 0.25) 0%, transparent 50%);
+            pointer-events: none;
+            z-index: 1;
         }
 
         .package-media img {
             width: 100%;
             height: 100%;
             object-fit: cover;
-            transition: transform 0.45s ease;
+            transition: transform 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94);
         }
 
         .package-card:hover .package-media img {
-            transform: scale(1.05);
+            transform: scale(1.06);
         }
 
         .package-content {
-            padding: 0.75rem 0.85rem 0.95rem;
+            padding: 1.15rem 1.2rem 1.25rem;
             display: flex;
             flex-direction: column;
-            gap: 0.5rem;
-            height: calc(100% - 150px);
+            gap: 0.65rem;
+            flex: 1;
         }
 
         .package-top-meta {
             display: flex;
             align-items: center;
-            justify-content: space-between;
-            gap: 0.6rem;
+            gap: 0.5rem;
         }
 
         .package-pill {
             display: inline-flex;
             align-items: center;
             justify-content: center;
-            border-radius: 999px;
-            padding: 0.28rem 0.58rem;
-            font-size: 0.66rem;
-            font-weight: 800;
-            letter-spacing: 0.08em;
+            border-radius: 0.5rem;
+            padding: 0.3rem 0.6rem;
+            font-size: 0.65rem;
+            font-weight: 700;
+            letter-spacing: 0.06em;
             text-transform: uppercase;
             white-space: nowrap;
         }
 
         .package-pill.badge {
-            background: rgba(180, 35, 24, 0.1);
-            color: #8f1e14;
+            background: #b42318;
+            color: #ffffff;
         }
 
         .package-pill.portion {
-            background: #fff4ed;
-            color: #8f1e14;
-            border: 1px solid rgba(180, 35, 24, 0.18);
+            background: #f8f5f2;
+            color: #6b5a50;
+            border: 1px solid rgba(0, 0, 0, 0.06);
         }
 
         .package-name {
-            color: #2e1c12;
-            font-size: 1.08rem;
-            line-height: 1.15;
-            font-weight: 800;
+            color: #1a1a1a;
+            font-size: 1.15rem;
+            line-height: 1.4;
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 700;
             margin: 0;
             letter-spacing: -0.01em;
         }
 
         .package-price-row {
             display: flex;
-            align-items: flex-end;
-            gap: 0.45rem;
+            align-items: baseline;
+            gap: 0.4rem;
         }
 
         .package-price {
-            color: #b42318;
-            font-size: 1.7rem;
-            font-weight: 900;
+            color: #8B0000; /* Theme brand color */
+            font-size: 1.55rem;
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 800;
             line-height: 1;
-            letter-spacing: -0.03em;
+            letter-spacing: -0.02em;
         }
 
         .package-price-unit {
-            color: #7d6d64;
-            font-size: 0.76rem;
-            font-weight: 700;
-            text-transform: uppercase;
-            letter-spacing: 0.08em;
-            padding-bottom: 0.2rem;
+            color: #999;
+            font-size: 0.72rem;
+            font-weight: 600;
+            text-transform: lowercase;
         }
 
         .package-old-price {
-            color: #8d8d8d;
-            font-size: 0.73rem;
-            font-weight: 700;
+            color: #bbb;
+            font-size: 0.8rem;
+            font-weight: 600;
             text-decoration: line-through;
         }
 
         .package-desc {
-            color: #5a4a41;
-            font-size: 0.78rem;
-            line-height: 1.45;
-            min-height: 2.8rem;
+            color: #666;
+            font-size: 0.85rem;
+            font-family: 'Poppins', sans-serif;
+            line-height: 1.6;
+            min-height: 2.6rem;
             margin: 0;
             overflow-wrap: anywhere;
+        }
+
+        .package-divider {
+            height: 1px;
+            background: rgba(0, 0, 0, 0.06);
+            margin: 0.25rem 0;
         }
 
         .package-cta {
             margin-top: auto;
             width: 100%;
             border: 0;
-            border-radius: 0.75rem;
-            padding: 0.62rem 0.8rem;
-            background: linear-gradient(135deg, #c52f22 0%, #9f2218 100%);
+            border-radius: 0.7rem;
+            padding: 0.72rem 1rem;
+            background: linear-gradient(to right, #700000 50%, #8B0000 50%);
+            background-size: 200% 100%;
+            background-position: right bottom;
             color: #fff;
-            font-size: 0.78rem;
-            font-weight: 800;
+            font-size: 0.8rem;
+            font-weight: 700;
             letter-spacing: 0.02em;
             display: inline-flex;
             align-items: center;
             justify-content: center;
-            gap: 0.35rem;
-            transition: transform 0.24s ease, box-shadow 0.24s ease, filter 0.24s ease;
-            box-shadow: 0 10px 20px rgba(150, 38, 27, 0.26);
+            gap: 0.5rem;
+            transition: all 0.4s ease-out;
+            box-shadow: 0 4px 10px rgba(139, 0, 0, 0.15);
             cursor: pointer;
+            overflow: hidden;
+            position: relative;
         }
 
         .package-cta:hover {
+            background-position: left bottom;
             transform: translateY(-1px);
-            filter: brightness(1.03);
-            box-shadow: 0 14px 24px rgba(150, 38, 27, 0.32);
+            box-shadow: 0 10px 20px -5px rgba(139, 0, 0, 0.4);
         }
+
+        .package-cta:active {
+            opacity: 0.9;
+            transform: translateY(0);
+        }
+
+        /* Featured CTA styles removed */
 
         .package-carousel {
             overflow-x: auto;
-            overflow-y: hidden;
+            overflow-y: visible;
             scroll-behavior: smooth;
             scroll-snap-type: x mandatory;
             overscroll-behavior-x: contain;
             -ms-overflow-style: none;
             scrollbar-width: none;
-            padding-bottom: 0.25rem;
+            padding: 2.5rem 0.5rem 3rem; /* Increased padding to accommodate 3D lift without clipping */
             width: 100%;
             margin: 0;
         }
@@ -944,71 +929,77 @@
         .package-track {
             display: flex;
             align-items: stretch;
-            gap: 1.05rem;
-            padding-right: 0.25rem;
+            gap: 1.25rem;
             width: max-content;
-            transform-style: preserve-3d;
-            perspective: 1500px;
+            padding-inline: 1.5rem;
         }
-        
+
         .package-slide {
+            flex: 0 0 310px;
+            scroll-snap-align: start;
+            scroll-snap-stop: always;
             transition: transform 0.3s ease-out;
         }
 
-        .package-slide {
-            flex: 0 0 300px;
-            scroll-snap-align: start;
-            scroll-snap-stop: always;
-        }
-
         .package-nav-btn {
-            width: 38px;
-            height: 38px;
-            border-radius: 999px;
-            border: 1px solid rgba(90, 31, 24, 0.15);
-            background: rgba(255, 255, 255, 0.78);
-            color: #5a1f18;
+            width: 40px;
+            height: 40px;
+            border-radius: 0.65rem;
+            border: 1px solid rgba(0, 0, 0, 0.08);
+            background: #ffffff;
+            color: #1a1a1a;
             display: inline-flex;
             align-items: center;
             justify-content: center;
-            transition: all 0.2s ease;
+            transition: all 0.25s ease;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.06);
         }
 
-        .package-nav-btn:hover {
-            background: #ffffff;
+        .package-nav-btn:hover:not(:disabled) {
+            background: #8B0000;
+            color: #ffffff;
+            border-color: #8B0000;
             transform: translateY(-1px);
+            box-shadow: 0 4px 12px rgba(139, 0, 0, 0.25);
         }
 
         .package-nav-btn:disabled {
-            opacity: 0.45;
+            opacity: 0.2;
             cursor: not-allowed;
-            transform: none;
+            transform: none !important;
+            box-shadow: none !important;
+            background: #f5f5f5 !important;
+            color: #ccc !important;
+            border-color: #ddd !important;
         }
 
         @media (max-width: 640px) {
             .package-slide {
-                flex-basis: 260px;
+                flex-basis: 280px;
+            }
+            .package-media {
+                height: 160px;
             }
         }
 
         @media (min-width: 640px) {
-            .package-nav-btn {
-                width: 40px;
-                height: 40px;
-            }
-
             .package-slide {
-                flex-basis: 285px;
+                flex-basis: 300px;
             }
         }
 
         @media (min-width: 1024px) {
             .package-slide {
-                flex-basis: 305px;
+                flex-basis: 320px;
             }
         }
     </style>
     <style>
+        .fade-in-up {
+            opacity: 0;
+            animation: fadeInUp 0.8s ease-out forwards;
+        }
+
         .fade-left {
             opacity: 1;
             transform: translateX(0);
@@ -1050,7 +1041,7 @@
         body, h1, h2, h3, h4, h5, h6, p, span, a, li, ul, ol, button, input, textarea, div {
             font-family: 'Poppins', sans-serif !important;
         }
-        .font-playfair { font-family: 'Poppins', sans-serif !important; }
+        . { font-family: 'Poppins', sans-serif !important; }
 
         .bg-body-image {
             position: relative;
@@ -1080,6 +1071,11 @@
             }
         }
     </style>
+
+    <style>
+        .auth-tagline, .auth-subtitle, h5, h6 { font-family: "Poppins", sans-serif !important; }
+        h1, h2, h3, h4 { font-family: "Inter", sans-serif !important; }
+    </style>
 </head>
 <body class="font-poppins bg-[#EFE1D1] text-[#3a2a1a] overflow-x-hidden">
     @include('partials.navbar')
@@ -1090,10 +1086,7 @@
         <!-- Background Container -->
         <div class="absolute inset-0">
             <div id="bg1" class="absolute inset-0 transition-opacity duration-700 ease-in-out opacity-100">
-                <img src="bg_home.jpeg" alt="Bakso Bunderan Ciomas" class="absolute inset-0 w-full h-full object-cover" />
-            </div>
-            <div id="bg2" class="absolute inset-0 transition-opacity duration-700 ease-in-out opacity-0">
-                <img src="background2.jpeg" alt="Bakso Bunderan Ciomas" class="absolute inset-0 w-full h-full object-cover" />
+                <img src="bg_home.png" alt="Bakso Bunderan Ciomas" class="absolute inset-0 w-full h-full object-cover" />
             </div>
         </div>
         
@@ -1101,23 +1094,23 @@
         <div class="absolute inset-0 bg-black/45 z-10"></div>
         
         <!-- Content -->
-        <div class="relative z-20 min-h-screen flex items-center pt-24 sm:pt-28">
-            <div class="max-w-7xl mx-auto px-4 sm:px-6 text-white">
-                <div class="w-full md:w-2/3 lg:w-[58%]">
-                    <p class="inline-flex items-center gap-2 mb-4 px-1 text-xs sm:text-sm font-semibold tracking-[0.08em] uppercase text-[#f8e9cf] fade-in-up">
+        <div class="relative z-20 min-h-screen flex items-center justify-center pt-24 sm:pt-28">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 text-white text-center">
+                <div class="max-w-3xl mx-auto">
+                    <p class="inline-flex items-center justify-center gap-2 mb-4 px-1 text-xs sm:text-sm font-semibold tracking-[0.08em] uppercase text-[#f8e9cf] fade-in-up w-full">
                         <span class="w-2 h-2 rounded-full bg-[#f4c95d]"></span>
                         Selamat Datang di Cita Rasa Legendaris
                     </p>
-                    <h2 class="text-3xl sm:text-4xl md:text-5xl font-bold leading-tight mb-4 font-playfair fade-in-left">
-                        <span id="typedHeroTitle" class="typing-title" data-text="Bakso Bunderan Ciomas"></span>
+                    <h2 class="text-3xl sm:text-4xl md:text-5xl leading-tight mb-4 font-bold fade-in-up" style="animation-delay: 0.15s">
+                        Bakso Bunderan Ciomas
                     </h2>
-                    <p class="mb-6 text-base sm:text-lg font-poppins text-white/95 slide-in">Nikmati semangkuk bakso gurih halal dengan racikan autentik yang konsisten sejak lama, cocok untuk keluarga dan momen hangat bersama.</p>
-                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4 items-stretch max-w-xl">
-                        <button onclick="window.location.href='{{ route('menu.public') }}'" class="w-full min-h-[48px] sm:min-h-[52px] inline-flex items-center justify-center gap-2 bg-[#b42318] px-5 sm:px-6 py-3 rounded-xl font-semibold text-sm sm:text-base tracking-wide text-white shadow-lg shadow-[#5a1a12]/35 transition-all duration-300 hover:bg-white hover:text-[#b42318] hover:-translate-y-0.5 hover:shadow-2xl hover:brightness-100 font-poppins btn-animated hover-scale fade-in-up text-center border border-transparent hover:border-[#b42318]">
+                    <p class="mb-8 text-base sm:text-lg font-poppins text-white/95 fade-in-up max-w-2xl mx-auto" style="animation-delay: 0.3s">Nikmati semangkuk bakso gurih halal dengan racikan autentik yang konsisten sejak lama, cocok untuk keluarga dan momen hangat bersama.</p>
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4 items-stretch max-w-xl mx-auto fade-in-up" style="animation-delay: 0.45s">
+                        <button onclick="window.location.href='{{ route('menu.public') }}'" class="w-full min-h-[48px] sm:min-h-[52px] inline-flex items-center justify-center gap-2 bg-[#b42318] px-5 sm:px-6 py-3 rounded-xl font-semibold text-sm sm:text-base tracking-wide text-white shadow-lg shadow-[#5a1a12]/35 transition-all duration-300 hover:bg-white hover:text-[#b42318] hover:-translate-y-0.5 hover:shadow-2xl hover:brightness-100 font-poppins btn-animated hover-scale text-center border border-transparent hover:border-[#b42318]">
                             <i class="fas fa-utensils text-sm"></i>
                             <span>LIHAT MENU</span>
                         </button>
-                        <button onclick="document.getElementById('lokasi')?.scrollIntoView({ behavior: 'smooth' })" class="w-full min-h-[48px] sm:min-h-[52px] inline-flex items-center justify-center gap-2 bg-white/90 text-[#b42318] px-5 sm:px-6 py-3 rounded-xl font-semibold text-sm sm:text-base tracking-wide border border-white/80 shadow-md shadow-black/10 transition-all duration-300 hover:bg-[#b42318] hover:text-white hover:-translate-y-0.5 hover:shadow-2xl hover:border-[#b42318] font-poppins btn-animated hover-scale fade-in-up text-center" style="animation-delay: 0.2s">
+                        <button onclick="document.getElementById('lokasi')?.scrollIntoView({ behavior: 'smooth' })" class="w-full min-h-[48px] sm:min-h-[52px] inline-flex items-center justify-center gap-2 bg-white/90 text-[#b42318] px-5 sm:px-6 py-3 rounded-xl font-semibold text-sm sm:text-base tracking-wide border border-white/80 shadow-md shadow-black/10 transition-all duration-300 hover:bg-[#b42318] hover:text-white hover:-translate-y-0.5 hover:shadow-2xl hover:border-[#b42318] font-poppins btn-animated hover-scale text-center">
                             <i class="fas fa-location-dot text-sm"></i>
                             <span>LOKASI KAMI</span>
                         </button>
@@ -1127,10 +1120,7 @@
         </div>
         
         <!-- Background Selector Dots -->
-        <div class="absolute bottom-8 left-1/2 transform -translate-x-1/2 z-30 flex gap-3">
-            <button onclick="changeBackground(1)" id="dot1" class="w-3 h-3 rounded-full bg-white/80 hover:bg-white transition-all duration-300 border-2 border-white"></button>
-            <button onclick="changeBackground(2)" id="dot2" class="w-3 h-3 rounded-full bg-white/40 hover:bg-white/80 transition-all duration-300 border-2 border-transparent"></button>
-        </div>
+        
     </section>
 
     <!-- PAKET ACARA -->
@@ -1138,10 +1128,9 @@
         <div class="max-w-6xl mx-auto px-4 sm:px-6">
             <div class="text-center mb-10">
                 <span class="text-red-700 font-bold tracking-widest text-sm uppercase mb-2 block font-poppins">Layanan Katering</span>
-                <h3 class="text-3xl md:text-5xl font-black text-[#26180f] tracking-tight font-playfair mb-4">
-                    Paket <span class="text-red-700 italic">Acara</span>
+                <h3 class="text-3xl md:text-5xl font-bold text-[#26180f] tracking-tight mb-4 text-center">
+                    Paket Acara
                 </h3>
-                <div class="w-16 md:w-24 h-1 bg-red-600 mx-auto rounded-full mt-4"></div>
             </div>
             <p class="text-center mb-5 text-base md:text-lg text-gray-700 font-poppins font-medium">Bawa cita rasa legendaris Bakso Bunderan Ciomas ke momen spesial Anda</p>
 
@@ -1168,37 +1157,34 @@
                     <div id="packageCarousel" class="package-carousel">
                         <div id="packageGrid" class="package-track">
                             @foreach($pakets as $paket)
-                                <div class="package-card package-slide fade-up {{ $loop->iteration === $featuredPackageIndex ? 'package-card-featured' : '' }}">
+                                <div class="package-card package-slide fade-left" style="transition-delay: {{ $loop->index * 0.1 }}s">
                                     <div class="package-media">
-                                        <img src="{{ $paket->image ? asset($paket->image) : 'https://placehold.co/800x600/efe1d1/3a2a1a?text=Paket' }}"
+                                        <img src="{{ $paket->image ? asset($paket->image) : 'https://placehold.co/800x600/f5f5f5/999?text=Paket' }}"
                                              alt="{{ $paket->name }}"
-                                             class="w-full h-full object-cover">
+                                             loading="lazy">
                                     </div>
                                     <div class="package-content">
                                         <div class="package-top-meta">
-                                            <span class="package-pill badge">{{ $loop->iteration === $featuredPackageIndex ? 'Unggulan' : 'Paket' }}</span>
-                                            <span class="package-pill portion">{{ $paket->portion }} Porsi</span>
+                                            <span class="package-pill portion"><i class="fas fa-users" style="font-size:0.55rem;margin-right:0.2rem;"></i>{{ $paket->portion }} Porsi</span>
                                         </div>
 
                                         <h4 class="package-name line-clamp-2">{{ $paket->name }}</h4>
+                                        <p class="package-desc line-clamp-2">{{ $paket->description }}</p>
+
+                                        <div class="package-divider"></div>
 
                                         <div>
-                                            <div class="mb-1 min-h-[1rem]">
                                             @if(!empty($paket->original_price))
-                                                    <div class="package-old-price">Rp {{ number_format((float) $paket->original_price, 0, ',', '.') }}</div>
+                                                <div class="package-old-price mb-0.5">Rp {{ number_format((float) $paket->original_price, 0, ',', '.') }}</div>
                                             @endif
-                                            </div>
-
                                             <div class="package-price-row">
                                                 <div class="package-price">Rp {{ number_format((float) $paket->price, 0, ',', '.') }}</div>
                                                 <div class="package-price-unit">/paket</div>
                                             </div>
                                         </div>
 
-                                        <p class="package-desc line-clamp-3">{{ $paket->description }}</p>
-
                                         <button onclick="addPaketToCart({{ (int) $paket->id }})" class="package-cta">
-                                            <i class="fas fa-cart-plus"></i>
+                                            <i class="fas fa-cart-plus" style="font-size:0.75rem;"></i>
                                             Tambah ke Keranjang
                                         </button>
                                     </div>
@@ -1235,10 +1221,9 @@
                     <div class="halal-intro fade-up mb-24 md:mb-32">
                         <div class="text-center mb-10">
                             <span class="text-red-700 font-bold tracking-widest text-sm uppercase mb-2 block font-poppins">Kualitas Terjamin</span>
-                            <h3 class="text-3xl md:text-5xl font-black text-[#26180f] tracking-tight font-playfair mb-4">
-                                Bersertifikasi <span class="text-red-700 italic">Halal</span>
+                            <h3 class="text-3xl md:text-5xl font-bold text-[#26180f] tracking-tight mb-4 text-center">
+                                Bersertifikasi Halal
                             </h3>
-                            <div class="w-16 md:w-24 h-1 bg-red-600 mx-auto rounded-full mt-4"></div>
                         </div>
 
                         <div class="halal-logo flex justify-center mb-10">
@@ -1251,10 +1236,9 @@
 
                     <div class="text-center mt-16 md:mt-24 mb-12">
                         <span class="text-red-700 font-bold tracking-widest text-sm uppercase mb-2 block font-poppins">Pilihan Terbaik</span>
-                        <h3 class="text-3xl md:text-5xl font-black text-[#26180f] tracking-tight font-playfair mb-4">
-                            Menu <span class="text-red-700 italic">Rekomendasi</span>
+                        <h3 class="text-3xl md:text-5xl font-bold text-[#26180f] tracking-tight mb-4 text-center">
+                            Menu Rekomendasi
                         </h3>
-                        <div class="w-16 md:w-24 h-1 bg-red-600 mx-auto rounded-full mt-4"></div>
                     </div>
 
                     <div id="rekomendasiSlider" class="rekomendasi-slider">
@@ -1286,14 +1270,14 @@
 
                                     <!-- Text Content -->
                                     <div class="flex-grow flex flex-col text-left px-1 mt-1">
-                                        <h4 class="font-extrabold text-[#26180f] text-lg md:text-xl mb-1.5 leading-snug group-hover:text-red-700 transition-colors font-poppins tracking-tight line-clamp-2 min-h-[3rem]">{{ $item->name }}</h4>
+                                        <h4 class="font-bold text-[#26180f] text-lg md:text-xl mb-1.5 leading-snug group-hover:text-red-700 transition-colors font-poppins tracking-tight line-clamp-2 min-h-[3rem]">{{ $item->name }}</h4>
                                         <p class="text-[0.75rem] text-gray-500 leading-relaxed mb-4 line-clamp-2 font-medium flex-grow min-h-[2.5rem]">{{ $item->description }}</p>
 
                                         <!-- Footer (Price & View Action) -->
                                         <div class="mt-auto flex items-end justify-between pt-3 border-t border-gray-50">
                                             <div>
                                                 <span class="block text-[9px] uppercase tracking-widest text-red-600/70 font-bold mb-1">Harga</span>
-                                                <div class="font-black text-red-600 text-[1.1rem] font-poppins tracking-tight">
+                                                <div class="font-bold text-red-600 text-[1.1rem] font-poppins tracking-tight">
                                                     <span class="text-[10px] align-super opacity-60 font-medium">Rp</span>{{ number_format((float)($item->price ?? 0), 0, ',', '.') }}
                                                 </div>
                                             </div>
@@ -1319,17 +1303,16 @@
     <section id="testimoni" class="pt-20 pb-0 md:pt-24 md:pb-0 bg-[#EFE1D1]">
         <div class="max-w-7xl mx-auto px-6">
             <h3 class="text-center md:text-left text-red-700 font-bold tracking-widest text-sm uppercase mb-2 block font-poppins">Ulasan Video</h3>
-            <h3 class="text-4xl md:text-5xl font-black text-[#26180f] tracking-tight font-playfair mb-10 text-center md:text-left">
-                Review <span class="text-red-700 italic">Sosial Media</span>
+            <h3 class="text-3xl md:text-5xl font-bold text-[#26180f] tracking-tight mb-10 text-center md:text-left">
+                Review Sosial Media
             </h3>
 
             <div class="mt-10">
                 <div class="text-center mb-8">
                     <span class="text-red-700 font-bold tracking-widest text-sm uppercase mb-2 block font-poppins">Video Review</span>
-                    <h3 class="text-3xl md:text-5xl font-black text-[#26180f] tracking-tight font-playfair mb-4">
-                        Testimoni <span class="text-red-700 italic">Influencer</span>
+                    <h3 class="text-3xl md:text-5xl font-bold text-[#26180f] tracking-tight mb-4 text-center">
+                        Testimoni Influencer
                     </h3>
-                    <div class="w-16 md:w-24 h-1 bg-red-600 mx-auto rounded-full mt-6"></div>
                 </div>
 
                 <div class="influencer-meta fade-up">
@@ -1391,10 +1374,9 @@
         <div class="max-w-7xl mx-auto px-6">
             <div class="text-center mb-12">
                 <span class="text-red-700 font-bold tracking-widest text-sm uppercase mb-2 block font-poppins">Ulasan Pelanggan</span>
-                <h4 class="text-3xl md:text-5xl font-black text-[#26180f] tracking-tight font-playfair mb-4">
-                    Apa Kata <span class="text-red-700 italic">Mereka?</span>
-                </h4>
-                <div class="w-16 md:w-24 h-1 bg-red-600 mx-auto rounded-full mt-6"></div>
+                <h3 class="text-3xl md:text-5xl font-bold text-[#26180f] tracking-tight mb-4 text-center">
+                    Apa Kata Mereka?
+                </h3>
             </div>
 
             @include('partials.testimonial-carousel', ['testimonials' => $testimonials ?? collect()])
@@ -1641,74 +1623,7 @@
         }
 
 
-        function initHeroTyping() {
-            const typedEl = document.getElementById('typedHeroTitle');
-            if (!typedEl || typedEl.dataset.typed === 'true') return;
 
-            const fullText = typedEl.dataset.text || 'Bakso Bunderan Ciomas';
-            const highlightWord = 'Ciomas';
-            const highlightStart = fullText.indexOf(highlightWord);
-            typedEl.dataset.typed = 'true';
-
-            if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
-                typedEl.textContent = fullText;
-                return;
-            }
-
-            typedEl.classList.add('typing-caret');
-            typedEl.textContent = '';
-
-            let charIndex = 0;
-            let deleting = false;
-
-            const typeSpeed = 120;
-            const deleteSpeed = 80;
-            const holdAtEnd = 1700;
-            const holdAtStart = 500;
-
-            function renderTypedText(count) {
-                if (highlightStart < 0) {
-                    typedEl.textContent = fullText.slice(0, count);
-                    return;
-                }
-
-                const before = fullText.slice(0, Math.min(count, highlightStart));
-                const highlighted = count > highlightStart
-                    ? fullText.slice(highlightStart, Math.min(count, fullText.length))
-                    : '';
-
-                typedEl.innerHTML = `${before}<span class="hero-accent-kuah">${highlighted}</span>`;
-            }
-
-            function loopTyping() {
-                if (!deleting) {
-                    charIndex += 1;
-                    renderTypedText(charIndex);
-
-                    if (charIndex >= fullText.length) {
-                        deleting = true;
-                        setTimeout(loopTyping, holdAtEnd);
-                        return;
-                    }
-
-                    setTimeout(loopTyping, typeSpeed);
-                    return;
-                }
-
-                charIndex -= 1;
-                renderTypedText(charIndex);
-
-                if (charIndex <= 0) {
-                    deleting = false;
-                    setTimeout(loopTyping, holdAtStart);
-                    return;
-                }
-
-                setTimeout(loopTyping, deleteSpeed);
-            }
-
-            loopTyping();
-        }
 
         function initPackageCarousel() {
             const carousel = document.getElementById('packageCarousel');
@@ -1719,15 +1634,16 @@
             if (!carousel || !prevBtn || !nextBtn) return;
 
             function updateButtons() {
+                const scrollLeft = carousel.scrollLeft;
                 const maxScroll = Math.max(0, carousel.scrollWidth - carousel.clientWidth);
-                const hasOverflow = maxScroll > 2;
-                if (!hasOverflow) {
-                    prevBtn.disabled = true;
-                    nextBtn.disabled = true;
-                    return;
-                }
-                prevBtn.disabled = carousel.scrollLeft <= 2;
-                nextBtn.disabled = carousel.scrollLeft >= maxScroll - 2;
+                
+                // Disable previous button if at the very start
+                const isAtStart = scrollLeft <= 10;
+                prevBtn.disabled = isAtStart;
+                
+                // Disable next button if at the very end
+                const isAtEnd = scrollLeft >= maxScroll - 10;
+                nextBtn.disabled = isAtEnd;
             }
 
             function syncNavVisibility() {
@@ -1736,6 +1652,18 @@
                 if (navControls) {
                     // Show controls only when cards exceed container bounds on all devices
                     navControls.classList.toggle('hidden', !hasOverflow);
+                }
+
+                // Center the track if there is no overflow
+                const track = document.getElementById('packageGrid');
+                if (track) {
+                    if (!hasOverflow) {
+                        track.style.minWidth = '100%';
+                        track.style.justifyContent = 'center';
+                    } else {
+                        track.style.minWidth = 'min-content';
+                        track.style.justifyContent = 'flex-start';
+                    }
                 }
 
                 updateButtons();
@@ -1759,7 +1687,7 @@
             requestAnimationFrame(syncNavVisibility);
         }
 
-        initHeroTyping();
+
         initPackageCarousel();
 
         function updateCartCount() {
@@ -2024,3 +1952,7 @@
     </script>
 </body>
 </html>
+
+
+
+

@@ -7,7 +7,7 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&family=Playfair+Display:wght@400;700;900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&amp;family=Plus+Jakarta+Sans:wght@400;500;600;700;800&amp;family=Inter:wght@300;400;500;600;700;800&family=Playfair+Display:wght@400;700;900&family=Montserrat:wght@700;800&family=Pinyon+Script&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <script>
@@ -118,6 +118,11 @@
             filter: brightness(1.02);
         }
     </style>
+
+    <style>
+        .auth-tagline, .auth-subtitle, h5, h6 { font-family: "Poppins", sans-serif !important; }
+        h1, h2, h3, h4 { font-family: "Inter", sans-serif !important; }
+    </style>
 </head>
 <body class="bg-[#EFE1D1] text-[#2D3748] font-poppins">
     @include('partials.navbar')
@@ -131,10 +136,9 @@
         <div class="mb-12 mt-4 flex flex-col md:flex-row md:items-end justify-between gap-6">
             <div class="text-left">
                 <span class="text-red-700 font-bold tracking-widest text-sm uppercase mb-2 block font-poppins">Penyelesaian</span>
-                <h1 class="text-4xl md:text-5xl font-black text-[#26180f] tracking-tight font-playfair mb-4">
-                    Checkout <span class="text-red-700 italic">Pesanan</span>       
+                <h1 class="text-4xl md:text-5xl font-bold text-[#26180f] tracking-tight font-bold mb-4">
+                    Penyelesaian Pesanan
                 </h1>
-                <div class="w-16 md:w-24 h-1 bg-red-600 rounded-full mt-4 mb-6"></div>
                 <p class="text-sm sm:text-base text-[#644b3c] mt-2 font-poppins font-medium">Lengkapi detail pemesanan agar proses konfirmasi lebih cepat.</p>      
             </div>
             <div class="flex items-center">
@@ -225,7 +229,7 @@
 
                     <div class="order-summary-card rounded-2xl overflow-hidden">
                         <div class="px-4 sm:px-5 py-3 border-b border-[#f0dfcb]">
-                            <div class="grid grid-cols-3 text-[11px] sm:text-xs font-extrabold text-[#3a2a1a] uppercase tracking-wide">
+                            <div class="grid grid-cols-3 text-[11px] sm:text-xs font-bold text-[#3a2a1a] uppercase tracking-wide">
                                 <div class="col-span-2">Produk</div>
                                 <div class="text-right">Subtotal</div>
                             </div>
@@ -239,11 +243,11 @@
                                 <div class="px-4 sm:px-5 py-3.5">
                                     <div class="grid grid-cols-3 gap-3 items-start">
                                         <div class="col-span-2">
-                                            <div class="text-sm font-extrabold text-[#3a2a1a] leading-tight">{{ $item['name'] }}</div>
+                                            <div class="text-sm font-bold text-[#3a2a1a] leading-tight">{{ $item['name'] }}</div>
                                             <div class="text-xs text-gray-600 mt-1">Jumlah: x{{ (int) ($item['quantity'] ?? 0) }}</div>
                                         </div>
                                         <div class="text-right">
-                                            <div class="text-sm font-extrabold text-red-700">Rp {{ number_format((float) $lineTotal, 0, ',', '.') }}</div>
+                                            <div class="text-sm font-bold text-red-700">Rp {{ number_format((float) $lineTotal, 0, ',', '.') }}</div>
                                         </div>
                                     </div>
                                 </div>
@@ -256,18 +260,18 @@
 
                         <div class="px-4 sm:px-5 py-4 border-t border-[#EFE1D1] bg-[#fff9f2]">
                             <div class="flex items-center justify-between text-sm">
-                                <span class="font-extrabold text-[#3a2a1a]">Subtotal</span>
-                                <span class="font-extrabold text-[#3a2a1a]">Rp {{ number_format((float) $subtotal, 0, ',', '.') }}</span>
+                                <span class="font-bold text-[#3a2a1a]">Subtotal</span>
+                                <span class="font-bold text-[#3a2a1a]">Rp {{ number_format((float) $subtotal, 0, ',', '.') }}</span>
                             </div>
                             <div class="flex items-center justify-between mt-2 pt-2 border-t border-[#efd7c2]">
-                                <span class="font-extrabold text-[#3a2a1a]">Total Pembayaran</span>
-                                <span class="text-base font-black text-[#b42318]">Rp {{ number_format((float) $subtotal, 0, ',', '.') }}</span>
+                                <span class="font-bold text-[#3a2a1a]">Total Pembayaran</span>
+                                <span class="text-base font-bold text-[#b42318]">Rp {{ number_format((float) $subtotal, 0, ',', '.') }}</span>
                             </div>
                         </div>
                     </div>
 
                     <div class="mt-5 grid grid-cols-1 gap-3">
-                        <button type="submit" class="checkout-cta text-white px-10 py-3 rounded-xl font-extrabold tracking-wide">Order Now</button>
+                        <button type="submit" class="checkout-cta text-white px-10 py-3 rounded-xl font-bold tracking-wide">Order Now</button>
                         <a href="{{ route('cart.index') }}" class="text-center text-sm font-semibold text-red-700 hover:underline">Kembali ke Keranjang</a>
                     </div>
                 </section>
@@ -377,3 +381,7 @@
     </script>
 </body>
 </html>
+
+
+
+

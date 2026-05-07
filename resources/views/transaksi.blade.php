@@ -7,8 +7,10 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&amp;family=Plus+Jakarta+Sans:wght@400;500;600;700;800&amp;family=Inter:wght@300;400;500;600;700;800&family=Montserrat:wght@700;800&family=Pinyon+Script&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+    </style>
     <script>
         tailwind.config = {
             theme: {
@@ -20,6 +22,11 @@
             }
         }
     </script>
+
+    <style>
+        .auth-tagline, .auth-subtitle, h5, h6 { font-family: "Poppins", sans-serif !important; }
+        h1, h2, h3, h4 { font-family: "Inter", sans-serif !important; }
+    </style>
 </head>
 <body class="bg-[#EFE1D1] text-[#2D3748] font-poppins">
     @include('partials.navbar')
@@ -75,10 +82,10 @@
         <div class="mb-8 flex flex-col md:flex-row md:items-end justify-between gap-6">
             <div class="text-left">
                 <span class="text-red-700 font-bold tracking-widest text-sm uppercase mb-2 block font-poppins">Status Pesanan</span>
-                <h1 class="text-4xl md:text-5xl font-black text-[#26180f] tracking-tight font-playfair mb-4">
-                    Detail <span class="text-red-700 italic">Transaksi</span>
+                <h1 class="text-4xl md:text-5xl font-bold text-[#26180f] tracking-tight font-bold mb-4">
+                    Detail Transaksi
                 </h1>
-                <div class="w-16 md:w-24 h-1 bg-red-600 rounded-full mt-4"></div>
+
             </div>
             <div class="flex flex-wrap items-center gap-3">
                 <a href="{{ url()->previous() !== url()->current() ? url()->previous() : route('home') }}" class="px-5 py-2.5 rounded-xl border border-[#3a2a1a] text-[#3a2a1a] font-bold hover:bg-[#3a2a1a] hover:text-[#EFE1D1] transition flex items-center gap-2 text-sm shadow-sm">
@@ -102,31 +109,31 @@
                     @else
                         <img src="/konfirmasi.jpeg" class="w-full max-w-md h-auto" />
                     @endif
-                    <div class="mt-4 text-sm font-extrabold {{ $status === 'confirmed' ? 'text-[#3a2a1a]' : 'text-[#3a2a1a]' }}">{{ strtoupper($statusTitle) }}</div>
+                    <div class="mt-4 text-sm font-bold {{ $status === 'confirmed' ? 'text-[#3a2a1a]' : 'text-[#3a2a1a]' }}">{{ strtoupper($statusTitle) }}</div>
                 </div>
             </div>
 
             <div class="px-6 py-6">
-                <div class="text-xs font-extrabold text-[#3a2a1a] mb-3">PROGRES TRANSAKSI</div>
+                <div class="text-xs font-bold text-[#3a2a1a] mb-3">PROGRES TRANSAKSI</div>
 
                 <div class="relative">
                     <div class="absolute left-0 right-0 top-[10px] h-[2px] bg-black/20"></div>
                     <div class="grid grid-cols-4 gap-0 relative">
                         <div class="flex flex-col items-center">
                             <div class="w-5 h-5 rounded-full {{ $stepPending ? 'bg-green-500' : 'bg-black' }}"></div>
-                            <div class="mt-2 text-[10px] font-extrabold text-[#3a2a1a]">TRANSAKSI DIBUAT</div>
+                            <div class="mt-2 text-[10px] font-bold text-[#3a2a1a]">TRANSAKSI DIBUAT</div>
                         </div>
                         <div class="flex flex-col items-center">
                             <div class="w-5 h-5 rounded-full {{ $stepConfirmed ? 'bg-green-500' : 'bg-black' }}"></div>
-                            <div class="mt-2 text-[10px] font-extrabold text-[#3a2a1a]">PEMBAYARAN</div>
+                            <div class="mt-2 text-[10px] font-bold text-[#3a2a1a]">PEMBAYARAN</div>
                         </div>
                         <div class="flex flex-col items-center">
                             <div class="w-5 h-5 rounded-full {{ $stepShipped ? 'bg-green-500' : 'bg-black' }}"></div>
-                            <div class="mt-2 text-[10px] font-extrabold text-[#3a2a1a]">SEDANG DIPROSES</div>
+                            <div class="mt-2 text-[10px] font-bold text-[#3a2a1a]">SEDANG DIPROSES</div>
                         </div>
                         <div class="flex flex-col items-center">
                             <div class="w-5 h-5 rounded-full {{ $stepCompleted ? 'bg-green-500' : 'bg-black' }}"></div>
-                            <div class="mt-2 text-[10px] font-extrabold text-[#3a2a1a]">TRANSAKSI SELESAI</div>
+                            <div class="mt-2 text-[10px] font-bold text-[#3a2a1a]">TRANSAKSI SELESAI</div>
                         </div>
                     </div>
                 </div>
@@ -134,16 +141,16 @@
                 @if($status === 'completed')
                     <div class="mt-8">
                         <div class="text-center">
-                            <div class="text-xl font-extrabold text-[#3a2a1a]">TRANSAKSI SELESAI</div>
+                            <div class="text-xl font-bold text-[#3a2a1a]">TRANSAKSI SELESAI</div>
                         </div>
 
                         <div class="mt-5 bg-white rounded-xl shadow-sm p-6">
-                            <div class="font-extrabold text-[#3a2a1a]">TRANSAKSI SELESAI</div>
+                            <div class="font-bold text-[#3a2a1a]">TRANSAKSI SELESAI</div>
                             <p class="mt-3 text-xs text-gray-700 leading-relaxed">Terima kasih sudah order di Bakso Bunderan Ciomas! Pesanan Anda sudah kami terima dan selesai. Yuk, bantu kami berkembang dengan memberikan rating & ulasan. Pendapat Anda sangat berarti buat kami!</p>
                         </div>
 
                         <div class="mt-6 bg-white rounded-xl shadow-sm p-6">
-                            <div class="text-xs font-extrabold text-[#3a2a1a] mb-3">BERI RATING & REVIEW</div>
+                            <div class="text-xs font-bold text-[#3a2a1a] mb-3">BERI RATING & REVIEW</div>
 
                             <form method="POST" action="{{ route('testimonial.store') }}" class="space-y-3">
                                 @csrf
@@ -164,28 +171,28 @@
                                 </div>
 
                                 <div>
-                                    <label class="block text-[11px] font-extrabold text-[#3a2a1a] mb-1">Ulasan</label>
+                                    <label class="block text-[11px] font-bold text-[#3a2a1a] mb-1">Ulasan</label>
                                     <textarea name="content" rows="4" class="w-full bg-[#F9EDDE] px-4 py-2 rounded-lg border border-transparent focus:outline-none focus:ring-2 focus:ring-red-500 transition resize-none" placeholder="Deskripsikan pengalaman Anda"></textarea>
                                 </div>
 
-                                <button type="submit" class="inline-flex items-center justify-center bg-red-600 text-white w-full py-2.5 rounded-lg font-extrabold hover:bg-red-700 transition">Kirim Ulasan</button>
+                                <button type="submit" class="inline-flex items-center justify-center bg-red-600 text-white w-full py-2.5 rounded-lg font-bold hover:bg-red-700 transition">Kirim Ulasan</button>
                             </form>
                         </div>
                     </div>
                 @else
                     <div class="mt-8">
-                        <div class="text-xs font-extrabold text-[#3a2a1a] mb-3">RINCIAN PEMBAYARAN</div>
+                        <div class="text-xs font-bold text-[#3a2a1a] mb-3">RINCIAN PEMBAYARAN</div>
 
                         <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
                             <div class="bg-white rounded-xl shadow-sm p-5">
                                 <div class="space-y-3 text-sm text-[#3a2a1a]">
                                     <div class="flex items-center justify-between">
                                         <span class="font-semibold">Jumlah</span>
-                                        <span class="font-extrabold">{{ $totalQty }}x</span>
+                                        <span class="font-bold">{{ $totalQty }}x</span>
                                     </div>
                                     <div class="flex items-start justify-between gap-4">
                                         <span class="font-semibold">Harga</span>
-                                        <div class="text-right font-extrabold">
+                                        <div class="text-right font-bold">
                                             @foreach($items as $it)
                                                 <div>Rp {{ number_format((float) ($it['price'] ?? 0), 0, ',', '.') }}</div>
                                             @endforeach
@@ -195,11 +202,11 @@
                                     <div class="pt-4 border-t border-[#EFE1D1]">
                                         <div class="flex items-center justify-between">
                                             <span class="font-semibold">Subtotal</span>
-                                            <span class="font-extrabold">Rp {{ number_format((float) $subtotal, 0, ',', '.') }}</span>
+                                            <span class="font-bold">Rp {{ number_format((float) $subtotal, 0, ',', '.') }}</span>
                                         </div>
                                         <div class="flex items-center justify-between mt-2">
                                             <span class="font-semibold">Total Pembayaran</span>
-                                            <span class="font-extrabold">Rp {{ number_format((float) $subtotal, 0, ',', '.') }}</span>
+                                            <span class="font-bold">Rp {{ number_format((float) $subtotal, 0, ',', '.') }}</span>
                                         </div>
                                     </div>
                                 </div>
@@ -210,25 +217,25 @@
                                     <div class="space-y-3 text-sm text-[#3a2a1a]">
                                         <div class="flex items-center justify-between">
                                             <span class="font-semibold">Metode Pembayaran</span>
-                                            <span class="font-extrabold">QRIS (ALL Payment)</span>
+                                            <span class="font-bold">QRIS (ALL Payment)</span>
                                         </div>
                                         <div class="flex items-center justify-between">
                                             <span class="font-semibold">Status Pembayaran</span>
-                                            <span class="inline-flex items-center px-3 py-1 rounded-full text-[11px] font-extrabold bg-pink-100 text-pink-700">Unpaid</span>
+                                            <span class="inline-flex items-center px-3 py-1 rounded-full text-[11px] font-bold bg-pink-100 text-pink-700">Unpaid</span>
                                         </div>
                                         <div class="flex items-center justify-between">
                                             <span class="font-semibold">Status Transaksi</span>
-                                            <span class="inline-flex items-center px-3 py-1 rounded-full text-[11px] font-extrabold bg-yellow-100 text-yellow-800">{{ ucfirst($status) }}</span>
+                                            <span class="inline-flex items-center px-3 py-1 rounded-full text-[11px] font-bold bg-yellow-100 text-yellow-800">{{ ucfirst($status) }}</span>
                                         </div>
 
                                         <div class="pt-2">
-                                            <button type="button" onclick="openQrisModal()" class="inline-flex items-center justify-center bg-red-600 text-white w-full py-2.5 rounded-lg font-extrabold hover:bg-red-700 transition"><i class="fas fa-qrcode mr-2"></i> Bayar Sekarang dengan QRIS</button>
+                                            <button type="button" onclick="openQrisModal()" class="inline-flex items-center justify-center bg-red-600 text-white w-full py-2.5 rounded-lg font-bold hover:bg-red-700 transition"><i class="fas fa-qrcode mr-2"></i> Bayar Sekarang dengan QRIS</button>
                                         </div>
 
                                         <div class="pt-2">
                                             <form method="POST" action="{{ route('transaksi.transfer.notify', ['orderId' => $pesanan->order_id]) }}">
                                                 @csrf
-                                                <button type="submit" class="inline-flex items-center justify-center bg-[#3a2a1a] text-[#EFE1D1] w-full py-2.5 rounded-lg font-extrabold hover:opacity-95 transition">
+                                                <button type="submit" class="inline-flex items-center justify-center bg-[#3a2a1a] text-[#EFE1D1] w-full py-2.5 rounded-lg font-bold hover:opacity-95 transition">
                                                     Saya sudah transfer
                                                 </button>
                                             </form>
@@ -236,7 +243,7 @@
                                         </div>
                                     </div>
                                 @else
-                                    <div class="font-extrabold text-[#3a2a1a]">{{ $statusTitle }}</div>
+                                    <div class="font-bold text-[#3a2a1a]">{{ $statusTitle }}</div>
                                     <p class="mt-3 text-xs text-gray-700 leading-relaxed">{{ $statusDescription }}</p>
 
                                     <!-- Customer Details Info for Paid/Processed Orders -->
@@ -260,7 +267,7 @@
 
                                     @if($status === 'completed')
                                         <div class="mt-5">
-                                            <button type="button" onclick="openReviewModal()" class="inline-flex items-center justify-center bg-green-600 text-white w-full py-2.5 rounded-lg font-extrabold hover:bg-green-700 transition shadow-md">
+                                            <button type="button" onclick="openReviewModal()" class="inline-flex items-center justify-center bg-green-600 text-white w-full py-2.5 rounded-lg font-bold hover:bg-green-700 transition shadow-md">
                                                 <i class="fas fa-star mr-2"></i> Berikan Ulasan
                                             </button>
                                         </div>
@@ -291,7 +298,7 @@
                                             $waText = implode("\n", $waTextLines);
                                             $waUrl = 'https://wa.me/'.$waPhone.'?text='.rawurlencode($waText);
                                         @endphp
-                                        <a href="{{ $waUrl }}" target="_blank" rel="noopener noreferrer" class="inline-flex items-center justify-center bg-red-600 text-white w-full py-2.5 rounded-lg font-extrabold hover:bg-red-700 transition">Hubungi Penjual</a>
+                                        <a href="{{ $waUrl }}" target="_blank" rel="noopener noreferrer" class="inline-flex items-center justify-center bg-red-600 text-white w-full py-2.5 rounded-lg font-bold hover:bg-red-700 transition">Hubungi Penjual</a>
                                     </div>
                                 @endif
                             </div>
@@ -304,17 +311,17 @@
         <div id="qrisModal" class="fixed inset-0 bg-black/60 hidden items-center justify-center z-50 px-4">
             <div class="bg-white w-full max-w-md rounded-2xl shadow-xl overflow-hidden">
                 <div class="px-5 py-4 flex items-center justify-between border-b border-gray-100 bg-gradient-to-r from-red-600 to-red-800 text-white">
-                    <div class="font-extrabold flex items-center"><i class="fas fa-qrcode mr-2"></i> QRIS Pembayaran</div>
+                    <div class="font-bold flex items-center"><i class="fas fa-qrcode mr-2"></i> QRIS Pembayaran</div>
                     <button type="button" onclick="closeQrisModal()" class="text-white/70 hover:text-white text-xl leading-none">&times;</button>
                 </div>
                 <div class="p-5 flex flex-col items-center">
-                    <div class="text-2xl font-black text-red-700 mb-4">Rp {{ number_format((float) $subtotal, 0, ',', '.') }}</div>
+                    <div class="text-2xl font-bold text-red-700 mb-4">Rp {{ number_format((float) $subtotal, 0, ',', '.') }}</div>
                     <img src="/qriss.jpeg" alt="QRIS" class="w-48 h-auto rounded-xl border mb-4" onerror="this.src='https://upload.wikimedia.org/wikipedia/commons/d/d0/QR_code_for_mobile_English_Wikipedia.svg'" />
                     <div class="mt-2 text-xs text-center text-gray-600">Scan QRIS di atas untuk menyelesaikan pesanan Anda.</div>
                 </div>
                 <div class="px-5 pb-5 grid grid-cols-2 gap-3">
-                    <button type="button" onclick="closeQrisModal()" class="w-full bg-[#F9EDDE] text-[#3a2a1a] py-2.5 rounded-lg border border-[#EFE1D1] font-extrabold hover:bg-gray-100 transition">Batal</button>
-                    <button id="btnConfirmQris" onclick="confirmPayment()" class="w-full bg-green-600 text-white py-2.5 rounded-lg font-extrabold shadow-lg hover:bg-green-700 transition flex items-center justify-center"><i class="fas fa-check-circle mr-2"></i> Sudah Bayar</button>
+                    <button type="button" onclick="closeQrisModal()" class="w-full bg-[#F9EDDE] text-[#3a2a1a] py-2.5 rounded-lg border border-[#EFE1D1] font-bold hover:bg-gray-100 transition">Batal</button>
+                    <button id="btnConfirmQris" onclick="confirmPayment()" class="w-full bg-green-600 text-white py-2.5 rounded-lg font-bold shadow-lg hover:bg-green-700 transition flex items-center justify-center"><i class="fas fa-check-circle mr-2"></i> Sudah Bayar</button>
                 </div>
             </div>
         </div>
@@ -325,7 +332,7 @@
         <div id="reviewModal" class="fixed inset-0 bg-black/60 hidden items-center justify-center z-50 px-4">
             <div class="bg-white w-full max-w-md rounded-2xl shadow-xl overflow-hidden">
                 <div class="px-5 py-4 flex items-center justify-between border-b border-gray-100 bg-gradient-to-r from-green-600 to-green-800 text-white">
-                    <div class="font-extrabold flex items-center"><i class="fas fa-star mr-2"></i> Berikan Ulasan Anda</div>
+                    <div class="font-bold flex items-center"><i class="fas fa-star mr-2"></i> Berikan Ulasan Anda</div>
                     <button type="button" onclick="closeReviewModal()" class="text-white/70 hover:text-white text-xl leading-none">&times;</button>
                 </div>
                 <form onsubmit="submitReview(event)" class="p-5 flex flex-col items-center">
@@ -348,8 +355,8 @@
                     </div>
 
                     <div class="w-full grid grid-cols-2 gap-3 mt-2">
-                        <button type="button" onclick="closeReviewModal()" class="w-full bg-[#F9EDDE] text-[#3a2a1a] py-2.5 rounded-lg border border-[#EFE1D1] font-extrabold hover:bg-gray-200 transition">Batal</button>
-                        <button type="submit" id="btnSubmitReview" class="w-full bg-green-600 text-white py-2.5 rounded-lg font-extrabold shadow-md hover:bg-green-700 transition flex items-center justify-center">
+                        <button type="button" onclick="closeReviewModal()" class="w-full bg-[#F9EDDE] text-[#3a2a1a] py-2.5 rounded-lg border border-[#EFE1D1] font-bold hover:bg-gray-200 transition">Batal</button>
+                        <button type="submit" id="btnSubmitReview" class="w-full bg-green-600 text-white py-2.5 rounded-lg font-bold shadow-md hover:bg-green-700 transition flex items-center justify-center">
                             <i class="fas fa-paper-plane mr-2"></i> Kirim
                         </button>
                     </div>
@@ -536,3 +543,7 @@
     </main>
 </body>
 </html>
+
+
+
+

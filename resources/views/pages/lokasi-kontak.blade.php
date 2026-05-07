@@ -6,7 +6,9 @@
     <title>Lokasi & Kontak - Bakso Bunderan Ciomas</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&family=Playfair+Display:wght@400;700;900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&amp;family=Plus+Jakarta+Sans:wght@400;500;600;700;800&amp;family=Inter:wght@300;400;500;600;700;800&family=Playfair+Display:wght@400;700;900&family=Montserrat:wght@700;800&family=Pinyon+Script&display=swap" rel="stylesheet">
+    <style>
+    </style>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <meta name="csrf-token" content="{{ csrf_token() }}">
@@ -14,7 +16,7 @@
         body, h1, h2, h3, h4, h5, h6, p, span, a, li, ul, ol, button, input, textarea, div {
             font-family: 'Poppins', sans-serif !important;
         }
-        .font-playfair { font-family: 'Poppins', sans-serif !important; }
+        . { font-family: 'Poppins', sans-serif !important; }
 
         .fade-up {
             opacity: 1;
@@ -146,6 +148,11 @@
             box-shadow: 0 10px 24px rgba(58, 32, 24, 0.08);
         }
     </style>
+
+    <style>
+        .auth-tagline, .auth-subtitle, h5, h6 { font-family: "Poppins", sans-serif !important; }
+        h1, h2, h3, h4 { font-family: "Inter", sans-serif !important; }
+    </style>
 </head>
 <body class="js font-poppins bg-[#EFE1D1] text-[#3a2a1a] overflow-x-hidden">
     @include('partials.navbar')
@@ -154,10 +161,10 @@
         <div class="max-w-7xl mx-auto px-5 sm:px-6">
             <div class="text-center mb-10 fade-up">
                 <span class="text-red-700 font-bold tracking-widest text-sm uppercase mb-2 block font-poppins">Kunjungi Kami</span>
-                <h2 class="text-4xl md:text-5xl font-black text-[#26180f] tracking-tight font-playfair mb-4">
-                    Lokasi & <span class="text-red-700 italic">Kontak</span>
+                <h2 class="text-4xl md:text-5xl font-bold text-[#26180f] tracking-tight font-bold mb-4 text-center">
+                    Lokasi &
+                    Kontak
                 </h2>
-                <div class="w-16 md:w-24 h-1 bg-red-600 mx-auto rounded-full mt-4 mb-6"></div>
                 <p class="text-gray-700 max-w-2xl mx-auto font-medium font-poppins">Kami siap melayani pesanan, pertanyaan, dan memberikan pengalaman kuliner terbaik untuk Anda.</p>
             </div>
 
@@ -173,7 +180,7 @@
                             </div>
                             <div>
                                 <div class="text-xs font-bold text-gray-500 uppercase tracking-wider">Lokasi Utama</div>
-                                <div class="text-sm font-extrabold text-gray-800">Bakso Bunderan Ciomas</div>
+                                <div class="text-sm font-bold text-gray-800">Bakso Bunderan Ciomas</div>
                             </div>
                         </div>
                     </div>
@@ -199,7 +206,9 @@
                             <div class="w-12 h-12 bg-white/20 backdrop-blur rounded-full flex items-center justify-center text-white mb-6">
                                 <i class="fas fa-store-alt text-xl"></i>
                             </div>
-                            <h3 class="text-2xl font-extrabold mb-2">Jam Operasional</h3>
+                            <h3 class="text-2xl font-bold mb-2 font-bold">
+                                Jam Operasional
+                            </h3>
                             <p class="text-red-100 font-medium mb-4">Nikmati porsi bakso hangat setiap hari tanpa libur.</p>
                             <div class="bg-black/20 rounded-xl p-4 backdrop-blur-sm border border-white/10">
                                 <div class="flex justify-between items-center font-bold">
@@ -215,7 +224,9 @@
                         <div class="w-12 h-12 bg-green-50 text-green-600 rounded-full flex items-center justify-center mb-6">
                             <i class="fab fa-whatsapp text-xl"></i>
                         </div>
-                        <h3 class="text-xl font-extrabold text-gray-800 mb-2">Hubungi Kami</h3>
+                        <h3 class="text-xl font-bold text-gray-800 mb-2 font-bold">
+                            Hubungi Kami
+                        </h3>
                         <p class="text-sm text-gray-500 mb-6">Butuh pesanan partai besar atau ada pertanyaan? Langsung chat admin kami.</p>
                         <a href="https://wa.me/6281234567890" target="_blank" class="flex w-full items-center justify-center gap-2 bg-green-600 text-white py-3 rounded-xl font-bold hover:bg-green-700 transition">
                             <i class="fab fa-whatsapp"></i> Chat WhatsApp
@@ -230,10 +241,11 @@
         <div class="max-w-4xl mx-auto px-5 sm:px-6">
             <div class="text-center mb-12">
                 <span class="text-red-700 font-bold tracking-widest text-sm uppercase mb-2 block font-poppins">Kontak Kami</span>
-                <h4 class="text-3xl md:text-5xl font-black text-[#26180f] tracking-tight font-playfair mb-4">
-                    Kirim Pesan <span class="text-red-700 italic">Langsung</span>
-                </h4>
-                <div class="w-16 md:w-24 h-1 bg-red-600 mx-auto rounded-full mt-4"></div>
+                <h3 class="text-3xl md:text-5xl font-bold text-[#26180f] tracking-tight font-bold mb-4 text-center">
+                    Kirim
+                    Pesan
+                    Langsung
+                </h3>
             </div>
 
             @if(session('contact_success'))
@@ -261,22 +273,22 @@
                 @csrf
                 <div class="grid md:grid-cols-2 gap-6 relative z-10">
                     <div class="space-y-2">
-                        <label class="block text-gray-700 font-extrabold tracking-wide text-xs mb-1 uppercase">Nama Lengkap</label>
+                        <label class="block text-gray-700 font-bold tracking-wide text-xs mb-1 uppercase">Nama Lengkap</label>
                         <input type="text" name="name" required class="w-full bg-gray-50 border border-gray-200 rounded-xl p-3.5 text-gray-800 outline-none focus:bg-white focus:border-red-400 focus:ring-4 focus:ring-red-50 transition-all">
                     </div>
 
                     <div class="space-y-2">
-                        <label class="block text-gray-700 font-extrabold tracking-wide text-xs mb-1 uppercase">Alamat Email</label>
+                        <label class="block text-gray-700 font-bold tracking-wide text-xs mb-1 uppercase">Alamat Email</label>
                         <input type="email" name="email" required class="w-full bg-gray-50 border border-gray-200 rounded-xl p-3.5 text-gray-800 outline-none focus:bg-white focus:border-red-400 focus:ring-4 focus:ring-red-50 transition-all">
                     </div>
 
                     <div class="space-y-2 md:col-span-2">
-                        <label class="block text-gray-700 font-extrabold tracking-wide text-xs mb-1 uppercase">Nomor WhatsApp</label>
+                        <label class="block text-gray-700 font-bold tracking-wide text-xs mb-1 uppercase">Nomor WhatsApp</label>
                         <input type="tel" name="phone" required class="w-full bg-gray-50 border border-gray-200 rounded-xl p-3.5 text-gray-800 outline-none focus:bg-white focus:border-red-400 focus:ring-4 focus:ring-red-50 transition-all">
                     </div>
 
                     <div class="space-y-2 md:col-span-2">
-                        <label class="block text-gray-700 font-extrabold tracking-wide text-xs mb-1 uppercase">Tulis Pesan Anda</label>
+                        <label class="block text-gray-700 font-bold tracking-wide text-xs mb-1 uppercase">Tulis Pesan Anda</label>
                         <textarea name="message" rows="5" required class="w-full bg-gray-50 border border-gray-200 rounded-xl p-3.5 text-gray-800 outline-none focus:bg-white focus:border-red-400 focus:ring-4 focus:ring-red-50 transition-all resize-none"></textarea>
                     </div>
 
@@ -312,3 +324,8 @@
     </script>
 </body>
 </html>
+
+
+
+
+

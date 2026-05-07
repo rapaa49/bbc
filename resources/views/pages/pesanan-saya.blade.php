@@ -6,10 +6,15 @@
     <title>Pembelian Saya - Bakso Bunderan Ciomas</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&family=Playfair+Display:wght@400;700;900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&amp;family=Plus+Jakarta+Sans:wght@400;500;600;700;800&amp;family=Inter:wght@300;400;500;600;700;800&family=Playfair+Display:wght@400;700;900&display=swap" rel="stylesheet">
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <meta name="csrf-token" content="{{ csrf_token() }}">
+
+    <style>
+        .auth-tagline, .auth-subtitle, h5, h6 { font-family: "Poppins", sans-serif !important; }
+        h1, h2, h3, h4 { font-family: "Inter", sans-serif !important; }
+    </style>
 </head>
 <body class="font-poppins bg-[#EFE1D1] text-[#3a2a1a] overflow-x-hidden" style="font-family: 'Poppins', sans-serif;">
     @include('partials.navbar')
@@ -18,10 +23,9 @@
         <div class="max-w-4xl mx-auto px-6">
             <div class="text-center mb-10">
                 <span class="text-red-700 font-bold tracking-widest text-sm uppercase mb-2 block font-poppins">Riwayat</span>
-                <h2 class="text-3xl sm:text-4xl md:text-5xl font-black text-[#26180f] tracking-tight font-playfair mb-4">
-                    Pesanan <span class="text-red-700 italic">Saya</span>
+                <h2 class="text-3xl sm:text-4xl md:text-5xl font-bold text-[#26180f] tracking-tight mb-4 text-center">
+                    Pesanan Saya
                 </h2>
-                <div class="w-16 md:w-24 h-1 bg-red-600 mx-auto rounded-full mt-4"></div>
             </div>
 
             @php
@@ -31,13 +35,13 @@
 
             <div class="bg-white/50 rounded-2xl px-4 pt-4">
                 <div class="grid grid-cols-3 gap-2">
-                    <a href="{{ route('pesanan.saya', ['tab' => 'belum-bayar']) }}" class="text-center pb-3 text-xs sm:text-sm font-extrabold {{ ($tab ?? 'belum-bayar') === 'belum-bayar' ? $activeTabClass : $inactiveTabClass }}">
+                    <a href="{{ route('pesanan.saya', ['tab' => 'belum-bayar']) }}" class="text-center pb-3 text-xs sm:text-sm font-bold {{ ($tab ?? 'belum-bayar') === 'belum-bayar' ? $activeTabClass : $inactiveTabClass }}">
                         Belum Bayar
                     </a>
-                    <a href="{{ route('pesanan.saya', ['tab' => 'diproses']) }}" class="text-center pb-3 text-xs sm:text-sm font-extrabold {{ ($tab ?? '') === 'diproses' ? $activeTabClass : $inactiveTabClass }}">
+                    <a href="{{ route('pesanan.saya', ['tab' => 'diproses']) }}" class="text-center pb-3 text-xs sm:text-sm font-bold {{ ($tab ?? '') === 'diproses' ? $activeTabClass : $inactiveTabClass }}">
                         Diproses
                     </a>
-                    <a href="{{ route('pesanan.saya', ['tab' => 'beri-penilaian']) }}" class="text-center pb-3 text-xs sm:text-sm font-extrabold {{ ($tab ?? '') === 'beri-penilaian' ? $activeTabClass : $inactiveTabClass }}">
+                    <a href="{{ route('pesanan.saya', ['tab' => 'beri-penilaian']) }}" class="text-center pb-3 text-xs sm:text-sm font-bold {{ ($tab ?? '') === 'beri-penilaian' ? $activeTabClass : $inactiveTabClass }}">
                         Beri Penilaian
                     </a>
                 </div>
@@ -54,11 +58,11 @@
                             <div class="min-w-0 flex-1">
                                 <div class="flex items-start justify-between gap-3">
                                     <div class="min-w-0">
-                                        <div class="text-sm sm:text-base font-extrabold uppercase truncate">{{ $order->order_id }}</div>
+                                        <div class="text-sm sm:text-base font-bold uppercase truncate">{{ $order->order_id }}</div>
                                         <div class="text-xs text-[#3a2a1a]/70 mt-1">{{ optional($order->created_at)->format('d M Y, H:i') }}</div>
                                     </div>
                                     <div class="text-right shrink-0">
-                                        <div class="text-sm sm:text-base font-extrabold text-red-700">Rp {{ number_format((float) ($order->total_price ?? 0), 0, ',', '.') }}</div>
+                                        <div class="text-sm sm:text-base font-bold text-red-700">Rp {{ number_format((float) ($order->total_price ?? 0), 0, ',', '.') }}</div>
                                     </div>
                                 </div>
 
@@ -72,20 +76,20 @@
                                         elseif ($status === 'shipped') $statusLabel = 'Dikirim';
                                         elseif ($status === 'confirmed') $statusLabel = 'Diproses';
                                     @endphp
-                                    <span class="inline-flex items-center px-3 py-1 rounded-full text-xs font-extrabold bg-white/70">{{ $statusLabel }}</span>
+                                    <span class="inline-flex items-center px-3 py-1 rounded-full text-xs font-bold bg-white/70">{{ $statusLabel }}</span>
                                 </div>
 
                                 <div class="mt-4 flex items-center justify-end gap-2">
                                     @if(($tab ?? 'belum-bayar') === 'belum-bayar')
-                                        <a href="{{ route('transaksi.show', ['orderId' => $order->order_id]) }}" class="bg-red-600 text-white text-xs font-extrabold px-4 py-2 rounded-lg hover:bg-red-700 transition">
+                                        <a href="{{ route('transaksi.show', ['orderId' => $order->order_id]) }}" class="bg-red-600 text-white text-xs font-bold px-4 py-2 rounded-lg hover:bg-red-700 transition">
                                             Bayar
                                         </a>
                                     @elseif(($tab ?? '') === 'beri-penilaian')
-                                        <a href="{{ route('pages.tentang') }}#testimoni" class="bg-red-600 text-white text-xs font-extrabold px-4 py-2 rounded-lg hover:bg-red-700 transition">
+                                        <a href="{{ route('pages.tentang') }}#testimoni" class="bg-red-600 text-white text-xs font-bold px-4 py-2 rounded-lg hover:bg-red-700 transition">
                                             Beri Nilai
                                         </a>
                                     @else
-                                        <a href="{{ route('transaksi.show', ['orderId' => $order->order_id]) }}" class="bg-red-600 text-white text-xs font-extrabold px-4 py-2 rounded-lg hover:bg-red-700 transition">
+                                        <a href="{{ route('transaksi.show', ['orderId' => $order->order_id]) }}" class="bg-red-600 text-white text-xs font-bold px-4 py-2 rounded-lg hover:bg-red-700 transition">
                                             Detail
                                         </a>
                                     @endif
@@ -95,7 +99,7 @@
                     </div>
                 @empty
                     <div class="bg-[#F9EDDE] rounded-2xl p-10 text-center shadow">
-                        <div class="text-lg font-extrabold">Belum ada pesanan.</div>
+                        <div class="text-lg font-bold">Belum ada pesanan.</div>
                         <div class="text-sm text-[#3a2a1a]/70 mt-2">Silakan pesan menu terlebih dahulu.</div>
                     </div>
                 @endforelse
@@ -106,3 +110,8 @@
     @include('partials.footer')
 </body>
 </html>
+
+
+
+
+

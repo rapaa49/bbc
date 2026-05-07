@@ -17,9 +17,10 @@ use Illuminate\Http\Request;
 // Authentication Routes
 Route::get('/login', [AuthController::class, 'showLogin'])->name('showLogin');
 Route::post('/login', [AuthController::class, 'login'])->name('login')->middleware('guest');
-Route::get('/register', [AuthController::class, 'showRegister'])->name('showRegister')->middleware('guest');
+Route::get('/register', [AuthController::class, 'showRegister'])->name('showRegister');
 Route::post('/register', [AuthController::class, 'register'])->name('register')->middleware('guest');
-Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
+Route::get('/logout', [AuthController::class, 'logout'])->name('logout');
+Route::post('/logout', [AuthController::class, 'logout'])->name('logout.post');
 
 // Universal login (combined user/admin UI)
 Route::get('/universal-login', function () { return view('auth.universal-login'); })->name('universal.login');
@@ -27,9 +28,26 @@ Route::post('/universal-login', [AuthController::class, 'universalLoginSubmit'])
 
 Route::post('/admin/logout', [AuthController::class, 'adminLogout'])->name('admin.logout');
 
+// Forgot Password (verifikasi via email OTP)
+Route::get('/forgot-password', [AuthController::class, 'showForgotPassword'])->name('password.request');
+Route::post('/forgot-password', [AuthController::class, 'sendUserOtp'])->name('password.email');
+Route::get('/forgot-password/verify', [AuthController::class, 'showUserOtpVerify'])->name('password.verify');
+Route::post('/forgot-password/verify', [AuthController::class, 'verifyUserOtp'])->name('password.verify.post');
+
+// Admin Forgot Password (verifikasi via email OTP)
+Route::get('/forgot-password-admin', [AuthController::class, 'showAdminForgotPassword'])->name('admin.password.request');
+Route::post('/forgot-password-admin', [AuthController::class, 'sendAdminOtp'])->name('admin.password.send-otp');
+Route::get('/forgot-password-admin/verify', [AuthController::class, 'showAdminOtpVerify'])->name('admin.password.verify');
+Route::post('/forgot-password-admin/verify', [AuthController::class, 'verifyAdminOtp'])->name('admin.password.verify.post');
+
+// Admin Change Password (dashboard)
+Route::get('/admin/change-password', [AuthController::class, 'showAdminChangePassword'])->name('admin.change-password')->middleware(['auth:admin', 'admin']);
+Route::post('/admin/change-password', [AuthController::class, 'adminChangePassword'])->name('admin.change-password.update')->middleware(['auth:admin', 'admin']);
+
+
 // Backwards-compatible user-specific routes
 Route::get('/user/login', [AuthController::class, 'showLogin'])->name('user.login');
-Route::get('/user/register', [AuthController::class, 'showRegister'])->name('user.register')->middleware('guest');
+Route::get('/user/register', [AuthController::class, 'showRegister'])->name('user.register');
 Route::post('/user/register', [AuthController::class, 'register'])->name('user.register.submit')->middleware('guest');
 
 Route::get('/', function () {
