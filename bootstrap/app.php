@@ -15,12 +15,15 @@ return Application::configure(basePath: dirname(__DIR__))
             'admin' => \App\Http\Middleware\AdminMiddleware::class,
             'remember.me' => \App\Http\Middleware\RememberMe::class,
             'session.expiry' => \App\Http\Middleware\SessionExpiry::class,
+            
         ]);
 
         $middleware->web(append: [
             \App\Http\Middleware\RememberMe::class,
             \App\Http\Middleware\SessionExpiry::class,
         ]);
+
+        $middleware->trustProxies(at: '*');
     })
     ->withExceptions(function (Exceptions $exceptions): void {
         //
