@@ -54,6 +54,89 @@
         }
 
         /* Form Controls */
+        /* Contact Cards */
+        .contact-card {
+            background: white;
+            border-radius: 1rem;
+            border: 1px solid transparent;
+            padding: 1.5rem;
+            transition: all 0.4s ease-out;
+            display: flex;
+            flex-direction: column;
+            height: 100%;
+        }
+
+        .contact-card:hover {
+            background: rgba(139, 0, 0, 0.06);
+            border-color: rgba(139, 0, 0, 0.15);
+            transform: translateY(-4px);
+            box-shadow: 0 12px 30px -8px rgba(139, 0, 0, 0.15);
+        }
+
+        .contact-icon {
+            width: 3rem;
+            height: 3rem;
+            border-radius: 0.75rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 1rem;
+        }
+
+        .contact-icon.whatsapp {
+            background: rgba(37, 211, 102, 0.1);
+            color: #25D366;
+        }
+
+        .contact-icon.instagram {
+            background: rgba(228, 64, 95, 0.1);
+            color: #E4405F;
+        }
+
+        .contact-btn {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            background: #f3f3f3;
+            color: #4a4a4a;
+            padding: 0.75rem 1rem;
+            border-radius: 0.5rem;
+            font-size: 0.875rem;
+            font-weight: 500;
+            transition: all 0.4s ease-out;
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .contact-btn::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(to right, #8B0000 0%, #a50000 100%);
+            transform: translateX(-100%);
+            opacity: 0;
+            transition: transform 0.4s ease-out, opacity 0.4s ease-out;
+            z-index: 0;
+        }
+
+        .contact-card:hover .contact-btn::before {
+            transform: translateX(0);
+            opacity: 1;
+        }
+
+        .contact-btn span,
+        .contact-btn i {
+            position: relative;
+            z-index: 1;
+            transition: color 0.4s ease-out;
+        }
+
+        .contact-card:hover .contact-btn span,
+        .contact-card:hover .contact-btn i {
+            color: white;
+        }
+
         .contact-input {
             width: 100%;
             background: rgba(255, 255, 255, 0.5);
@@ -87,7 +170,7 @@
 
         .bento-card {
             background: white;
-            border-radius: 2.5rem;
+            border-radius: 1rem;
             border: 1px solid rgba(139, 0, 0, 0.05);
             box-shadow: 0 10px 30px -10px rgba(0,0,0,0.08);
             transition: all 0.5s ease;
@@ -108,8 +191,8 @@
         <div class="content-shell px-6">
             <!-- Header Section -->
             <header class="text-center mb-16 fade-in-up">
-                <div class="inline-flex items-center gap-2 mb-4 px-4 py-2 rounded-full bg-white/40 backdrop-blur-sm border border-white/50 text-[11px] font-bold uppercase tracking-[0.15em] text-red-800">
-                    <span class="w-2 h-2 rounded-full bg-red-600 animate-pulse"></span>
+                <div class="inline-flex items-center gap-2 mb-4 px-[18px] py-2 rounded-full bg-[rgba(139,0,0,0.08)] border border-[rgba(139,0,0,0.15)] text-xs font-bold uppercase tracking-[0.5px] text-[#8B0000]">
+                    <span class="w-2 h-2 rounded-full bg-[#8B0000]"></span>
                     Hubungi Kami
                 </div>
                 <h1 class="text-4xl md:text-6xl font-extrabold text-[#1a1a1a] tracking-tight mb-6 leading-tight">
@@ -133,13 +216,13 @@
                     </iframe>
                     
                     <!-- Floating Location Info -->
-                    <div class="absolute bottom-6 left-6 right-6 p-6 bg-white/90 backdrop-blur-md rounded-2xl border border-white shadow-2xl z-20">
+                    <div class="absolute bottom-6 left-6 right-6 p-6 bg-white/90 backdrop-blur-md rounded-lg border border-white shadow-2xl z-20">
                         <div class="flex flex-col md:flex-row md:items-center justify-between gap-4">
                             <div>
                                 <h3 class="text-xl font-black text-[#1a1a1a] mb-1">Bunderan Ciomas</h3>
                                 <p class="text-xs text-[#6a4a34] font-medium">Jl. Raya Ciomas No.1, Bogor, Jawa Barat</p>
                             </div>
-                            <a href="https://goo.gl/maps/..." target="_blank" class="bg-[#8b0000] text-white px-6 py-3 rounded-xl font-bold text-xs flex items-center gap-2 hover:bg-[#6b0000] transition-colors">
+                            <a href="https://goo.gl/maps/..." target="_blank" class="bg-[#8b0000] text-white px-6 py-3 rounded-md font-bold text-xs flex items-center gap-2 hover:bg-[#6b0000] transition-colors">
                                 <i class="fas fa-diamond-turn-right"></i>
                                 Petunjuk Jalan
                             </a>
@@ -154,7 +237,7 @@
                     <div class="bento-card p-8 bg-gradient-to-br from-[#8b0000] to-[#6b0000] text-white relative overflow-hidden">
                         <div class="relative z-10">
                             <div class="flex items-center gap-3 mb-8">
-                                <div class="w-10 h-10 bg-white/20 backdrop-blur rounded-lg flex items-center justify-center">
+                                <div class="w-10 h-10 bg-white/20 backdrop-blur rounded-md flex items-center justify-center">
                                     <i class="fas fa-door-open text-sm"></i>
                                 </div>
                                 <span class="text-[10px] font-black uppercase tracking-widest text-red-200">Operasional</span>
@@ -175,19 +258,27 @@
 
                     <!-- Small Bento: Quick Connect -->
                     <div class="grid grid-cols-2 gap-6">
-                        <a href="https://wa.me/..." target="_blank" class="bento-card p-6 bg-white hover:bg-green-50 transition-colors group">
-                            <div class="w-10 h-10 bg-green-100 text-green-600 rounded-lg flex items-center justify-center mb-4 group-hover:scale-110 transition-transform">
-                                <i class="fab fa-whatsapp"></i>
+                        <a href="https://wa.me/..." target="_blank" class="contact-card group flex flex-col h-full">
+                            <div class="contact-icon whatsapp">
+                                <i class="fab fa-whatsapp text-xl"></i>
                             </div>
-                            <div class="text-[10px] font-black uppercase tracking-widest text-gray-400 mb-1">WhatsApp</div>
-                            <div class="text-sm font-bold text-gray-900">Chat Admin</div>
+                            <h4 class="text-lg font-bold text-gray-900 mb-1 group-hover:text-[#8B0000] transition-colors">WhatsApp</h4>
+                            <p class="text-sm text-gray-500 mb-4">Chat langsung dengan admin kami</p>
+                            <div class="contact-btn mt-auto">
+                                <span>Chat Now</span>
+                                <i class="fas fa-arrow-right text-xs"></i>
+                            </div>
                         </a>
-                        <a href="https://instagram.com/..." target="_blank" class="bento-card p-6 bg-white hover:bg-pink-50 transition-colors group">
-                            <div class="w-10 h-10 bg-pink-100 text-pink-600 rounded-lg flex items-center justify-center mb-4 group-hover:scale-110 transition-transform">
-                                <i class="fab fa-instagram"></i>
+                        <a href="https://instagram.com/..." target="_blank" class="contact-card group flex flex-col h-full">
+                            <div class="contact-icon instagram">
+                                <i class="fab fa-instagram text-xl"></i>
                             </div>
-                            <div class="text-[10px] font-black uppercase tracking-widest text-gray-400 mb-1">Instagram</div>
-                            <div class="text-sm font-bold text-gray-900">@bunderanciomas</div>
+                            <h4 class="text-lg font-bold text-gray-900 mb-1 group-hover:text-[#E4405F] transition-colors">Instagram</h4>
+                            <p class="text-sm text-gray-500 mb-4">@bunderanciomas</p>
+                            <div class="contact-btn mt-auto">
+                                <span>Follow</span>
+                                <i class="fas fa-arrow-right text-xs"></i>
+                            </div>
                         </a>
                     </div>
 

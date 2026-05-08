@@ -65,6 +65,18 @@
             transition-delay: 0.34s;
         }
 
+        .influencer-stat {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            background: rgba(180, 35, 24, 0.06);
+            border-radius: 999px;
+            padding: 0.35rem 0.75rem;
+            font-size: 0.78rem;
+            font-weight: 600;
+            color: #5a1f18;
+        }
+
         .about-panel {
             position: relative;
         }
@@ -542,6 +554,10 @@
                     <h3 class="text-3xl md:text-5xl font-bold text-[#26180f] tracking-tight font-bold mb-4">
                         Testimoni Influencer
                     </h3>
+                    <div class="flex flex-wrap items-center justify-center gap-3 mt-4">
+                        <span class="influencer-stat"><i class="fas fa-circle-check text-[#b42318]"></i>Konten Terverifikasi</span>
+                        <span class="influencer-stat"><i class="fab fa-youtube text-[#b42318]"></i>Official Channel Highlights</span>
+                    </div>
                 </div>
 
                 <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8 mt-8">
@@ -600,6 +616,20 @@
 
                 @include('partials.testimonial-carousel', ['testimonials' => $testimonials ?? collect()])
             </div>
+        </div>
+    </section>
+
+    <!-- Ulasan Section - Same as Home Page -->
+    <section id="ulasan" class="pt-20 pb-20 md:pt-24 md:pb-32 bg-body-image">
+        <div class="max-w-7xl mx-auto px-6">
+            <div class="text-center mb-12">
+                <span class="text-red-700 font-bold tracking-widest text-sm uppercase mb-2 block font-poppins">Ulasan Pelanggan</span>
+                <h3 class="text-3xl md:text-5xl font-bold text-[#26180f] tracking-tight mb-4 text-center">
+                    Apa Kata Mereka?
+                </h3>
+            </div>
+
+            @include('partials.testimonial-carousel', ['testimonials' => $testimonials ?? collect()])
         </div>
     </section>
 

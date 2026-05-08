@@ -19,6 +19,25 @@
         padding-inline: clamp(0.65rem, 2.8vw, 2.2rem);
     }
 
+    .testimonial-fade {
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        width: 60px;
+        pointer-events: none;
+        z-index: 10;
+    }
+
+    .testimonial-fade-left {
+        left: 0;
+        background: linear-gradient(to right, #f8f7f4 0%, transparent 100%);
+    }
+
+    .testimonial-fade-right {
+        right: 0;
+        background: linear-gradient(to left, #f8f7f4 0%, transparent 100%);
+    }
+
     .testimonial-carousel-track {
         display: flex;
         align-items: flex-start;
@@ -28,27 +47,24 @@
     }
 
     .testimonial-summary {
-        width: fit-content;
-        margin: 0 auto 0.95rem;
         display: inline-flex;
         align-items: center;
-        gap: 0.58rem;
-        background: #f8f7f4;
-        color: #2a2a35;
-        border: 1px solid rgba(0, 0, 0, 0.07);
+        justify-content: center;
+        gap: 0.5rem;
+        background: rgba(180, 35, 24, 0.06);
+        color: #5a1f18;
         border-radius: 999px;
-        padding: 0.62rem 1.1rem;
-        font-size: 0.9rem;
-        font-weight: 700;
-        box-shadow: 0 2px 0 rgba(0, 0, 0, 0.03);
+        padding: 0.35rem 0.75rem;
+        font-size: 0.78rem;
+        font-weight: 600;
     }
 
     .testimonial-summary-stars {
         display: inline-flex;
         align-items: center;
-        gap: 0.2rem;
-        color: #f59e0b;
-        font-size: 1.16rem;
+        gap: 0.1rem;
+        color: #b42318;
+        font-size: 0.9rem;
         line-height: 1;
         letter-spacing: 0;
     }
@@ -56,7 +72,7 @@
     .testimonial-summary-text {
         white-space: nowrap;
         line-height: 1.15;
-        font-size: 0.89rem;
+        font-size: 0.78rem;
     }
 
     /* Responsive animation speed */
@@ -546,7 +562,7 @@
             $roundedRating = (int) round((float) ($testimonials->avg('rating') ?? 0));
         @endphp
 
-        <div class="text-center">
+        <div class="text-center mb-8">
             <div class="testimonial-summary" aria-label="Ringkasan rating pelanggan">
                 <span class="testimonial-summary-stars" aria-hidden="true">
                     @for($i = 1; $i <= 5; $i++)
@@ -558,6 +574,8 @@
         </div>
 
         <div class="testimonial-carousel-container" id="testimonialCarousel">
+            <div class="testimonial-fade testimonial-fade-left" aria-hidden="true"></div>
+            <div class="testimonial-fade testimonial-fade-right" aria-hidden="true"></div>
             <div class="testimonial-carousel-track" id="testimonialTrack">
                 <!-- Cards will be duplicated by JavaScript for seamless loop -->
                 @foreach($testimonials as $testimonial)

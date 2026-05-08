@@ -381,8 +381,8 @@
 
             <!-- Header Section -->
             <header class="text-center mb-16 fade-in-up">
-                <div class="inline-flex items-center gap-2 mb-4 px-4 py-2 rounded-full bg-white/40 backdrop-blur-sm border border-white/50 text-[11px] font-bold uppercase tracking-[0.15em] text-red-800">
-                    <span class="w-2 h-2 rounded-full bg-red-600 animate-pulse"></span>
+                <div class="inline-flex items-center gap-2 mb-4 px-[18px] py-2 rounded-full bg-[rgba(139,0,0,0.08)] border border-[rgba(139,0,0,0.15)] text-xs font-bold uppercase tracking-[0.5px] text-[#8B0000]">
+                    <span class="w-2 h-2 rounded-full bg-[#8B0000]"></span>
                     Cita Rasa Legendaris
                 </div>
                 <h1 class="text-4xl md:text-6xl font-extrabold text-[#1a1a1a] tracking-tight mb-6 leading-tight">

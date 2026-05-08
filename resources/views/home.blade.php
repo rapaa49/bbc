@@ -419,14 +419,13 @@
         .influencer-stat {
             display: inline-flex;
             align-items: center;
-            gap: 0.4rem;
-            background: rgba(255, 255, 255, 0.62);
-            border: 1px solid rgba(122, 46, 32, 0.12);
+            gap: 0.5rem;
+            background: rgba(180, 35, 24, 0.06);
             border-radius: 999px;
-            padding: 0.38rem 0.72rem;
-            font-size: 0.72rem;
-            color: #5a1f18;
+            padding: 0.35rem 0.75rem;
+            font-size: 0.78rem;
             font-weight: 600;
+            color: #5a1f18;
         }
 
 
@@ -651,34 +650,9 @@
             margin-bottom: 24px;
         }
 
-        /* Spotlight Effect on Brand Name */
+        /* Brand Name - Solid Red */
         .hero-title-accent {
             color: #8B0000;
-            position: relative;
-            display: inline;
-            background: linear-gradient(120deg, #8B0000 0%, #c0392b 50%, #8B0000 100%);
-            background-size: 200% 100%;
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-            animation: spotlightShimmer 4s ease-in-out infinite;
-        }
-
-        @keyframes spotlightShimmer {
-            0%, 100% { background-position: 0% 50%; }
-            50% { background-position: 100% 50%; }
-        }
-
-        .hero-title-accent::after {
-            content: '';
-            position: absolute;
-            left: 0;
-            bottom: 2px;
-            width: 100%;
-            height: 10px;
-            background: linear-gradient(90deg, rgba(139, 0, 0, 0.2), rgba(192, 57, 43, 0.25), rgba(139, 0, 0, 0.2));
-            border-radius: 4px;
-            z-index: -1;
         }
 
         .hero-desc {
@@ -709,21 +683,25 @@
             display: inline-flex;
             align-items: center;
             gap: 12px;
-            background: #8B0000;
+            background: linear-gradient(to right, #8B0000 50%, #a50000 50%);
+            background-size: 200% 100%;
+            background-position: right bottom;
             color: white;
             padding: 14px 28px;
             border-radius: 12px;
             font-size: 14px;
             font-weight: 700;
             text-decoration: none;
-            transition: all 0.3s ease;
+            transition: all 0.4s ease-out;
             box-shadow: 0 10px 30px rgba(139, 0, 0, 0.25);
+            cursor: pointer;
+            border: 0;
         }
 
         .hero-btn-primary:hover {
-            background: #1a120b;
-            transform: translateY(-2px);
-            box-shadow: 0 14px 40px rgba(0,0,0,0.2);
+            background-position: left bottom;
+            transform: translateY(-1px);
+            box-shadow: 0 10px 20px -5px rgba(139, 0, 0, 0.4);
         }
 
         .hero-btn-secondary {
@@ -733,7 +711,7 @@
             border-radius: 12px;
             font-size: 14px;
             font-weight: 700;
-            color: #1a120b;
+            color: #8B0000;
             border: 1.5px solid rgba(26, 18, 11, 0.18);
             text-decoration: none;
             transition: all 0.3s ease;
@@ -744,6 +722,177 @@
             background: rgba(255,255,255,0.85);
             border-color: rgba(26, 18, 11, 0.25);
             transform: translateY(-2px);
+        }
+
+        /* Hero Bento Grid — 2-row layout */
+        .hero-bento-grid {
+            display: flex;
+            flex-direction: column;
+            gap: 14px;
+            position: relative;
+            min-width: 420px;
+        }
+
+        .bento-photo-main {
+            position: relative;
+            border-radius: 1.25rem;
+            overflow: hidden;
+            aspect-ratio: 16/10;
+            box-shadow: 0 16px 40px rgba(0,0,0,0.1);
+        }
+
+        .bento-photo-main img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.6s ease;
+        }
+
+        .bento-photo-main:hover img {
+            transform: scale(1.03);
+        }
+
+        .bento-photo-overlay {
+            position: absolute;
+            bottom: 16px;
+            left: 16px;
+        }
+
+        .bento-photo-badge {
+            background: #8B0000;
+            color: white;
+            padding: 6px 14px;
+            border-radius: 999px;
+            font-size: 0.75rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .bento-bottom-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 14px;
+        }
+
+        .bento-rating-card {
+            background: white;
+            border-radius: 1.25rem;
+            padding: 1.25rem;
+            box-shadow: 0 10px 30px -10px rgba(0,0,0,0.08);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            border: 1px solid rgba(139, 0, 0, 0.05);
+        }
+
+        .bento-stars {
+            color: #f59e0b;
+            font-size: 1.25rem;
+            letter-spacing: 2px;
+            margin-bottom: 4px;
+        }
+
+        .bento-rating-score {
+            font-size: 1.75rem;
+            font-weight: 800;
+            color: #1a1a1a;
+            line-height: 1;
+        }
+
+        .bento-rating-max {
+            font-size: 1rem;
+            color: #9ca3af;
+            font-weight: 600;
+        }
+
+        .bento-rating-count {
+            font-size: 0.75rem;
+            color: #6b7280;
+            margin-top: 4px;
+        }
+
+        .bento-trust-badge {
+            background: white;
+            border-radius: 1.25rem;
+            padding: 1rem 1.25rem;
+            box-shadow: 0 10px 30px -10px rgba(0,0,0,0.08);
+            display: flex;
+            flex-direction: column;
+            gap: 0.75rem;
+            border: 1px solid rgba(139, 0, 0, 0.05);
+        }
+
+        .bento-trust-item {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .bento-trust-icon {
+            width: 40px;
+            height: 40px;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.1rem;
+        }
+
+        .bento-trust-icon.halal {
+            background: rgba(139, 0, 0, 0.08);
+            color: #8B0000;
+        }
+
+        .bento-trust-icon.exp {
+            background: rgba(218, 165, 32, 0.1);
+            color: #b8860b;
+        }
+
+        .bento-trust-title {
+            font-size: 0.875rem;
+            font-weight: 700;
+            color: #1a1a1a;
+        }
+
+        .bento-trust-sub {
+            font-size: 0.75rem;
+            color: #6b7280;
+        }
+
+        .bento-trust-divider {
+            height: 1px;
+            background: rgba(0,0,0,0.05);
+        }
+
+        @media (max-width: 1024px) {
+            .hero-bento-grid {
+                min-width: unset;
+                max-width: 480px;
+                margin: 0 auto;
+            }
+
+            .bento-photo-main {
+                aspect-ratio: 16/9;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .hero-bento-grid {
+                gap: 12px;
+            }
+
+            .bento-bottom-row {
+                gap: 12px;
+            }
+
+            .bento-rating-card,
+            .bento-trust-badge {
+                padding: 1rem;
+                border-radius: 1rem;
+            }
         }
 
         /* Right: Bento Grid — 2x2 diagonal photos */
@@ -1399,51 +1548,47 @@
                     </div>
                 </div>
 
-                <!-- Right: Bento Grid (diagonal 2-photo) -->
-                <div class="hero-right-grid fade-in-up" style="animation-delay: 0.2s">
-                    <!-- Top-Left: Photo 1 -->
-                    <div class="grid-img-wrap">
-                        <img src="{{ asset('bg_home.png') }}" alt="Signature Bakso BBC" class="grid-main-img" onerror="this.src='https://placehold.co/600x450/8B0000/fff?text=Bakso+BBC'" />
-                    </div>
-
-                    <!-- Top-Right: Stats Card -->
-                    <div class="grid-stat-card">
-                        <div class="grid-stat-num">10rb+</div>
-                        <div class="grid-stat-label">Pelanggan Puas</div>
-                        <div class="grid-stat-avatars">
-                            <div class="g-avatar"></div>
-                            <div class="g-avatar"></div>
-                            <div class="g-avatar"></div>
-                            <div class="g-avatar-more">+</div>
+                <!-- Right: Bento Grid (2-row layout) -->
+                <div class="hero-bento-grid fade-in-up" style="animation-delay: 0.2s">
+                    <!-- Row 1: Main Hero Photo (Landscape) -->
+                    <div class="bento-photo-main">
+                        <img src="{{ asset('bg_home.png') }}" alt="Signature Bakso BBC" onerror="this.src='https://placehold.co/800x450/8B0000/fff?text=Bakso+BBC'" />
+                        <div class="bento-photo-overlay">
+                            <span class="bento-photo-badge">Best Seller</span>
                         </div>
                     </div>
 
-                    <!-- Bottom-Left: Trust / Halal Card -->
-                    <div class="grid-trust-card">
-                        <div style="display:flex;align-items:center;gap:12px;">
-                            <div class="g-trust-icon">
-                                <i class="fas fa-certificate"></i>
-                            </div>
-                            <div>
-                                <div class="g-trust-title">Sertifikasi Halal</div>
-                                <div class="g-trust-sub">100% Dijamin</div>
-                            </div>
+                    <!-- Row 2: Rating Card + Trust Card -->
+                    <div class="bento-bottom-row">
+                        <!-- Rating Card -->
+                        <div class="bento-rating-card">
+                            <div class="bento-stars">★★★★★</div>
+                            <div class="bento-rating-score">4.9<span class="bento-rating-max">/5</span></div>
+                            <div class="bento-rating-count">Dari 9+ ulasan Google</div>
                         </div>
-                        <div style="height:1px;background:rgba(0,0,0,0.06);"></div>
-                        <div style="display:flex;align-items:center;gap:12px;">
-                            <div class="g-trust-icon" style="background:rgba(218,165,32,0.1);color:#b8860b;">
-                                <i class="fas fa-star"></i>
-                            </div>
-                            <div>
-                                <div class="g-trust-title">Legendaris</div>
-                                <div class="g-trust-sub">Sejak 2012</div>
-                            </div>
-                        </div>
-                    </div>
 
-                    <!-- Bottom-Right: Photo 2 -->
-                    <div class="grid-img-wrap">
-                        <img src="{{ asset('about.jpeg') }}" alt="Suasana Bakso BBC" class="grid-main-img" onerror="this.src='https://placehold.co/600x450/1a120b/fff?text=Suasana+BBC'" />
+                        <!-- Trust Badge Card -->
+                        <div class="bento-trust-badge">
+                            <div class="bento-trust-item">
+                                <div class="bento-trust-icon halal">
+                                    <i class="fas fa-certificate"></i>
+                                </div>
+                                <div>
+                                    <div class="bento-trust-title">100% Halal</div>
+                                    <div class="bento-trust-sub">Tersertifikasi</div>
+                                </div>
+                            </div>
+                            <div class="bento-trust-divider"></div>
+                            <div class="bento-trust-item">
+                                <div class="bento-trust-icon exp">
+                                    <i class="fas fa-award"></i>
+                                </div>
+                                <div>
+                                    <div class="bento-trust-title">12+ Tahun</div>
+                                    <div class="bento-trust-sub">Pengalaman</div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
 
@@ -1645,8 +1790,8 @@
 
                 <div class="influencer-meta fade-up">
                    
-                    <span class="influencer-stat"><i class="fas fa-circle-check"></i>Konten Terverifikasi</span>
-                    <span class="influencer-stat"><i class="fab fa-youtube"></i>Official Channel Highlights</span>
+                    <span class="influencer-stat"><i class="fas fa-circle-check text-[#b42318]"></i>Konten Terverifikasi</span>
+                    <span class="influencer-stat"><i class="fab fa-youtube text-[#b42318]"></i>Official Channel Highlights</span>
                 </div>
 
                 <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8 mt-8">
