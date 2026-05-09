@@ -4,34 +4,27 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Admin BBC - Manajemen Menu</title>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         :root {
             --primary: #8B0000;
             --primary-soft: #a70f0f;
-            --secondary: #DAA520;
-            --cream: #ffffff;
-            --surface: #fffaf4;
-            --surface-2: #ffffff;
-            --text-main: #2D3748;
-            --text-soft: #6b7280;
-            --line: #e2e8f0;
-            --shadow-soft: 0 10px 24px rgba(139, 0, 0, 0.08);
-            --shadow-card: 0 12px 30px rgba(45, 55, 72, 0.08);
+            --bg: #f8fafc;
+            --surface: #ffffff;
+            --text: #0f172a;
+            --text-secondary: #64748b;
+            --border: #e2e8f0;
+            --border-light: #f1f5f9;
         }
 
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
 
         body {
-            font-family: 'Poppins', sans-serif;
-            background: #ffffff;
-            color: var(--text-main);
-            overflow-x: hidden;
+            font-family: 'Inter', sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            -webkit-font-smoothing: antialiased;
         }
 
         .dashboard-container {
@@ -39,529 +32,295 @@
             min-height: 100vh;
         }
 
-        /* Main Content Styles */
+        /* ── Main ── */
         .main-content {
             flex: 1;
             margin-left: 272px;
-            padding: 30px;
-            background: transparent;
+            padding: 32px;
             min-height: 100vh;
-            display: flex;
-            flex-direction: column;
         }
 
+        /* ── Header ── */
         .page-header {
-            margin-bottom: 32px;
+            margin-bottom: 28px;
             display: flex;
             justify-content: space-between;
             align-items: center;
         }
 
         .page-header h1 {
-            font-size: 28px;
+            font-size: 24px;
             font-weight: 700;
-            color: var(--primary);
-            margin-bottom: 0;
+            color: var(--text);
+            letter-spacing: -0.3px;
         }
 
         .page-header p {
-            color: var(--text-soft);
-            font-size: 16px;
-            margin-bottom: 0;
+            color: var(--text-secondary);
+            font-size: 14px;
+            margin-top: 4px;
         }
-
+        
         .header-actions {
             display: flex;
-            gap: 10px;
+            gap: 12px;
             align-items: center;
         }
 
-        .logout-btn, .add-btn {
+        /* ── Buttons ── */
+        .btn {
             padding: 8px 16px;
             border: none;
-            border-radius: 10px;
-            font-size: 14px;
+            border-radius: 8px;
+            font-size: 13px;
             font-weight: 600;
+            font-family: inherit;
             cursor: pointer;
-            display: flex;
+            display: inline-flex;
             align-items: center;
-            gap: 6px;
-            transition: all 0.3s ease;
+            gap: 8px;
+            transition: all 0.2s;
             text-decoration: none;
         }
 
-        .logout-btn {
-            background: linear-gradient(90deg, var(--primary) 0%, var(--primary-soft) 100%);
-            color: white;
-            box-shadow: 0 8px 20px rgba(139, 0, 0, 0.18);
+        .btn-primary {
+            background: var(--primary);
+            color: #fff;
         }
 
-        .logout-btn:hover {
-            filter: brightness(1.03);
-            transform: translateY(-1px);
+        .btn-primary:hover { background: var(--primary-soft); }
+
+        .btn-secondary {
+            background: #f1f5f9;
+            color: #475569;
         }
 
-        .add-btn {
-            background: linear-gradient(90deg, var(--primary) 0%, var(--primary-soft) 100%);
-            color: white;
-            box-shadow: 0 8px 20px rgba(139, 0, 0, 0.18);
-        }
+        .btn-secondary:hover { background: #e2e8f0; }
 
-        .add-btn:hover {
-            filter: brightness(1.03);
-            transform: translateY(-1px);
-        }
-
-        /* Table Section */
-        .content-section {
-            background: var(--surface-2);
-            border-radius: 16px;
+        /* ── Card / Section ── */
+        .card {
+            background: var(--surface);
+            border-radius: 12px;
+            border: 1px solid var(--border-light);
             padding: 24px;
-            box-shadow: var(--shadow-card);
-            border: 1px solid var(--line);
-            margin-bottom: 24px;
-        }
-
-        .content-section h2 {
-            font-size: 20px;
-            font-weight: 600;
-            color: var(--primary);
             margin-bottom: 20px;
         }
 
-        .table-container {
-            overflow-x: auto;
+        .card-title {
+            font-size: 16px;
+            font-weight: 600;
+            color: var(--text);
+            margin-bottom: 16px;
         }
 
-        .menus-table {
+        /* ── Alert ── */
+        .alert {
+            padding: 12px 16px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 13px;
+            font-weight: 500;
+        }
+
+        .alert-success {
+            background-color: #ecfdf5;
+            color: #059669;
+            border: 1px solid #d1fae5;
+        }
+
+        /* ── Filter Bar ── */
+        .filter-bar {
+            display: flex;
+            gap: 8px;
+            align-items: center;
+            flex-wrap: wrap;
+            margin-bottom: 20px;
+        }
+
+        .filter-bar input,
+        .filter-bar select {
+            padding: 8px 12px;
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            font-size: 13px;
+            font-family: inherit;
+            background: var(--surface);
+            color: var(--text);
+            outline: none;
+            transition: border-color 0.2s;
+        }
+
+        .filter-bar input:focus,
+        .filter-bar select:focus {
+            border-color: var(--primary);
+        }
+
+        .filter-bar input { flex: 1; min-width: 220px; }
+        .filter-bar select { min-width: 140px; }
+
+        /* ── Table ── */
+        .data-table {
             width: 100%;
             border-collapse: collapse;
         }
 
-        .menus-table th {
-            background-color: #fff3e4;
-            padding: 14px;
+        .data-table th {
+            padding: 10px 14px;
             text-align: left;
+            font-size: 11px;
             font-weight: 600;
-            color: var(--text-main);
-            border-bottom: 2px solid var(--line);
-            font-size: 13px;
+            color: var(--text-secondary);
             text-transform: uppercase;
-            letter-spacing: 0.3px;
+            letter-spacing: 0.5px;
+            border-bottom: 1px solid var(--border);
+            background: transparent;
         }
 
-        .menus-table td {
+        .data-table td {
             padding: 14px;
-            border-bottom: 1px solid var(--line);
-            font-size: 14px;
+            font-size: 13px;
+            color: var(--text);
+            border-bottom: 1px solid var(--border-light);
             vertical-align: middle;
-            color: var(--text-main);
         }
 
-        .menus-table tr:hover {
-            background-color: #fffaf2;
+        .data-table tbody tr:hover {
+            background: #f8fafc;
         }
 
-        .menus-table tr:last-child td {
+        .data-table tbody tr:last-child td {
             border-bottom: none;
         }
 
         .menu-image {
-            width: 64px;
-            height: 64px;
+            width: 52px;
+            height: 52px;
             object-fit: cover;
-            border-radius: 12px;
-            border: 1px solid var(--line);
-            box-shadow: 0 4px 8px rgba(0,0,0,0.08);
+            border-radius: 8px;
+            border: 1px solid var(--border-light);
         }
 
-        .status-badge {
+        /* ── Status Badges ── */
+        .badge {
             display: inline-block;
-            padding: 4px 12px;
-            border-radius: 999px;
+            padding: 4px 10px;
+            border-radius: 6px;
             font-size: 11px;
-            font-weight: 700;
+            font-weight: 600;
             text-transform: uppercase;
             letter-spacing: 0.3px;
         }
 
-        .status-badge.active {
-            background-color: #d4edda;
-            color: #155724;
+        .badge-active { background: #dcfce7; color: #166534; }
+        .badge-inactive { background: #fee2e2; color: #991b1b; }
+        .badge-category { background: #f1f5f9; color: #475569; }
+
+        .price {
+            font-weight: 600;
+            color: #059669;
         }
 
-        .status-badge.inactive {
-            background-color: #f8d7da;
-            color: #721c24;
-        }
-
+        /* ── Action Buttons ── */
         .action-buttons {
             display: flex;
             gap: 6px;
         }
 
         .btn-sm {
-            padding: 5px 10px;
+            width: 32px;
+            height: 32px;
             border: none;
-            border-radius: 8px;
+            border-radius: 6px;
             cursor: pointer;
-            font-size: 12px;
-            font-weight: 600;
-            transition: all 0.3s ease;
+            font-size: 13px;
             display: flex;
             align-items: center;
-            gap: 4px;
+            justify-content: center;
+            transition: all 0.2s;
             text-decoration: none;
         }
 
-        .btn-sm:hover {
-            transform: translateY(-1px);
-        }
-
         .btn-edit {
-            background: linear-gradient(90deg, #667eea 0%, #764ba2 100%);
-            color: white;
+            background: #eff6ff;
+            color: #2563eb;
         }
+        .btn-edit:hover { background: #dbeafe; }
 
         .btn-delete {
-            background-color: #dc3545;
-            color: white;
+            background: #fef2f2;
+            color: #dc2626;
         }
-
-        .btn-delete:hover {
-            background-color: #c82333;
-        }
+        .btn-delete:hover { background: #fee2e2; }
 
         .empty-state {
             text-align: center;
             padding: 40px;
-            color: #6c757d;
+            color: var(--text-secondary);
         }
 
         .empty-state i {
-            font-size: 48px;
-            margin-bottom: 20px;
-            color: #ccc;
+            font-size: 32px;
+            margin-bottom: 12px;
+            color: #cbd5e1;
         }
 
-        .alert {
-            padding: 12px 20px;
-            border-radius: 6px;
-            margin-bottom: 20px;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-
-        .alert-success {
-            background-color: #d4edda;
-            color: #155724;
-            border: 1px solid #c3e6cb;
-        }
-
-        .alert-error {
-            background-color: #f8d7da;
-            color: #721c24;
-            border: 1px solid #f5c6cb;
-        }
-
-        .price {
-            font-weight: 600;
-            color: #27ae60;
-        }
-
-        /* Pagination Styling - Compact */
-        .pagination {
-            display: flex;
-            list-style: none;
-            padding: 0;
-            margin: 0;
-            gap: 3px;
-            flex-wrap: wrap;
-        }
-        .pagination li {
-            display: inline-flex;
-        }
+        /* ── Pagination ── */
+        .pagination { display: flex; list-style: none; padding: 0; margin: 16px 0 0; gap: 4px; flex-wrap: wrap; }
+        .pagination li { display: inline-flex; }
         .pagination li a,
         .pagination li span {
-            padding: 5px 10px;
-            border: 1px solid #dee2e6;
-            border-radius: 4px;
-            color: #6c757d;
+            padding: 6px 10px;
+            border: 1px solid var(--border);
+            border-radius: 6px;
+            color: var(--text-secondary);
             text-decoration: none;
             font-size: 12px;
             font-weight: 500;
-            background: #fff;
-            transition: all 0.15s ease;
+            background: var(--surface);
+            transition: all 0.15s;
             min-width: 32px;
             text-align: center;
-            justify-content: center;
-            align-items: center;
         }
-        .pagination li.active span {
-            background: #2c3e50;
-            color: #fff;
-            border-color: #2c3e50;
-        }
-        .pagination li a:hover {
-            background: #e9ecef;
-            color: #2c3e50;
-            border-color: #adb5bd;
-        }
-        .pagination li.disabled span {
-            color: #adb5bd;
-            background: #f8f9fa;
-            cursor: not-allowed;
-        }
-        .pagination li:first-child a,
-        .pagination li:first-child span,
-        .pagination li:last-child a,
-        .pagination li:last-child span {
-            padding: 5px 8px;
-        }
-        /* Bootstrap 4 pagination compatibility */
-        .pagination .page-item {
-            display: inline-flex;
-        }
+        .pagination li.active span { background: var(--primary); color: #fff; border-color: var(--primary); }
+        .pagination li a:hover { background: #f1f5f9; color: var(--text); }
+        .pagination li.disabled span { color: #cbd5e1; background: #f8fafc; cursor: not-allowed; }
+        .pagination .page-item { display: inline-flex; }
         .pagination .page-link {
-            padding: 5px 10px;
-            border: 1px solid #dee2e6;
-            border-radius: 4px;
-            color: #6c757d;
-            text-decoration: none;
-            font-size: 12px;
-            font-weight: 500;
-            background: #fff;
-            transition: all 0.15s ease;
-            min-width: 32px;
-            text-align: center;
-            justify-content: center;
-            align-items: center;
-            margin: 0 2px;
+            padding: 6px 10px; border: 1px solid var(--border); border-radius: 6px;
+            color: var(--text-secondary); text-decoration: none; font-size: 12px; font-weight: 500;
+            background: var(--surface); transition: all 0.15s; min-width: 32px; text-align: center; margin: 0 2px;
         }
-        .pagination .page-item.active .page-link {
-            background: #2c3e50;
-            color: #fff;
-            border-color: #2c3e50;
-        }
-        .pagination .page-item.disabled .page-link {
-            color: #adb5bd;
-            background: #f8f9fa;
-            cursor: not-allowed;
-        }
+        .pagination .page-item.active .page-link { background: var(--primary); color: #fff; border-color: var(--primary); }
+        .pagination .page-item.disabled .page-link { color: #cbd5e1; background: #f8fafc; cursor: not-allowed; }
 
-        /* Paket Section */
-        .paket-section {
-            margin-top: 30px;
-        }
-
-        .paket-section h2 {
-            font-size: 20px;
-            font-weight: 600;
-            color: #2c3e50;
-            margin-bottom: 20px;
-        }
-
-        .paket-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 20px;
-        }
-
-        .add-paket-btn {
-            background: linear-gradient(90deg, var(--primary) 0%, var(--primary-soft) 100%);
-            color: white;
-            border: none;
-            padding: 8px 16px;
-            border-radius: 10px;
-            font-size: 14px;
-            font-weight: 600;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            gap: 6px;
-            transition: all 0.3s ease;
-            text-decoration: none;
-            box-shadow: 0 8px 20px rgba(139, 0, 0, 0.18);
-        }
-
-        .add-paket-btn:hover {
-            filter: brightness(1.03);
-            transform: translateY(-1px);
-        }
-
-        .pakets-table {
-            width: 100%;
-            border-collapse: collapse;
-        }
-
-        .pakets-table th {
-            background-color: #f8f9fa;
-            padding: 12px 14px;
-            text-align: left;
-            font-weight: 600;
-            color: #2c3e50;
-            border-bottom: 1px solid #e9ecef;
-            font-size: 14px;
-        }
-
-        .pakets-table td {
-            padding: 12px 14px;
-            border-bottom: 1px solid #e9ecef;
-            font-size: 14px;
-            vertical-align: middle;
-        }
-
-        .pakets-table tr:hover {
-            background-color: #f8fafc;
-        }
-
-        .pakets-table tr:last-child td {
-            border-bottom: none;
-        }
-
-        .paket-image {
-            width: 64px;
-            height: 64px;
-            object-fit: cover;
-            border-radius: 10px;
-            border: 1px solid #e9ecef;
-        }
-
-        .portion-badge {
-            display: inline-block;
-            background-color: #e3f2fd;
-            color: #1976d2;
-            padding: 4px 12px;
-            border-radius: 12px;
-            font-size: 12px;
-            font-weight: 600;
-        }
-
-        .category-badge {
-            display: inline-block;
-            background-color: #f0f0f0;
-            color: #555;
-            padding: 3px 10px;
-            border-radius: 4px;
-            font-size: 12px;
-            font-weight: 600;
-        }
-
-        /* Responsive Design */
+        /* ── Responsive ── */
         @media (max-width: 992px) {
-            .main-content {
-                margin-left: 0;
-                padding: 20px;
-            }
-            
-            .dashboard-container {
-                flex-direction: column;
-            }
-
-            .page-header h1 {
-                font-size: 24px;
-            }
-
-            .page-header p {
-                font-size: 14px;
-            }
+            .main-content { margin-left: 0; padding: 20px; }
+            .dashboard-container { flex-direction: column; }
+            .page-header { flex-direction: column; align-items: flex-start; gap: 16px; }
+            .header-actions { width: 100%; justify-content: flex-start; }
         }
 
         @media (max-width: 768px) {
-            .main-content {
-                padding: 15px;
-            }
-
-            .content-section {
-                padding: 16px;
-            }
-
-            .menus-table th,
-            .menus-table td,
-            .pakets-table th,
-            .pakets-table td {
-                padding: 10px;
-                font-size: 12px;
-            }
-
-            .menu-image,
-            .paket-image {
-                width: 48px;
-                height: 48px;
-            }
-
-            .btn {
-                padding: 8px 12px;
-                font-size: 13px;
-            }
-
-            .page-header {
-                flex-direction: column;
-                align-items: flex-start;
-                gap: 15px;
-            }
-
-            .header-actions {
-                width: 100%;
-                justify-content: flex-start;
-            }
-
-            .paket-header {
-                flex-direction: column;
-                align-items: flex-start;
-                gap: 15px;
-            }
-
-            form {
-                flex-direction: column;
-                align-items: stretch;
-            }
-
-            form input,
-            form select,
-            form button,
-            form a {
-                width: 100%;
-            }
+            .main-content { padding: 16px; }
+            .card { padding: 16px; }
+            .data-table th, .data-table td { padding: 10px; font-size: 12px; }
+            .menu-image { width: 44px; height: 44px; }
+            .filter-bar { flex-direction: column; align-items: stretch; }
+            .filter-bar input, .filter-bar select { min-width: 100%; width: 100%; }
+            .filter-bar .btn { width: 100%; justify-content: center; }
         }
-
+        
         @media (max-width: 576px) {
-            .menus-table,
-            .pakets-table {
-                font-size: 11px;
-            }
-
-            .menus-table th,
-            .menus-table td,
-            .pakets-table th,
-            .pakets-table td {
-                padding: 8px;
-            }
-
-            .action-buttons {
-                flex-direction: column;
-                gap: 5px;
-            }
-
-            .btn-sm {
-                width: 100%;
-                justify-content: center;
-            }
-
-            .status-badge,
-            .category-badge,
-            .portion-badge {
-                font-size: 10px;
-                padding: 3px 8px;
-            }
-
-            .menu-image,
-            .paket-image {
-                width: 40px;
-                height: 40px;
-            }
+            .data-table { font-size: 11px; }
+            .data-table th, .data-table td { padding: 8px; }
+            .action-buttons { flex-direction: column; gap: 4px; }
+            .btn-sm { width: 28px; height: 28px; font-size: 12px; }
+            .badge { font-size: 10px; padding: 3px 6px; }
+            .menu-image { width: 36px; height: 36px; }
         }
     </style>
 </head>
@@ -577,14 +336,9 @@
                     <p>Kelola menu produk BBC</p>
                 </div>
                 <div class="header-actions">
-                    <a href="/admin/menu-management/create" class="add-btn">
-                        <i class="fas fa-plus"></i>
-                        Tambah Menu
+                    <a href="/admin/menu-management/create" class="btn btn-primary">
+                        <i class="fas fa-plus"></i> Tambah Menu
                     </a>
-                    <button class="logout-btn">
-                        <i class="fas fa-sign-out-alt"></i>
-                        Logout
-                    </button>
                 </div>
             </header>
 
@@ -595,42 +349,44 @@
                 </div>
             @endif
 
-            <section class="content-section">
-                <h2>Daftar Menu</h2>
-                <form method="GET" action="{{ route('admin.menu.index') }}" style="display:flex; gap:10px; align-items:center; flex-wrap:wrap; margin: 0 0 16px;">
-                    <input type="text" name="q" value="{{ request('q') }}" placeholder="Cari nama / deskripsi..." style="flex:1; min-width: 220px; padding:10px 12px; border:1px solid #e9ecef; border-radius:8px;">
-                    <select name="category" style="min-width: 160px; padding:10px 12px; border:1px solid #e9ecef; border-radius:8px;">
+            <div class="card">
+                <div class="card-title">Daftar Menu</div>
+                
+                <form method="GET" action="{{ route('admin.menu.index') }}" class="filter-bar">
+                    <input type="text" name="q" value="{{ request('q') }}" placeholder="Cari nama / deskripsi...">
+                    <select name="category">
                         <option value="">Semua Kategori</option>
                         <option value="bakso" {{ request('category') === 'bakso' ? 'selected' : '' }}>Bakso</option>
                         <option value="mie" {{ request('category') === 'mie' ? 'selected' : '' }}>Mie</option>
                         <option value="paket" {{ request('category') === 'paket' ? 'selected' : '' }}>Paket</option>
                         <option value="minuman" {{ request('category') === 'minuman' ? 'selected' : '' }}>Minuman</option>
                     </select>
-                    <select name="recommended" style="min-width: 170px; padding:10px 12px; border:1px solid #e9ecef; border-radius:8px;">
+                    <select name="recommended">
                         <option value="">Semua Rekomendasi</option>
                         <option value="1" {{ request('recommended') === '1' ? 'selected' : '' }}>Rekomendasi</option>
                         <option value="0" {{ request('recommended') === '0' ? 'selected' : '' }}>Bukan Rekomendasi</option>
                     </select>
-                    <select name="status" style="min-width: 160px; padding:10px 12px; border:1px solid #e9ecef; border-radius:8px;">
+                    <select name="status">
                         <option value="">Semua Status</option>
                         <option value="active" {{ request('status') === 'active' ? 'selected' : '' }}>Aktif</option>
                         <option value="inactive" {{ request('status') === 'inactive' ? 'selected' : '' }}>Tidak Aktif</option>
                     </select>
-                    <button type="submit" style="padding:10px 14px; border:none; border-radius:8px; background:#2c3e50; color:#fff; font-weight:700; cursor:pointer;">Terapkan</button>
-                    <a href="{{ route('admin.menu.index') }}" style="padding:10px 14px; border:1px solid #e9ecef; border-radius:8px; background:#fff; color:#334155; font-weight:700; text-decoration:none;">Reset</a>
+                    <button type="submit" class="btn btn-primary"><i class="fas fa-search"></i> Terapkan</button>
+                    <a href="{{ route('admin.menu.index') }}" class="btn btn-secondary"><i class="fas fa-rotate-left"></i> Reset</a>
                 </form>
-                <div class="table-container">
-                    <table class="menus-table">
+
+                <div style="overflow-x:auto;">
+                    <table class="data-table">
                         <thead>
                             <tr>
-                                <th style="width: 84px;">Gambar</th>
+                                <th style="width: 70px;">Gambar</th>
                                 <th>Nama Menu</th>
                                 <th>Deskripsi</th>
                                 <th>Kategori</th>
                                 <th>Harga</th>
                                 <th>Rekomendasi</th>
                                 <th>Status</th>
-                                <th style="width: 120px;">Aksi</th>
+                                <th style="width: 90px;">Aksi</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -640,33 +396,33 @@
                                         <img src="{{ $menu->image }}" alt="{{ $menu->name }}" class="menu-image">
                                     </td>
                                     <td>
-                                        <strong>{{ $menu->name }}</strong>
+                                        <strong style="color: var(--text);">{{ $menu->name }}</strong>
                                     </td>
-                                    <td>
+                                    <td style="color: var(--text-secondary);">
                                         {{ Str::limit($menu->description, 30) }}
                                     </td>
                                     <td>
-                                        <span class="category-badge">{{ $menu->category }}</span>
+                                        <span class="badge badge-category">{{ $menu->category }}</span>
                                     </td>
                                     <td>
                                         <span class="price">Rp {{ number_format($menu->price, 0, ',', '.') }}</span>
                                     </td>
                                     <td>
-                                        <span class="status-badge {{ $menu->is_recommended ? 'active' : 'inactive' }}">
+                                        <span class="badge {{ $menu->is_recommended ? 'badge-active' : 'badge-inactive' }}">
                                             {{ $menu->is_recommended ? 'Ya' : 'Tidak' }}
                                         </span>
                                     </td>
                                     <td>
-                                        <span class="status-badge {{ $menu->status }}">
+                                        <span class="badge {{ $menu->status === 'active' ? 'badge-active' : 'badge-inactive' }}">
                                             {{ $menu->status === 'active' ? 'Aktif' : 'Tidak Aktif' }}
                                         </span>
                                     </td>
                                     <td>
                                         <div class="action-buttons">
-                                            <a href="/admin/menu-management/{{ $menu->id }}/edit" class="btn-sm btn-edit">
-                                                <i class="fas fa-edit"></i>
+                                            <a href="/admin/menu-management/{{ $menu->id }}/edit" class="btn-sm btn-edit" title="Edit">
+                                                <i class="fas fa-pen"></i>
                                             </a>
-                                            <button class="btn-sm btn-delete" onclick="if(confirm('Hapus menu ini?')) window.location.href='/admin/menu-management/{{ $menu->id }}/delete'">
+                                            <button class="btn-sm btn-delete" onclick="if(confirm('Hapus menu ini?')) window.location.href='/admin/menu-management/{{ $menu->id }}/delete'" title="Hapus">
                                                 <i class="fas fa-trash"></i>
                                             </button>
                                         </div>
@@ -677,7 +433,7 @@
                                     <td colspan="8">
                                         <div class="empty-state">
                                             <i class="fas fa-inbox"></i>
-                                            <p>Tidak ada menu</p>
+                                            <p>Tidak ada menu yang ditemukan</p>
                                         </div>
                                     </td>
                                 </tr>
@@ -686,95 +442,8 @@
                     </table>
                 </div>
 
-                <div style="margin-top: 16px;">
-                    {{ $menus->links('pagination::bootstrap-4') }}
-                </div>
-            </section>
-
-            <!-- Paket Section -->
-            <section class="content-section paket-section">
-                <div class="paket-header">
-                    <h2>Daftar Paket</h2>
-                    <a href="/paket/create" class="add-paket-btn">
-                        <i class="fas fa-plus"></i>
-                        Tambah Paket
-                    </a>
-                </div>
-                <form method="GET" action="{{ route('admin.menu.index') }}" style="display:flex; gap:10px; align-items:center; flex-wrap:wrap; margin: 0 0 16px;">
-                    <input type="text" name="paket_q" value="{{ request('paket_q') }}" placeholder="Cari nama / deskripsi paket..." style="flex:1; min-width: 240px; padding:10px 12px; border:1px solid #e9ecef; border-radius:8px;">
-                    <select name="paket_status" style="min-width: 180px; padding:10px 12px; border:1px solid #e9ecef; border-radius:8px;">
-                        <option value="">Semua Status</option>
-                        <option value="active" {{ request('paket_status') === 'active' ? 'selected' : '' }}>Aktif</option>
-                        <option value="inactive" {{ request('paket_status') === 'inactive' ? 'selected' : '' }}>Tidak Aktif</option>
-                    </select>
-                    <button type="submit" style="padding:10px 14px; border:none; border-radius:8px; background:#2c3e50; color:#fff; font-weight:700; cursor:pointer;">Terapkan</button>
-                    <a href="{{ route('admin.menu.index') }}" style="padding:10px 14px; border:1px solid #e9ecef; border-radius:8px; background:#fff; color:#334155; font-weight:700; text-decoration:none;">Reset</a>
-                </form>
-                <div class="table-container">
-                    <table class="pakets-table">
-                        <thead>
-                            <tr>
-                                <th style="width: 84px;">Gambar</th>
-                                <th>Nama Paket</th>
-                                <th>Deskripsi</th>
-                                <th>Porsi</th>
-                                <th>Harga</th>
-                                <th>Status</th>
-                                <th style="width: 120px;">Aksi</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            @forelse($pakets as $paket)
-                                <tr>
-                                    <td>
-                                        <img src="{{ $paket->image }}" alt="{{ $paket->name }}" class="paket-image">
-                                    </td>
-                                    <td>
-                                        <strong>{{ $paket->name }}</strong>
-                                    </td>
-                                    <td>
-                                        {{ Str::limit($paket->description, 30) }}
-                                    </td>
-                                    <td>
-                                        <span class="portion-badge">{{ $paket->portion }} Orang</span>
-                                    </td>
-                                    <td>
-                                        <span class="price">Rp {{ number_format($paket->price, 0, ',', '.') }}</span>
-                                    </td>
-                                    <td>
-                                        <span class="status-badge {{ $paket->status }}">
-                                            {{ $paket->status === 'active' ? 'Aktif' : 'Tidak Aktif' }}
-                                        </span>
-                                    </td>
-                                    <td>
-                                        <div class="action-buttons">
-                                            <a href="/paket/{{ $paket->id }}/edit" class="btn-sm btn-edit">
-                                                <i class="fas fa-edit"></i>
-                                            </a>
-                                            <button class="btn-sm btn-delete" onclick="if(confirm('Hapus paket ini?')) window.location.href='/paket/{{ $paket->id }}/delete'">
-                                                <i class="fas fa-trash"></i>
-                                            </button>
-                                        </div>
-                                    </td>
-                                </tr>
-                            @empty
-                                <tr>
-                                    <td colspan="7">
-                                        <div class="empty-state">
-                                            <i class="fas fa-inbox"></i>
-                                            <p>Tidak ada paket</p>
-                                        </div>
-                                    </td>
-                                </tr>
-                            @endforelse
-                        </tbody>
-                    </table>
-                </div>
-
-                <div style="margin-top: 16px;">
-                    {{ $pakets->links('pagination::bootstrap-4') }}
-                </div>
-            </section>
+                {{ $menus->links('pagination::bootstrap-4') }}
+            </div>
         </main>
     </div>
 </body>

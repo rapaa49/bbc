@@ -4,34 +4,28 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Admin BBC - Dashboard</title>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&amp;family=Plus+Jakarta+Sans:wght@400;500;600;700;800&amp;family=Inter:wght@300;400;500;600;700;800&family=Playfair+Display:wght@600;700&family=Montserrat:wght@700;800&family=Pinyon+Script&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <style>
         :root {
             --primary: #8B0000;
             --primary-soft: #a70f0f;
-            --secondary: #DAA520;
-            --cream: #ffffff;
-            --surface: #fffaf4;
-            --surface-2: #ffffff;
-            --text-main: #2D3748;
-            --text-soft: #6b7280;
-            --line: #eadcc8;
-            --shadow-soft: 0 10px 24px rgba(139, 0, 0, 0.08);
-            --shadow-card: 0 12px 30px rgba(45, 55, 72, 0.08);
-        }
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
+            --bg: #f8fafc;
+            --surface: #ffffff;
+            --text: #0f172a;
+            --text-secondary: #64748b;
+            --border: #e2e8f0;
+            --border-light: #f1f5f9;
         }
 
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
         body {
-            font-family: 'Poppins', sans-serif;
-            background: var(--cream);
-            color: var(--text-main);
-            overflow-x: hidden;
+            font-family: 'Inter', sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            -webkit-font-smoothing: antialiased;
         }
 
         .dashboard-container {
@@ -39,657 +33,436 @@
             min-height: 100vh;
         }
 
-        /* Main Content Styles */
+        /* ── Main ── */
         .main-content {
             flex: 1;
             margin-left: 272px;
-            padding: 30px;
-            background: transparent;
+            padding: 32px;
             min-height: 100vh;
-            display: flex;
-            flex-direction: column;
         }
 
+        /* ── Header ── */
         .page-header {
-            margin-bottom: 32px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
+            margin-bottom: 28px;
         }
 
         .page-header h1 {
-            font-family: 'Playfair Display', serif;
-            font-size: 28px;
+            font-size: 24px;
             font-weight: 700;
-            color: var(--primary);
-            margin-bottom: 0;
+            color: var(--text);
+            letter-spacing: -0.3px;
         }
 
         .page-header p {
-            color: #8a6a4c;
-            font-size: 16px;
-            margin-bottom: 0;
-        }
-
-        .logout-btn {
-            background: linear-gradient(90deg, var(--primary) 0%, var(--primary-soft) 100%);
-            color: white;
-            border: none;
-            padding: 8px 16px;
-            border-radius: 10px;
+            color: var(--text-secondary);
             font-size: 14px;
-            font-weight: 600;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            gap: 6px;
-            transition: all 0.3s ease;
-            box-shadow: 0 8px 20px rgba(139, 0, 0, 0.18);
+            margin-top: 4px;
         }
 
-        .logout-btn:hover {
-            filter: brightness(1.03);
-            transform: translateY(-1px);
-        }
-
-        /* Stats Grid */
+        /* ── Stats Grid ── */
         .stats-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 20px;
-            margin-bottom: 30px;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 16px;
+            margin-bottom: 24px;
         }
 
         .stat-card {
-            background: var(--surface-2);
-            border-radius: 16px;
+            background: var(--surface);
+            border-radius: 12px;
             padding: 20px;
-            box-shadow: var(--shadow-card);
+            border: 1px solid var(--border-light);
             display: flex;
             align-items: center;
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
-            border: 1px solid var(--line);
+            gap: 16px;
+            transition: all 0.2s ease;
         }
 
         .stat-card:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 16px 32px rgba(45, 55, 72, 0.12);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.04);
         }
 
         .stat-icon {
-            width: 50px;
-            height: 50px;
-            border-radius: 8px;
+            width: 48px;
+            height: 48px;
+            border-radius: 12px;
             display: flex;
             align-items: center;
             justify-content: center;
-            margin-right: 15px;
-            font-size: 20px;
-            color: white;
+            font-size: 18px;
+            flex-shrink: 0;
         }
 
-        .stat-card:nth-child(1) .stat-icon {
-            background-color: #12825f;
-            border: none;
-            color: #fff;
-        }
+        .stat-card:nth-child(1) .stat-icon { background: #ecfdf5; color: #059669; }
+        .stat-card:nth-child(2) .stat-icon { background: #f3e8ff; color: #7c3aed; }
+        .stat-card:nth-child(3) .stat-icon { background: #fef2f2; color: var(--primary); }
+        .stat-card:nth-child(4) .stat-icon { background: #fffbeb; color: #d97706; }
 
-        .stat-card:nth-child(2) .stat-icon {
-            background-color: #7b2cbf;
-            border: none;
-            color: #fff;
-        }
+        .stat-content { min-width: 0; }
 
-        .stat-card:nth-child(3) .stat-icon {
-            background-color: var(--primary);
-            border: none;
-            color: #fff;
-        }
-
-        .stat-card:nth-child(4) .stat-icon {
-            background-color: #b07a0f;
-            border: none;
-            color: #fff;
-        }
-
-        .stat-content {
-            flex: 1;
-        }
-
-        .stat-change {
+        .stat-label {
             font-size: 12px;
-            font-weight: 600;
-            margin-bottom: 5px;
-        }
-
-        .stat-change.positive {
-            color: #10b981;
+            color: var(--text-secondary);
+            font-weight: 500;
+            text-transform: uppercase;
+            letter-spacing: 0.4px;
+            margin-bottom: 4px;
         }
 
         .stat-value {
             font-size: 20px;
-            font-weight: bold;
-            margin-bottom: 5px;
-            color: var(--text-main);
+            font-weight: 700;
+            color: var(--text);
+            letter-spacing: -0.3px;
+            line-height: 1.2;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
         }
 
-        .stat-label {
-            font-size: 11px;
-            color: #8a6a4c;
-            text-transform: lowercase;
-        }
-
-        /* Orders Section */
-        .orders-section {
-            background: var(--surface-2);
-            border-radius: 16px;
-            padding: 20px;
-            margin-bottom: 30px;
-            box-shadow: var(--shadow-card);
-            border: 1px solid var(--line);
-        }
-
-        .orders-wrapper {
-            display: flex;
-            gap: 30px;
-            align-items: flex-start;
-        }
-
-        .orders-section {
-            flex: 1;
-        }
-
-        .quick-actions {
-            width: 300px;
-        }
-
-        .section-header {
-            display: flex;
-            justify-content: between;
-            align-items: center;
-            margin-bottom: 24px;
-        }
-
-        .orders-section h2 {
-            font-size: 20px;
-            font-weight: 600;
-            color: var(--primary);
+        /* ── Card / Section ── */
+        .card {
+            background: var(--surface);
+            border-radius: 12px;
+            border: 1px solid var(--border-light);
+            padding: 24px;
             margin-bottom: 20px;
         }
 
-        .table-container {
-            overflow-x: auto;
+        .card-title {
+            font-size: 16px;
+            font-weight: 600;
+            color: var(--text);
+            margin-bottom: 16px;
         }
 
-        .orders-table {
+        /* ── Chart ── */
+        .chart-wrap {
+            position: relative;
+            width: 100%;
+            height: 300px;
+        }
+
+        .chart-wrap canvas {
+            width: 100% !important;
+            height: 100% !important;
+        }
+
+        /* ── Orders + Quick Actions ── */
+        .content-row {
+            display: grid;
+            grid-template-columns: 1fr 260px;
+            gap: 20px;
+            align-items: start;
+        }
+
+        /* ── Filter Bar ── */
+        .filter-bar {
+            display: flex;
+            gap: 8px;
+            align-items: center;
+            flex-wrap: wrap;
+            margin-bottom: 16px;
+        }
+
+        .filter-bar input,
+        .filter-bar select {
+            padding: 8px 12px;
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            font-size: 13px;
+            font-family: inherit;
+            background: var(--surface);
+            color: var(--text);
+            outline: none;
+            transition: border-color 0.2s;
+        }
+
+        .filter-bar input:focus,
+        .filter-bar select:focus {
+            border-color: var(--primary);
+        }
+
+        .filter-bar input { min-width: 180px; }
+
+        .btn-filter {
+            padding: 8px 14px;
+            border: none;
+            border-radius: 8px;
+            font-size: 13px;
+            font-weight: 600;
+            font-family: inherit;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            transition: all 0.2s;
+            text-decoration: none;
+        }
+
+        .btn-filter.primary {
+            background: var(--primary);
+            color: #fff;
+        }
+
+        .btn-filter.primary:hover { background: var(--primary-soft); }
+
+        .btn-filter.secondary {
+            background: #f1f5f9;
+            color: #475569;
+        }
+
+        .btn-filter.secondary:hover { background: #e2e8f0; }
+
+        /* ── Table ── */
+        .data-table {
             width: 100%;
             border-collapse: collapse;
         }
 
-        .orders-table th {
-            background-color: #fff3e4;
-            padding: 10px;
+        .data-table th {
+            padding: 10px 14px;
             text-align: left;
+            font-size: 11px;
             font-weight: 600;
-            color: var(--text-main);
-            border-bottom: 1px solid var(--line);
-            font-size: 14px;
+            color: var(--text-secondary);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            border-bottom: 1px solid var(--border);
+            background: transparent;
         }
 
-        .orders-table td {
-            padding: 10px;
-            border-bottom: 1px solid var(--line);
-            font-size: 14px;
+        .data-table td {
+            padding: 12px 14px;
+            font-size: 13px;
+            color: var(--text);
+            border-bottom: 1px solid var(--border-light);
         }
 
-        .orders-table tr:hover {
-            background-color: #fffaf2;
+        .data-table tbody tr:hover {
+            background: #f8fafc;
         }
 
-        .orders-table tr:last-child td {
+        .data-table tbody tr:last-child td {
             border-bottom: none;
         }
 
-        .status-badge {
-            padding: 3px 8px;
-            border-radius: 12px;
+        /* ── Status Badges ── */
+        .badge {
+            display: inline-block;
+            padding: 4px 10px;
+            border-radius: 6px;
             font-size: 11px;
             font-weight: 600;
             text-transform: uppercase;
+            letter-spacing: 0.3px;
         }
 
-        .status-badge.completed {
-            background-color: #d4edda;
-            color: #155724;
-        }
-
-        .status-badge.processing {
-            background-color: #fff3cd;
-            color: #856404;
-        }
-
-        .status-badge.shipped {
-            background-color: #cce5ff;
-            color: #004085;
-        }
+        .badge.completed { background: #dcfce7; color: #166534; }
+        .badge.processing { background: #fef9c3; color: #854d0e; }
+        .badge.shipped { background: #dbeafe; color: #1e40af; }
+        .badge.pending { background: #fef9c3; color: #854d0e; }
+        .badge.confirmed { background: #dbeafe; color: #1e40af; }
+        .badge.rejected { background: #fee2e2; color: #991b1b; }
 
         .btn-detail {
-            background-color: var(--primary);
-            color: white;
+            padding: 5px 12px;
+            border-radius: 6px;
+            font-size: 12px;
+            font-weight: 500;
+            color: var(--primary);
+            background: #fef2f2;
             border: none;
-            border: none;
-            padding: 4px 8px;
-            border-radius: 8px;
             cursor: pointer;
-            font-size: 11px;
-            transition: background-color 0.3s ease;
+            text-decoration: none;
+            transition: all 0.2s;
+            display: inline-block;
         }
 
         .btn-detail:hover {
-            background-color: var(--primary-soft);
+            background: #fde8e8;
         }
 
-        /* Quick Actions Section */
-        .quick-actions {
-            background: var(--surface-2);
-            border-radius: 16px;
-            padding: 20px;
-            box-shadow: var(--shadow-card);
-            border: 1px solid var(--line);
-        }
-
-        .quick-actions h2 {
-            font-size: 20px;
-            font-weight: 600;
-            color: var(--primary);
-            margin-bottom: 20px;
-        }
-
-        .action-buttons {
-            display: flex;
-            gap: 16px;
-            flex-wrap: wrap;
-        }
-
-        .btn {
-            padding: 10px 20px;
-            border: none;
-            border-radius: 6px;
-            font-size: 14px;
-            font-weight: 600;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            transition: all 0.3s ease;
-        }
-
-        .btn-primary {
-            background: linear-gradient(90deg, var(--primary) 0%, var(--primary-soft) 100%);
-            color: white;
-            border: none;
-        }
-
-        .btn-primary:hover {
-            filter: brightness(1.03);
-            transform: translateY(-2px);
-        }
-
-        .btn-warning {
-            background-color: var(--secondary);
-            color: white;
-            border: none;
-        }
-
-        .btn-warning:hover {
-            background-color: #c99312;
-            transform: translateY(-2px);
-        }
-
-        .chart-section {
-            background: var(--surface-2);
-            border-radius: 16px;
-            padding: 20px;
-            box-shadow: var(--shadow-card);
-            border: 1px solid var(--line);
-            margin-bottom: 22px;
-        }
-
-        .chart-section h2 {
-            font-size: 20px;
-            font-weight: 600;
-            color: var(--primary);
+        /* ── Quick Actions ── */
+        .quick-actions .card-title {
             margin-bottom: 14px;
         }
 
-        .chart-box {
-            background: #fff;
-            border: 1px solid var(--line);
-            border-radius: 12px;
-            padding: 14px;
-        }
-
-        .chart-box canvas {
-            width: 100% !important;
-            height: 320px !important;
-        }
-
-        /* Pagination Styling - Compact */
-        .pagination {
+        .action-list {
             display: flex;
-            list-style: none;
-            padding: 0;
-            margin: 0;
-            gap: 3px;
-            flex-wrap: wrap;
+            flex-direction: column;
+            gap: 10px;
         }
-        .pagination li {
-            display: inline-flex;
+
+        .action-link {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 12px 14px;
+            border-radius: 10px;
+            text-decoration: none;
+            font-size: 13px;
+            font-weight: 500;
+            color: var(--text);
+            background: var(--bg);
+            border: 1px solid var(--border-light);
+            transition: all 0.2s;
         }
+
+        .action-link:hover {
+            border-color: var(--border);
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+        }
+
+        .action-link .action-icon {
+            width: 36px;
+            height: 36px;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 14px;
+            flex-shrink: 0;
+        }
+
+        .action-link:nth-child(1) .action-icon { background: #fef2f2; color: var(--primary); }
+        .action-link:nth-child(2) .action-icon { background: #ecfdf5; color: #059669; }
+        .action-link:nth-child(3) .action-icon { background: #eff6ff; color: #2563eb; }
+
+        /* ── Pagination ── */
+        .pagination { display: flex; list-style: none; padding: 0; margin: 16px 0 0; gap: 4px; flex-wrap: wrap; }
+        .pagination li { display: inline-flex; }
         .pagination li a,
         .pagination li span {
-            padding: 5px 10px;
-            border: 1px solid #dee2e6;
-            border-radius: 4px;
-            color: #6c757d;
+            padding: 6px 10px;
+            border: 1px solid var(--border);
+            border-radius: 6px;
+            color: var(--text-secondary);
             text-decoration: none;
             font-size: 12px;
             font-weight: 500;
-            background: #fff;
-            transition: all 0.15s ease;
+            background: var(--surface);
+            transition: all 0.15s;
             min-width: 32px;
             text-align: center;
-            justify-content: center;
-            align-items: center;
         }
-        .pagination li.active span {
-            background: var(--primary);
-            color: #fff;
-            border-color: var(--primary);
-        }
-        .pagination li a:hover {
-            background: var(--line);
-            color: var(--primary);
-        }
-        .pagination li.disabled span {
-            color: #adb5bd;
-            background: #f8f9fa;
-            cursor: not-allowed;
-        }
-        .pagination li:first-child a,
-        .pagination li:first-child span,
-        .pagination li:last-child a,
-        .pagination li:last-child span {
-            padding: 5px 8px;
-        }
-        /* Bootstrap 4 pagination compatibility */
-        .pagination .page-item {
-            display: inline-flex;
-        }
+        .pagination li.active span { background: var(--primary); color: #fff; border-color: var(--primary); }
+        .pagination li a:hover { background: #f1f5f9; color: var(--text); }
+        .pagination li.disabled span { color: #cbd5e1; background: #f8fafc; cursor: not-allowed; }
+        .pagination .page-item { display: inline-flex; }
         .pagination .page-link {
-            padding: 5px 10px;
-            border: 1px solid #dee2e6;
-            border-radius: 4px;
-            color: #6c757d;
-            text-decoration: none;
-            font-size: 12px;
-            font-weight: 500;
-            background: #fff;
-            transition: all 0.15s ease;
-            min-width: 32px;
-            text-align: center;
-            justify-content: center;
-            align-items: center;
-            margin: 0 2px;
+            padding: 6px 10px; border: 1px solid var(--border); border-radius: 6px;
+            color: var(--text-secondary); text-decoration: none; font-size: 12px; font-weight: 500;
+            background: var(--surface); transition: all 0.15s; min-width: 32px; text-align: center; margin: 0 2px;
         }
-        .pagination .page-item.active .page-link {
-            background: var(--primary);
-            color: #fff;
-            border-color: var(--primary);
-        }
-        .pagination .page-item.disabled .page-link {
-            color: #adb5bd;
-            background: #f8f9fa;
-            cursor: not-allowed;
-        }
+        .pagination .page-item.active .page-link { background: var(--primary); color: #fff; border-color: var(--primary); }
+        .pagination .page-item.disabled .page-link { color: #cbd5e1; background: #f8fafc; cursor: not-allowed; }
 
-        /* Responsive Design */
+        /* ── Responsive ── */
         @media (max-width: 1200px) {
-            .stats-grid {
-                grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            }
+            .stats-grid { grid-template-columns: repeat(2, 1fr); }
+            .content-row { grid-template-columns: 1fr; }
         }
 
         @media (max-width: 992px) {
-            .main-content {
-                margin-left: 0;
-                padding: 20px;
-            }
-            
-            .dashboard-container {
-                flex-direction: column;
-            }
-
-            .orders-wrapper {
-                flex-direction: column;
-            }
-
-            .quick-actions {
-                width: 100%;
-            }
-
-            .stats-grid {
-                grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
-                gap: 15px;
-            }
-
-            .page-header h1 {
-                font-size: 24px;
-            }
-
-            .page-header p {
-                font-size: 14px;
-            }
+            .main-content { margin-left: 0; padding: 20px; }
+            .dashboard-container { flex-direction: column; }
         }
 
         @media (max-width: 768px) {
-            .main-content {
-                padding: 15px;
-            }
-
-            .stats-grid {
-                grid-template-columns: repeat(2, 1fr);
-                gap: 12px;
-            }
-
-            .stat-card {
-                padding: 15px;
-            }
-
-            .stat-icon {
-                width: 40px;
-                height: 40px;
-                font-size: 16px;
-            }
-
-            .stat-value {
-                font-size: 20px;
-            }
-
-            .orders-section,
-            .chart-section,
-            .quick-actions {
-                padding: 16px;
-            }
-
-            .orders-table th,
-            .orders-table td {
-                padding: 10px;
-                font-size: 12px;
-            }
-
-            .btn {
-                padding: 8px 12px;
-                font-size: 13px;
-            }
-
-            .page-header {
-                flex-direction: column;
-                align-items: flex-start;
-                gap: 15px;
-            }
-
-            .header-actions {
-                width: 100%;
-                justify-content: flex-start;
-            }
+            .main-content { padding: 16px; }
+            .stats-grid { gap: 10px; }
+            .stat-card { padding: 16px; }
+            .stat-icon { width: 42px; height: 42px; font-size: 16px; }
+            .stat-value { font-size: 17px; }
+            .stat-label { font-size: 11px; }
+            .card { padding: 16px; }
+            .filter-bar { flex-direction: column; align-items: stretch; }
+            .filter-bar input { min-width: 100%; }
+            .chart-wrap { height: 240px; }
         }
 
         @media (max-width: 576px) {
-            .stats-grid {
-                grid-template-columns: 1fr;
-            }
-
-            .stat-card {
-                flex-direction: row;
-                text-align: left;
-            }
-
-            .stat-icon {
-                margin-right: 15px;
-                margin-bottom: 0;
-            }
-
-            .orders-table {
-                font-size: 11px;
-            }
-
-            .orders-table th,
-            .orders-table td {
-                padding: 8px;
-            }
-
-            .action-buttons {
-                flex-direction: column;
-                gap: 5px;
-            }
-
-            .btn-sm {
-                width: 100%;
-                justify-content: center;
-            }
+            .stats-grid { grid-template-columns: 1fr 1fr; gap: 8px; }
+            .stat-card { padding: 14px; gap: 10px; }
+            .stat-icon { width: 38px; height: 38px; font-size: 15px; border-radius: 10px; }
+            .stat-value { font-size: 15px; }
+            .chart-wrap { height: 200px; }
         }
-    </style>
-
-    <style>
-        .auth-tagline, .auth-subtitle, h5, h6 { font-family: "Poppins", sans-serif !important; }
-        h1, h2, h3, h4 { font-family: "Inter", sans-serif !important; }
     </style>
 </head>
 <body>
     <div class="dashboard-container">
         @include('admin.partials.sidebar', ['activeMenu' => 'dashboard', 'pendingCount' => $pendingCount ?? 0])
 
-        <!-- Main Content -->
         <main class="main-content">
+            <!-- Header -->
             <header class="page-header">
-                <div>
-                    <h1 class="font-bold">Dashboard</h1>
-                    <p>Selamat datang di Admin Panel BBC</p>
-                </div>
+                <h1>Dashboard</h1>
+                <p>Selamat datang di Admin Panel BBC</p>
             </header>
 
-            <!-- Stats Cards -->
+            <!-- Stats -->
             <section class="stats-grid">
                 <div class="stat-card">
-                    <div class="stat-icon">
-                        <i class="fas fa-dollar-sign"></i>
-                    </div>
+                    <div class="stat-icon"><i class="fas fa-wallet"></i></div>
                     <div class="stat-content">
-                        <div class="stat-change positive">
-                            <i class="fas fa-arrow-up"></i>
-                            +10.5%
-                        </div>
-                        <div class="stat-value">Rp {{ number_format((float) ($totalRevenue ?? 0), 0, ',', '.') }}</div>
                         <div class="stat-label">Total Pendapatan</div>
+                        <div class="stat-value">Rp {{ number_format((float) ($totalRevenue ?? 0), 0, ',', '.') }}</div>
                     </div>
                 </div>
-
                 <div class="stat-card">
-                    <div class="stat-icon">
-                        <i class="fas fa-shopping-cart"></i>
-                    </div>
+                    <div class="stat-icon"><i class="fas fa-shopping-bag"></i></div>
                     <div class="stat-content">
-                        <div class="stat-change positive">
-                            <i class="fas fa-arrow-up"></i>
-                            +10.5%
-                        </div>
-                        <div class="stat-value">{{ isset($totalOrders) ? number_format((int) $totalOrders) : '0' }}</div>
                         <div class="stat-label">Total Pesanan</div>
+                        <div class="stat-value">{{ isset($totalOrders) ? number_format((int) $totalOrders) : '0' }}</div>
                     </div>
                 </div>
-
                 <div class="stat-card">
-                    <div class="stat-icon">
-                        <i class="fas fa-users"></i>
-                    </div>
+                    <div class="stat-icon"><i class="fas fa-users"></i></div>
                     <div class="stat-content">
-                        <div class="stat-change positive">
-                            <i class="fas fa-arrow-up"></i>
-                            +10.5%
-                        </div>
-                        <div class="stat-value">{{ isset($totalCustomers) ? number_format((int) $totalCustomers) : '0' }}</div>
                         <div class="stat-label">Total Pelanggan</div>
+                        <div class="stat-value">{{ isset($totalCustomers) ? number_format((int) $totalCustomers) : '0' }}</div>
                     </div>
                 </div>
-
                 <div class="stat-card">
-                    <div class="stat-icon">
-                        <i class="fas fa-store"></i>
-                    </div>
+                    <div class="stat-icon"><i class="fas fa-utensils"></i></div>
                     <div class="stat-content">
-                        <div class="stat-change positive">
-                            <i class="fas fa-arrow-up"></i>
-                            +10.5%
-                        </div>
-                        <div class="stat-value">{{ isset($totalMenus) ? number_format((int) $totalMenus) : '0' }}</div>
                         <div class="stat-label">Total Menu</div>
+                        <div class="stat-value">{{ isset($totalMenus) ? number_format((int) $totalMenus) : '0' }}</div>
                     </div>
                 </div>
             </section>
 
-            <section class="chart-section">
-                <h2>Grafik Penjualan 6 Bulan Terakhir</h2>
-                <div class="chart-box">
+            <!-- Chart -->
+            <div class="card">
+                <div class="card-title">Grafik Penjualan 6 Bulan Terakhir</div>
+                <div class="chart-wrap">
                     <canvas id="salesChart"></canvas>
                 </div>
-            </section>
+            </div>
 
-            <div class="orders-wrapper">
-                <!-- KIRI -->
-                <section class="orders-section">
-                    <div class="section-header" style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px;margin-bottom:20px;">
-                        <h2>Info Pesanan</h2>
-                        <form method="GET" action="{{ route('admin.dashboard') }}" style="display:flex;gap:10px;align-items:center;flex-wrap:wrap;">
-                            <input type="text" name="q" value="{{ request('q') }}" placeholder="Cari order/pelanggan..." style="padding:8px 12px;border:1px solid var(--line);border-radius:8px;font-size:13px;min-width:180px;">
-                            <select name="status" style="padding:8px 12px;border:1px solid var(--line);border-radius:8px;font-size:13px;background:#fff;">
-                                <option value="">Semua Status</option>
-                                <option value="pending" {{ request('status') === 'pending' ? 'selected' : '' }}>Pending</option>
-                                <option value="confirmed" {{ request('status') === 'confirmed' ? 'selected' : '' }}>Confirmed</option>
-                                <option value="shipped" {{ request('status') === 'shipped' ? 'selected' : '' }}>Shipped</option>
-                                <option value="completed" {{ request('status') === 'completed' ? 'selected' : '' }}>Completed</option>
-                                <option value="rejected" {{ request('status') === 'rejected' ? 'selected' : '' }}>Rejected</option>
-                            </select>
-                            <button type="submit" style="padding:8px 14px;background:var(--primary);color:#fff;border:none;border-radius:8px;font-size:13px;font-weight:600;cursor:pointer;">
-                                <i class="fas fa-filter"></i> Filter
-                            </button>
-                            <a href="{{ route('admin.dashboard') }}" style="padding:8px 14px;background:#e9ecef;color:#495057;border:none;border-radius:8px;font-size:13px;font-weight:600;text-decoration:none;">
-                                <i class="fas fa-rotate-left"></i> Reset
-                            </a>
-                        </form>
-                    </div>
-                    <div class="table-container">
-                        <table class="orders-table">
+            <!-- Orders + Quick Actions -->
+            <div class="content-row">
+                <!-- Orders -->
+                <div class="card">
+                    <div class="card-title">Info Pesanan</div>
+                    <form method="GET" action="{{ route('admin.dashboard') }}" class="filter-bar">
+                        <input type="text" name="q" value="{{ request('q') }}" placeholder="Cari order / pelanggan...">
+                        <select name="status">
+                            <option value="">Semua Status</option>
+                            <option value="pending" {{ request('status') === 'pending' ? 'selected' : '' }}>Pending</option>
+                            <option value="confirmed" {{ request('status') === 'confirmed' ? 'selected' : '' }}>Confirmed</option>
+                            <option value="shipped" {{ request('status') === 'shipped' ? 'selected' : '' }}>Shipped</option>
+                            <option value="completed" {{ request('status') === 'completed' ? 'selected' : '' }}>Completed</option>
+                            <option value="rejected" {{ request('status') === 'rejected' ? 'selected' : '' }}>Rejected</option>
+                        </select>
+                        <button type="submit" class="btn-filter primary"><i class="fas fa-search"></i> Filter</button>
+                        <a href="{{ route('admin.dashboard') }}" class="btn-filter secondary"><i class="fas fa-rotate-left"></i> Reset</a>
+                    </form>
+
+                    <div style="overflow-x:auto;">
+                        <table class="data-table">
                             <thead>
                                 <tr>
                                     <th>ID Pesanan</th>
@@ -703,49 +476,53 @@
                                 @if(isset($latestOrders) && $latestOrders->count() > 0)
                                     @foreach($latestOrders as $order)
                                         <tr>
-                                            <td>{{ $order->order_id }}</td>
+                                            <td style="font-weight:500;">{{ $order->order_id }}</td>
                                             <td>{{ $order->customer_name }}</td>
-                                            <td>Rp {{ number_format((float) $order->total_price, 0, ',', '.') }}</td>
+                                            <td style="font-weight:600;">Rp {{ number_format((float) $order->total_price, 0, ',', '.') }}</td>
                                             <td>
                                                 @php
                                                     $badgeClass = 'processing';
                                                     if ($order->status === 'completed') $badgeClass = 'completed';
-                                                    if ($order->status === 'shipped') $badgeClass = 'shipped';
+                                                    elseif ($order->status === 'shipped') $badgeClass = 'shipped';
+                                                    elseif ($order->status === 'pending') $badgeClass = 'pending';
+                                                    elseif ($order->status === 'confirmed') $badgeClass = 'confirmed';
+                                                    elseif ($order->status === 'rejected') $badgeClass = 'rejected';
                                                 @endphp
-                                                <span class="status-badge {{ $badgeClass }}">{{ strtoupper($order->status) }}</span>
+                                                <span class="badge {{ $badgeClass }}">{{ ucfirst($order->status) }}</span>
                                             </td>
-                                            <td><a href="{{ route('pesanan.show', $order->id) }}" class="btn-detail" style="text-decoration:none;display:inline-block;">Detail</a></td>
+                                            <td><a href="{{ route('pesanan.show', $order->id) }}" class="btn-detail">Detail</a></td>
                                         </tr>
                                     @endforeach
                                 @else
                                     <tr>
-                                        <td colspan="5" style="text-align:center;color:#64748b;">Belum ada pesanan.</td>
+                                        <td colspan="5" style="text-align:center;color:#94a3b8;padding:32px;">Belum ada pesanan.</td>
                                     </tr>
                                 @endif
                             </tbody>
                         </table>
                     </div>
 
-                    <!-- Pagination -->
-                    <div style="margin-top:16px;">
-                        {{ $latestOrders->links('pagination::bootstrap-4') }}
-                    </div>
-                </section>
+                    {{ $latestOrders->links('pagination::bootstrap-4') }}
+                </div>
 
-                <!-- KANAN -->
-                <section class="quick-actions">
-                    <h2>Aksi Cepat</h2>
-                    <div class="action-buttons">
-                        <a href="{{ route('admin.menu.create') }}" class="btn btn-primary" style="text-decoration:none;">
-                            <i class="fas fa-plus"></i>
-                            Tambah Menu Baru
+                <!-- Quick Actions -->
+                <div class="card quick-actions">
+                    <div class="card-title">Aksi Cepat</div>
+                    <div class="action-list">
+                        <a href="{{ route('admin.menu.create') }}" class="action-link">
+                            <div class="action-icon"><i class="fas fa-plus"></i></div>
+                            <span>Tambah Menu Baru</span>
                         </a>
-                        <a href="{{ route('admin.laporan.index') }}" class="btn btn-warning" style="text-decoration:none;">
-                            <i class="fas fa-download"></i>
-                            Export Laporan
+                        <a href="{{ route('admin.laporan.index') }}" class="action-link">
+                            <div class="action-icon"><i class="fas fa-chart-line"></i></div>
+                            <span>Lihat Laporan</span>
+                        </a>
+                        <a href="{{ route('paket.index') }}" class="action-link">
+                            <div class="action-icon"><i class="fas fa-box-open"></i></div>
+                            <span>Kelola Paket</span>
                         </a>
                     </div>
-                </section>
+                </div>
             </div>
         </main>
     </div>
@@ -764,28 +541,57 @@
                         label: 'Penjualan',
                         data: salesData,
                         borderColor: '#8B0000',
-                        backgroundColor: 'rgba(139, 0, 0, 0.12)',
+                        backgroundColor: 'rgba(139, 0, 0, 0.06)',
                         fill: true,
-                        borderWidth: 3,
-                        tension: 0.35,
+                        borderWidth: 2.5,
+                        tension: 0.4,
                         pointRadius: 4,
-                        pointHoverRadius: 6,
-                        pointBackgroundColor: '#DAA520'
+                        pointHoverRadius: 7,
+                        pointBackgroundColor: '#ffffff',
+                        pointBorderColor: '#8B0000',
+                        pointBorderWidth: 2,
+                        pointHoverBackgroundColor: '#8B0000',
+                        pointHoverBorderColor: '#ffffff',
+                        pointHoverBorderWidth: 2
                     }]
                 },
                 options: {
                     responsive: true,
                     maintainAspectRatio: false,
                     plugins: {
-                        legend: { display: true }
+                        legend: {
+                            display: false
+                        },
+                        tooltip: {
+                            backgroundColor: '#1e293b',
+                            titleFont: { size: 12, weight: '600' },
+                            bodyFont: { size: 12 },
+                            padding: 10,
+                            cornerRadius: 8,
+                            displayColors: false,
+                            callbacks: {
+                                label: (ctx) => 'Rp ' + Number(ctx.parsed.y).toLocaleString('id-ID')
+                            }
+                        }
                     },
                     scales: {
+                        x: {
+                            grid: { display: false },
+                            ticks: { font: { size: 12, weight: '500' }, color: '#94a3b8' }
+                        },
                         y: {
                             beginAtZero: true,
+                            grid: { color: '#f1f5f9', drawBorder: false },
                             ticks: {
+                                font: { size: 11 },
+                                color: '#94a3b8',
                                 callback: (value) => 'Rp ' + Number(value).toLocaleString('id-ID')
                             }
                         }
+                    },
+                    interaction: {
+                        intersect: false,
+                        mode: 'index'
                     }
                 }
             });
@@ -793,6 +599,3 @@
     </script>
 </body>
 </html>
-
-
-

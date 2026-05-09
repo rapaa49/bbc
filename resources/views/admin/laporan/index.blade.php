@@ -123,70 +123,67 @@
         /* Stats Grid */
         .stats-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            grid-template-columns: repeat(4, 1fr);
             gap: 20px;
-            margin-bottom: 30px;
+            margin-bottom: 32px;
         }
 
         .stat-card {
-            background: var(--surface-2);
+            background: #ffffff;
             border-radius: 16px;
-            padding: 20px;
-            box-shadow: var(--shadow-card);
+            padding: 22px 24px;
+            border: 1px solid #f1f5f9;
             display: flex;
             align-items: center;
-            border: 1px solid var(--line);
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            gap: 18px;
+            transition: all 0.25s ease;
         }
 
         .stat-card:hover {
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.06);
             transform: translateY(-2px);
-            box-shadow: 0 16px 32px rgba(45, 55, 72, 0.12);
         }
 
         .stat-icon {
-            width: 50px;
-            height: 50px;
-            border-radius: 12px;
+            width: 52px;
+            height: 52px;
+            border-radius: 14px;
             display: flex;
             align-items: center;
             justify-content: center;
-            margin-right: 15px;
             font-size: 20px;
-            color: white;
+            flex-shrink: 0;
         }
 
-        .stat-card:nth-child(1) .stat-icon {
-            background: linear-gradient(135deg, #27ae60 0%, #2ecc71 100%);
-        }
-
-        .stat-card:nth-child(2) .stat-icon {
-            background: linear-gradient(135deg, #8e44ad 0%, #9b59b6 100%);
-        }
-
-        .stat-card:nth-child(3) .stat-icon {
-            background: linear-gradient(135deg, #e67e22 0%, #f39c12 100%);
-        }
-
-        .stat-card:nth-child(4) .stat-icon {
-            background: linear-gradient(135deg, #3498db 0%, #2980b9 100%);
-        }
+        .stat-card:nth-child(1) .stat-icon { background: #ecfdf5; color: #059669; }
+        .stat-card:nth-child(2) .stat-icon { background: #f3e8ff; color: #7c3aed; }
+        .stat-card:nth-child(3) .stat-icon { background: #fff7ed; color: #ea580c; }
+        .stat-card:nth-child(4) .stat-icon { background: #eff6ff; color: #2563eb; }
 
         .stat-content {
-            flex: 1;
-        }
-
-        .stat-value {
-            font-size: 24px;
-            font-weight: 700;
-            margin-bottom: 5px;
-            color: var(--text-main);
+            display: flex;
+            flex-direction: column;
+            gap: 2px;
+            min-width: 0;
         }
 
         .stat-label {
-            font-size: 14px;
-            color: var(--text-soft);
+            font-size: 13px;
+            color: #94a3b8;
             font-weight: 500;
+            white-space: nowrap;
+        }
+
+        .stat-value {
+            font-size: 22px;
+            font-weight: 700;
+            color: #1e293b;
+            letter-spacing: -0.3px;
+            font-family: 'Poppins', sans-serif;
+            line-height: 1.3;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
         }
 
         /* Tables */
@@ -344,7 +341,7 @@
         /* Responsive Design */
         @media (max-width: 1200px) {
             .stats-grid {
-                grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+                grid-template-columns: repeat(2, 1fr);
             }
         }
 
@@ -356,11 +353,6 @@
             
             .dashboard-container {
                 flex-direction: column;
-            }
-
-            .stats-grid {
-                grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
-                gap: 15px;
             }
 
             .page-header h1 {
@@ -383,17 +375,21 @@
             }
 
             .stat-card {
-                padding: 15px;
+                padding: 16px;
             }
 
             .stat-icon {
-                width: 40px;
-                height: 40px;
-                font-size: 16px;
+                width: 44px;
+                height: 44px;
+                font-size: 17px;
             }
 
             .stat-value {
-                font-size: 20px;
+                font-size: 18px;
+            }
+
+            .stat-label {
+                font-size: 12px;
             }
 
             .content-section {
@@ -410,11 +406,6 @@
                 height: 250px !important;
             }
 
-            .btn {
-                padding: 8px 12px;
-                font-size: 13px;
-            }
-
             .page-header {
                 flex-direction: column;
                 align-items: flex-start;
@@ -429,17 +420,24 @@
 
         @media (max-width: 576px) {
             .stats-grid {
-                grid-template-columns: 1fr;
+                grid-template-columns: 1fr 1fr;
+                gap: 10px;
             }
 
             .stat-card {
-                flex-direction: row;
-                text-align: left;
+                padding: 14px;
+                gap: 12px;
             }
 
             .stat-icon {
-                margin-right: 15px;
-                margin-bottom: 0;
+                width: 40px;
+                height: 40px;
+                font-size: 16px;
+                border-radius: 12px;
+            }
+
+            .stat-value {
+                font-size: 16px;
             }
 
             .data-table {
@@ -478,31 +476,31 @@
 
             <section class="stats-grid">
                 <div class="stat-card">
-                    <div class="stat-icon"><i class="fas fa-sack-dollar"></i></div>
+                    <div class="stat-icon"><i class="fas fa-wallet"></i></div>
                     <div class="stat-content">
-                        <div class="stat-value">Rp {{ number_format((float) ($totalSales ?? 0), 0, ',', '.') }}</div>
                         <div class="stat-label">Total Penjualan</div>
+                        <div class="stat-value">Rp {{ number_format((float) ($totalSales ?? 0), 0, ',', '.') }}</div>
                     </div>
                 </div>
                 <div class="stat-card">
                     <div class="stat-icon"><i class="fas fa-box-open"></i></div>
                     <div class="stat-content">
-                        <div class="stat-value">Rp {{ number_format((float) ($paketSales ?? 0), 0, ',', '.') }}</div>
                         <div class="stat-label">Penjualan Paket</div>
+                        <div class="stat-value">Rp {{ number_format((float) ($paketSales ?? 0), 0, ',', '.') }}</div>
                     </div>
                 </div>
                 <div class="stat-card">
                     <div class="stat-icon"><i class="fas fa-calendar-check"></i></div>
                     <div class="stat-content">
-                        <div class="stat-value">Rp {{ number_format((float) ($currentMonthSales ?? 0), 0, ',', '.') }}</div>
                         <div class="stat-label">Bulan Ini</div>
+                        <div class="stat-value">Rp {{ number_format((float) ($currentMonthSales ?? 0), 0, ',', '.') }}</div>
                     </div>
                 </div>
                 <div class="stat-card">
                     <div class="stat-icon"><i class="fas fa-calendar-minus"></i></div>
                     <div class="stat-content">
-                        <div class="stat-value">Rp {{ number_format((float) ($lastMonthSales ?? 0), 0, ',', '.') }}</div>
                         <div class="stat-label">Bulan Lalu</div>
+                        <div class="stat-value">Rp {{ number_format((float) ($lastMonthSales ?? 0), 0, ',', '.') }}</div>
                     </div>
                 </div>
             </section>
