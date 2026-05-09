@@ -360,7 +360,7 @@
 </head>
 <body>
     <div class="dashboard-container">
-        @include('admin.partials.sidebar', ['activeMenu' => 'menu', 'pendingCount' => $pendingCount ?? 0])
+        @include('admin.partials.sidebar', ['activeMenu' => 'paket', 'pendingCount' => $pendingCount ?? 0])
         
         <!-- Main Content -->
         <main class="main-content">

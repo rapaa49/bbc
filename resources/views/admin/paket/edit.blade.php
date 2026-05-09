@@ -238,7 +238,7 @@
 </head>
 <body>
     <div class="dashboard-container">
-        @include('admin.partials.sidebar', ['activeMenu' => 'menu', 'pendingCount' => $pendingCount ?? 0])
+        @include('admin.partials.sidebar', ['activeMenu' => 'paket', 'pendingCount' => $pendingCount ?? 0])
         
         <!-- Main Content -->
         <main class="main-content">
@@ -248,7 +248,7 @@
                     <p>Edit paket bundle produk BBC</p>
                 </div>
                 <div class="header-actions">
-                    <a href="/menu" class="back-btn">
+                    <a href="/paket" class="back-btn">
                         <i class="fas fa-arrow-left"></i>
                         Kembali
                     </a>
@@ -326,7 +326,7 @@
                     </div>
 
                     <div class="form-actions">
-                        <a href="/menu" class="btn btn-cancel">
+                        <a href="/paket" class="btn btn-cancel">
                             <i class="fas fa-times"></i>
                             Batal
                         </a>

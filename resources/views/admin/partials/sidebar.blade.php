@@ -43,6 +43,7 @@
         top: 0;
         left: 0;
         overflow-x: hidden;
+        transition: transform 0.35s cubic-bezier(0.4, 0, 0.2, 1);
     }
 
     .sidebar.admin-sidebar .sidebar-top {
@@ -116,8 +117,7 @@
     .menu-dropdown-toggle {
         display: flex;
         align-items: center;
-        width: 100%;
-        margin: 5px 10px;
+        width: calc(100% - 20px);
         box-sizing: border-box;
     }
 
@@ -150,22 +150,24 @@
     .menu-dropdown-link {
         display: flex;
         align-items: center;
-        padding: 10px 12px 10px 44px;
-        margin: 2px 10px;
-        border-radius: 10px;
+        padding: 10px 13px 10px 38px;
+        margin: 5px 10px;
+        border-radius: 14px;
+        border: 1px solid transparent;
         text-decoration: none;
-        color: #2D3748;
+        color: #475569;
         font-size: 14px;
         font-weight: 500;
         box-sizing: border-box;
-        max-width: calc(100% - 20px);
-        transition: all 0.2s ease;
+        width: calc(100% - 20px);
+        transition: color 0.22s ease, background 0.22s ease, border-color 0.22s ease;
         position: relative;
     }
 
     .menu-dropdown-link:hover {
-        background: rgba(139, 0, 0, 0.04);
         color: #8B0000;
+        background: rgba(139, 0, 0, 0.04);
+        border-color: rgba(139, 0, 0, 0.25);
     }
 
     .menu-dropdown-link.is-active {
@@ -173,17 +175,19 @@
         font-weight: 600;
         background: rgba(139, 0, 0, 0.06);
     }
-
-    .menu-dropdown-link.is-active::before {
-        content: '';
-        position: absolute;
-        left: 14px;
-        top: 50%;
-        transform: translateY(-50%);
-        width: 6px;
-        height: 6px;
-        background: #8B0000;
-        border-radius: 50%;
+    
+    .menu-dropdown-link i {
+        width: 20px;
+        text-align: center;
+        margin-right: 8px;
+        font-size: 13px;
+        opacity: 0.75;
+        transition: opacity 0.2s ease;
+    }
+    
+    .menu-dropdown-link:hover i,
+    .menu-dropdown-link.is-active i {
+        opacity: 1;
     }
 
     .sidebar-logout {
@@ -201,20 +205,41 @@
         padding: 13px 14px;
         border-radius: 14px;
         border: 0;
-        background: linear-gradient(to right, #8B0000 50%, rgba(139, 0, 0, 0.04) 50%);
-        background-size: 200% 100%;
-        background-position: right bottom;
+        background: rgba(139, 0, 0, 0.04);
         color: #8B0000;
         font-size: 15px;
         font-weight: 600;
         cursor: pointer;
-        transition: background-position 0.4s ease-out, color 0.3s ease, box-shadow 0.3s ease;
+        transition: color 0.3s ease, box-shadow 0.3s ease;
+        position: relative;
+        overflow: hidden;
+    }
+
+    .sidebar-logout .logout-btn::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: #8B0000;
+        transform: translateX(-101%);
+        transition: transform 0.4s ease-out;
+        z-index: 0;
+    }
+
+    .sidebar-logout .logout-btn > * {
+        position: relative;
+        z-index: 1;
     }
 
     .sidebar-logout .logout-btn:hover {
-        background-position: left bottom;
         color: #fff;
         box-shadow: 0 10px 22px rgba(139, 0, 0, 0.2);
+    }
+
+    .sidebar-logout .logout-btn:hover::before {
+        transform: translateX(0);
     }
 
     .sidebar.admin-sidebar .menu-item {
@@ -287,15 +312,21 @@
         width: 44px;
         height: 44px;
         border-radius: 12px;
-        background: #8B0000;
-        color: #fff;
-        border: none;
+        background: #ffffff;
+        color: #2D3748;
+        border: 1px solid #e2e8f0;
         align-items: center;
         justify-content: center;
         cursor: pointer;
-        box-shadow: 0 4px 12px rgba(139, 0, 0, 0.3);
+        box-shadow: 0 4px 12px rgba(45, 55, 72, 0.06);
         font-size: 18px;
-        transition: transform 0.2s ease, box-shadow 0.2s ease;
+        transition: all 0.2s ease;
+    }
+
+    .sidebar-mobile-toggle:hover {
+        background: #f8fafc;
+        box-shadow: 0 6px 16px rgba(45, 55, 72, 0.1);
+        color: #8B0000;
     }
 
     .sidebar-mobile-toggle:active {
@@ -366,16 +397,18 @@
             <span>Dashboard</span>
         </a>
         <div class="menu-dropdown {{ in_array($activeMenu, ['menu', 'paket']) ? 'is-active' : '' }}">
-            <a class="menu-item menu-dropdown-toggle {{ in_array($activeMenu, ['menu', 'paket']) ? 'active' : '' }}" onclick="toggleDropdown(this)" href="javascript:void(0)">
+            <a class="menu-item menu-dropdown-toggle {{ in_array($activeMenu, ['menu', 'paket']) ? 'active' : '' }}" href="javascript:void(0)">
                 <i class="fas fa-utensils"></i>
                 <span>Kelola Produk</span>
-                <i class="fas fa-chevron-down dropdown-arrow" style="margin-left:8px;font-size:12px;"></i>
+                <i class="fas fa-chevron-down dropdown-arrow" style="margin-left:auto;font-size:12px;"></i>
             </a>
             <div class="menu-dropdown-list {{ in_array($activeMenu, ['menu', 'paket']) ? 'is-open' : '' }}">
                 <a href="/admin/menu-management" class="menu-dropdown-link {{ $activeMenu === 'menu' ? 'is-active' : '' }}">
+                    <i class="fas fa-list-ul"></i>
                     <span>Daftar Menu</span>
                 </a>
                 <a href="/paket" class="menu-dropdown-link {{ $activeMenu === 'paket' ? 'is-active' : '' }}">
+                    <i class="fas fa-boxes"></i>
                     <span>Paket</span>
                 </a>
             </div>
@@ -389,16 +422,18 @@
             <span>Laporan Penjualan</span>
         </a>
         <div class="menu-dropdown {{ in_array($activeMenu, ['testimoni', 'ulasan']) ? 'is-active' : '' }}">
-            <a class="menu-item menu-dropdown-toggle {{ in_array($activeMenu, ['testimoni', 'ulasan']) ? 'active' : '' }}" onclick="toggleDropdown(this)" href="javascript:void(0)">
+            <a class="menu-item menu-dropdown-toggle {{ in_array($activeMenu, ['testimoni', 'ulasan']) ? 'active' : '' }}" href="javascript:void(0)">
                 <i class="fas fa-comment"></i>
                 <span>Testimoni</span>
-                <i class="fas fa-chevron-down dropdown-arrow" style="margin-left:8px;font-size:12px;"></i>
+                <i class="fas fa-chevron-down dropdown-arrow" style="margin-left:auto;font-size:12px;"></i>
             </a>
             <div class="menu-dropdown-list {{ in_array($activeMenu, ['testimoni', 'ulasan']) ? 'is-open' : '' }}">
                 <a href="{{ route('admin.testimoni.index') }}" class="menu-dropdown-link {{ $activeMenu === 'testimoni' ? 'is-active' : '' }}">
+                    <i class="fas fa-users"></i>
                     <span>Influencer</span>
                 </a>
                 <a href="{{ route('admin.testimoni.ulasan') }}" class="menu-dropdown-link {{ $activeMenu === 'ulasan' ? 'is-active' : '' }}">
+                    <i class="fas fa-star"></i>
                     <span>Ulasan</span>
                 </a>
             </div>
@@ -441,6 +476,7 @@
         const menu = sidebar.querySelector('.menu');
         const slider = menu.querySelector('.menu-slider');
         const items = menu.querySelectorAll('.menu-item');
+        const dropdownToggles = menu.querySelectorAll('.menu-dropdown-toggle');
 
         function isMobile() {
             return window.innerWidth <= 992;
@@ -491,6 +527,20 @@
             }
         }
 
+        function trackSliderMovement() {
+            let start = performance.now();
+            function step(time) {
+                const currentActive = menu.querySelector('.menu-item.is-active') || activeItem;
+                if (currentActive) {
+                    positionSlider(currentActive, false);
+                }
+                if (time - start < 450) {
+                    requestAnimationFrame(step);
+                }
+            }
+            requestAnimationFrame(step);
+        }
+
         function clearActiveVisual() {
             items.forEach(el => el.classList.remove('is-active'));
         }
@@ -499,26 +549,56 @@
             if (item) item.classList.add('is-active');
         }
 
-        const activeItem = menu.querySelector('.menu-item.active');
+        const activeItem = menu.querySelector('.menu-item.active') || menu.querySelector('.menu-dropdown-toggle.active');
         if (activeItem) {
             activeItem.classList.remove('active');
             positionSlider(activeItem, false);
             setActiveVisual(activeItem);
         }
 
-        items.forEach(item => {
-            item.addEventListener('click', function(e) {
-                const href = item.getAttribute('href');
-                const isDropdownToggle = href && href.startsWith('javascript:');
+        // Accordion behavior for dropdowns
+        dropdownToggles.forEach(toggle => {
+            // Remove the inline onclick attribute
+            toggle.removeAttribute('onclick');
+            
+            toggle.addEventListener('click', function(e) {
+                e.preventDefault();
+                
+                const dropdown = toggle.closest('.menu-dropdown');
+                const list = dropdown.querySelector('.menu-dropdown-list');
+                const isOpen = list.classList.contains('is-open');
 
-                if (isDropdownToggle) {
-                    e.preventDefault();
-                    clearActiveVisual();
-                    positionSlider(item, true);
-                    setTimeout(() => setActiveVisual(item), 280);
-                    return;
+                // Close other dropdowns
+                const allDropdowns = menu.querySelectorAll('.menu-dropdown');
+                allDropdowns.forEach(dd => {
+                    if (dd !== dropdown) {
+                        dd.classList.remove('is-active');
+                        const otherList = dd.querySelector('.menu-dropdown-list');
+                        if (otherList) otherList.classList.remove('is-open');
+                    }
+                });
+
+                // Toggle current
+                if (isOpen) {
+                    list.classList.remove('is-open');
+                    dropdown.classList.remove('is-active');
+                } else {
+                    list.classList.add('is-open');
+                    dropdown.classList.add('is-active');
                 }
 
+                // Smoothly track slider position as layout shifts
+                clearActiveVisual();
+                setActiveVisual(toggle);
+                trackSliderMovement();
+            });
+        });
+
+        items.forEach(item => {
+            if (item.classList.contains('menu-dropdown-toggle')) return; // handled above
+
+            item.addEventListener('click', function(e) {
+                const href = item.getAttribute('href');
                 if (!href || href === '#' || item.classList.contains('is-active')) return;
 
                 e.preventDefault();
