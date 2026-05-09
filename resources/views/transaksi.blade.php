@@ -321,8 +321,35 @@
                 </div>
                 <div class="px-5 pb-5 grid grid-cols-2 gap-3">
                     <button type="button" onclick="closeQrisModal()" class="w-full bg-[#F9EDDE] text-[#3a2a1a] py-2.5 rounded-lg border border-[#EFE1D1] font-bold hover:bg-gray-100 transition">Batal</button>
-                    <button id="btnConfirmQris" onclick="confirmPayment()" class="w-full bg-green-600 text-white py-2.5 rounded-lg font-bold shadow-lg hover:bg-green-700 transition flex items-center justify-center"><i class="fas fa-check-circle mr-2"></i> Sudah Bayar</button>
+                    <button id="btnConfirmQris" onclick="openUploadProofModal()" class="w-full bg-green-600 text-white py-2.5 rounded-lg font-bold shadow-lg hover:bg-green-700 transition flex items-center justify-center"><i class="fas fa-check-circle mr-2"></i> Sudah Bayar</button>
                 </div>
+            </div>
+        </div>
+
+        <!-- Modal Upload Bukti Pembayaran -->
+        <div id="uploadProofModal" class="fixed inset-0 bg-black/60 hidden items-center justify-center z-50 px-4">
+            <div class="bg-white w-full max-w-md rounded-2xl shadow-xl overflow-hidden">
+                <div class="px-5 py-4 flex items-center justify-between border-b border-gray-100 bg-gradient-to-r from-green-600 to-green-800 text-white">
+                    <div class="font-bold flex items-center"><i class="fas fa-upload mr-2"></i> Upload Bukti Pembayaran</div>
+                    <button type="button" onclick="closeUploadProofModal()" class="text-white/70 hover:text-white text-xl leading-none">&times;</button>
+                </div>
+                <form id="uploadProofForm" onsubmit="submitPaymentProof(event)" class="p-5 flex flex-col items-center">
+                    <div class="mb-4 w-full">
+                        <label class="block text-sm font-bold text-gray-700 mb-2">Upload Screenshot Bukti Transfer</label>
+                        <input type="file" id="paymentProof" name="payment_proof" accept="image/*" required class="w-full border-gray-300 rounded-lg p-2.5 outline-none focus:ring-2 focus:ring-green-600 bg-gray-50">
+                        <div class="mt-2 text-xs text-gray-500">Format: JPG, PNG, JPEG (Max 5MB)</div>
+                    </div>
+                    <div id="previewContainer" class="mb-4 w-full hidden">
+                        <label class="block text-sm font-bold text-gray-700 mb-2">Preview:</label>
+                        <img id="previewImage" src="" alt="Preview" class="w-full h-auto rounded-lg border">
+                    </div>
+                    <div class="w-full grid grid-cols-2 gap-3 mt-2">
+                        <button type="button" onclick="closeUploadProofModal()" class="w-full bg-[#F9EDDE] text-[#3a2a1a] py-2.5 rounded-lg border border-[#EFE1D1] font-bold hover:bg-gray-200 transition">Batal</button>
+                        <button type="submit" id="btnSubmitProof" class="w-full bg-green-600 text-white py-2.5 rounded-lg font-bold shadow-md hover:bg-green-700 transition flex items-center justify-center">
+                            <i class="fas fa-paper-plane mr-2"></i> Kirim
+                        </button>
+                    </div>
+                </form>
             </div>
         </div>
 
@@ -441,6 +468,97 @@
                 if (!modal) return;
                 modal.classList.add('hidden');
                 modal.classList.remove('flex');
+            }
+
+            function openUploadProofModal() {
+                closeQrisModal();
+                const modal = document.getElementById('uploadProofModal');
+                if (!modal) return;
+                modal.classList.remove('hidden');
+                modal.classList.add('flex');
+
+                // Setup file input listener
+                const fileInput = document.getElementById('paymentProof');
+                if (fileInput) {
+                    fileInput.addEventListener('change', function(e) {
+                        const file = e.target.files[0];
+                        const previewContainer = document.getElementById('previewContainer');
+                        const previewImage = document.getElementById('previewImage');
+
+                        if (file) {
+                            const reader = new FileReader();
+                            reader.onload = function(e) {
+                                previewImage.src = e.target.result;
+                                previewContainer.classList.remove('hidden');
+                            };
+                            reader.readAsDataURL(file);
+                        } else {
+                            previewContainer.classList.add('hidden');
+                        }
+                    });
+                }
+            }
+
+            function closeUploadProofModal() {
+                const modal = document.getElementById('uploadProofModal');
+                if (!modal) return;
+                modal.classList.add('hidden');
+                modal.classList.remove('flex');
+                document.getElementById('uploadProofForm').reset();
+                document.getElementById('previewContainer').classList.add('hidden');
+            }
+
+            async function submitPaymentProof(e) {
+                e.preventDefault();
+                const btn = document.getElementById('btnSubmitProof');
+                btn.disabled = true;
+                btn.innerHTML = '<i class="fas fa-spinner fa-spin mr-2"></i> Mengirim...';
+
+                const formData = new FormData();
+                const fileInput = document.getElementById('paymentProof');
+                if (fileInput.files[0]) {
+                    formData.append('payment_proof', fileInput.files[0]);
+                }
+
+                try {
+                    const response = await fetch('{{ route('transaksi.upload-proof', $pesanan->order_id) }}', {
+                        method: 'POST',
+                        headers: {
+                            'X-CSRF-TOKEN': '{{ csrf_token() }}',
+                            'Accept': 'application/json'
+                        },
+                        body: formData
+                    });
+
+                    const data = await response.json();
+
+                    if (data.success) {
+                        btn.innerHTML = '<i class="fas fa-check mr-2"></i> Berhasil!';
+                        btn.classList.replace('bg-green-600', 'bg-blue-600');
+                        btn.classList.replace('hover:bg-green-700', 'hover:bg-blue-700');
+
+                        try {
+                            const audio = document.getElementById('successSound');
+                            audio.src = 'https://assets.mixkit.co/active_storage/sfx/2013/2013-preview.mp3';
+                            await audio.play();
+                        } catch(e) {}
+
+                        setTimeout(() => {
+                            closeUploadProofModal();
+                            alert('Bukti pembayaran berhasil dikirim. Admin akan memverifikasi pembayaran Anda.');
+                            window.location.href = "{{ route('my-orders', ['tab' => 'diproses']) }}";
+                        }, 1000);
+                    } else {
+                        alert('Terjadi kesalahan. Silakan coba lagi.');
+                        btn.disabled = false;
+                        btn.innerHTML = '<i class="fas fa-paper-plane mr-2"></i> Kirim';
+                    }
+                } catch (error) {
+                    console.error(error);
+                    alert('Gagal menghubungi server.');
+                    btn.disabled = false;
+                    btn.innerHTML = '<i class="fas fa-paper-plane mr-2"></i> Kirim';
+                }
             }
 
             document.addEventListener('DOMContentLoaded', () => {

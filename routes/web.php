@@ -89,7 +89,8 @@ Route::middleware('auth')->group(function () {
     Route::get('/transaksi/{orderId}', [TransaksiController::class, 'show'])->name('transaksi.show');
     Route::post('/transaksi/{orderId}/transfer-notify', [TransaksiController::class, 'notifyTransfer'])->name('transaksi.transfer.notify');
     Route::post('/transaksi/{orderId}/pay', [TransaksiController::class, 'pay'])->name('transaksi.pay');
-    
+    Route::post('/transaksi/{orderId}/upload-proof', [TransaksiController::class, 'uploadProof'])->name('transaksi.upload-proof');
+
     Route::get('/my-orders', [TransaksiController::class, 'index'])->name('my-orders');
 });
 

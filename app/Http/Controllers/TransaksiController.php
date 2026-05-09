@@ -142,4 +142,73 @@ class TransaksiController extends Controller
             'message' => 'Transfer berhasil dikonfirmasi',
         ]);
     }
+
+    public function uploadProof(Request $request, string $orderId)
+    {
+        $pesanan = Pesanan::where('order_id', $orderId)->firstOrFail();
+
+        if ($request->hasFile('payment_proof')) {
+            $file = $request->file('payment_proof');
+
+            // Validate file
+            $request->validate([
+                'payment_proof' => 'required|image|mimes:jpeg,png,jpg|max:5120'
+            ]);
+
+            $filename = 'payment_proof_' . $pesanan->order_id . '_' . time() . '.' . $file->getClientOriginalExtension();
+
+            // Create directory if not exists
+            $uploadPath = public_path('uploads/payment_proofs');
+            if (!file_exists($uploadPath)) {
+                mkdir($uploadPath, 0777, true);
+            }
+
+            $file->move($uploadPath, $filename);
+
+            try {
+                $pesanan->update([
+                    'payment_proof' => $filename,
+                    'status' => 'confirmed'
+                ]);
+            } catch (\Exception $e) {
+                // If payment_proof column doesn't exist, just update status
+                if (str_contains($e->getMessage(), 'payment_proof')) {
+                    $pesanan->update([
+                        'status' => 'confirmed'
+                    ]);
+                    Log::warning("Kolom payment_proof belum ada di database, hanya update status: " . $e->getMessage());
+                } else {
+                    throw $e;
+                }
+            }
+
+            // Kirim notifikasi WA ke Admin
+            $nomorAdmin = '';
+            $tokenFonnte = 'iVYAMrABUfg37ybY3mMp';
+            $pesan = "Halo Admin, bukti pembayaran untuk pesanan ID *{$pesanan->order_id}* a/n *{$pesanan->customer_name}* senilai Rp " . number_format($pesanan->total_price, 0, ',', '.') . " telah diupload.\n\nSilakan verifikasi di Dashboard!";
+
+            try {
+                $response = Http::withHeaders([
+                    'Authorization' => $tokenFonnte,
+                ])->post('https://api.fonnte.com/send', [
+                    'target' => $nomorAdmin,
+                    'message' => $pesan,
+                ]);
+
+                Log::info("Notifikasi WA bukti pembayaran terkirim ke {$nomorAdmin}. Response: " . $response->body());
+            } catch (\Exception $e) {
+                Log::error("Gagal kirim notifikasi WA: " . $e->getMessage());
+            }
+
+            return response()->json([
+                'success' => true,
+                'message' => 'Bukti pembayaran berhasil diupload',
+            ]);
+        }
+
+        return response()->json([
+            'success' => false,
+            'message' => 'Gagal mengupload bukti pembayaran',
+        ]);
+    }
 }
