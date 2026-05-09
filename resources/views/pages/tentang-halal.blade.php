@@ -619,20 +619,6 @@
         </div>
     </section>
 
-    <!-- Ulasan Section - Same as Home Page -->
-    <section id="ulasan" class="pt-20 pb-20 md:pt-24 md:pb-32 bg-body-image">
-        <div class="max-w-7xl mx-auto px-6">
-            <div class="text-center mb-12">
-                <span class="text-red-700 font-bold tracking-widest text-sm uppercase mb-2 block font-poppins">Ulasan Pelanggan</span>
-                <h3 class="text-3xl md:text-5xl font-bold text-[#26180f] tracking-tight mb-4 text-center">
-                    Apa Kata Mereka?
-                </h3>
-            </div>
-
-            @include('partials.testimonial-carousel', ['testimonials' => $testimonials ?? collect()])
-        </div>
-    </section>
-
     @include('partials.footer')
     <script>
         const revealEls = document.querySelectorAll('.fade-up, .fade-left, .fade-right');

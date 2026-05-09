@@ -73,32 +73,65 @@
         </div>
     </div>
 
-    <div id="mobileNavbarMenu" class="md:hidden rounded-2xl border border-white/30 bg-white/15 px-3 py-3 backdrop-blur-2xl shadow-xl shadow-black/15">
-        <div class="flex flex-col gap-2">
-            <a href="{{ route('home') }}" class="mobile-nav-link px-1 py-2 text-sm font-semibold {{ request()->routeIs('home') ? 'mobile-nav-link-active' : '' }}">HOME</a>
-            <a href="{{ route('pages.tentang') }}" class="mobile-nav-link px-1 py-2 text-sm font-semibold {{ request()->routeIs('pages.tentang') ? 'mobile-nav-link-active' : '' }}">TENTANG BBC</a>
-            <a href="{{ route('menu.public') }}" class="mobile-nav-link px-1 py-2 text-sm font-semibold {{ request()->routeIs('menu.public') ? 'mobile-nav-link-active' : '' }}">MENU</a>
-            <a href="{{ route('pages.lokasi_kontak') }}" class="mobile-nav-link px-1 py-2 text-sm font-semibold {{ request()->routeIs('pages.lokasi_kontak') ? 'mobile-nav-link-active' : '' }}">LOKASI DAN KONTAK</a>
+    <div id="mobileNavbarMenu" class="md:hidden mx-auto max-w-[1180px]">
+        <div class="mobile-menu-inner rounded-[24px] border border-white/50 bg-white/95 backdrop-blur-2xl shadow-2xl shadow-black/10">
+            <div class="flex flex-col p-3 gap-1">
+                <a href="{{ route('home') }}" class="group relative flex items-center justify-between px-4 py-3.5 rounded-xl text-[14px] font-semibold transition-all duration-300 {{ request()->routeIs('home') ? 'bg-red-50 text-red-700' : 'text-[#3a2a1a] hover:bg-[#f8f5f0]' }}">
+                    <span class="flex items-center gap-3"><i class="fas fa-home text-[18px] w-6 text-center transition-colors duration-300 {{ request()->routeIs('home') ? 'text-red-600' : 'text-[#8b7355] group-hover:text-red-600' }}"></i> Home</span>
+                    @if(request()->routeIs('home')) <i class="fas fa-chevron-right text-[11px] text-red-500"></i> @endif
+                </a>
+                <a href="{{ route('pages.tentang') }}" class="group relative flex items-center justify-between px-4 py-3.5 rounded-xl text-[14px] font-semibold transition-all duration-300 {{ request()->routeIs('pages.tentang') ? 'bg-red-50 text-red-700' : 'text-[#3a2a1a] hover:bg-[#f8f5f0]' }}">
+                    <span class="flex items-center gap-3"><i class="fas fa-info-circle text-[18px] w-6 text-center transition-colors duration-300 {{ request()->routeIs('pages.tentang') ? 'text-red-600' : 'text-[#8b7355] group-hover:text-red-600' }}"></i> Tentang BBC</span>
+                    @if(request()->routeIs('pages.tentang')) <i class="fas fa-chevron-right text-[11px] text-red-500"></i> @endif
+                </a>
+                <a href="{{ route('menu.public') }}" class="group relative flex items-center justify-between px-4 py-3.5 rounded-xl text-[14px] font-semibold transition-all duration-300 {{ request()->routeIs('menu.public') ? 'bg-red-50 text-red-700' : 'text-[#3a2a1a] hover:bg-[#f8f5f0]' }}">
+                    <span class="flex items-center gap-3"><i class="fas fa-utensils text-[18px] w-6 text-center transition-colors duration-300 {{ request()->routeIs('menu.public') ? 'text-red-600' : 'text-[#8b7355] group-hover:text-red-600' }}"></i> Menu</span>
+                    @if(request()->routeIs('menu.public')) <i class="fas fa-chevron-right text-[11px] text-red-500"></i> @endif
+                </a>
+                <a href="{{ route('pages.lokasi_kontak') }}" class="group relative flex items-center justify-between px-4 py-3.5 rounded-xl text-[14px] font-semibold transition-all duration-300 {{ request()->routeIs('pages.lokasi_kontak') ? 'bg-red-50 text-red-700' : 'text-[#3a2a1a] hover:bg-[#f8f5f0]' }}">
+                    <span class="flex items-center gap-3"><i class="fas fa-map-marker-alt text-[18px] w-6 text-center transition-colors duration-300 {{ request()->routeIs('pages.lokasi_kontak') ? 'text-red-600' : 'text-[#8b7355] group-hover:text-red-600' }}"></i> Lokasi & Kontak</span>
+                    @if(request()->routeIs('pages.lokasi_kontak')) <i class="fas fa-chevron-right text-[11px] text-red-500"></i> @endif
+                </a>
 
-            @auth
-            <div class="border-t border-white/20 pt-2 mt-1">
-                <p class="text-[11px] text-[#5c4637] font-medium px-1 py-1 truncate">{{ auth()->user()->name ?? 'Pengguna' }}</p>
-                <a href="{{ route('my-orders') }}" class="mobile-nav-link {{ request()->routeIs('my-orders') ? 'mobile-nav-link-active' : '' }}">
-                    <i class="fas fa-clipboard-list mr-1.5 text-[11px]"></i>Pesanan Saya
+                @auth
+                <div class="h-px bg-gradient-to-r from-transparent via-[#8b7355]/20 to-transparent my-1"></div>
+                
+                <div class="px-4 py-2 mt-1 mb-1 bg-[#f8f5f0]/50 rounded-xl border border-[#8b7355]/10">
+                    <p class="text-[10px] text-[#8b7355] font-bold uppercase tracking-widest mb-0.5">Akun Saya</p>
+                    <p class="text-[14px] font-bold text-[#3a2a1a] truncate">{{ auth()->user()->name ?? 'Pengguna' }}</p>
+                </div>
+
+                <a href="{{ route('my-orders') }}" class="group relative flex items-center justify-between px-4 py-3.5 rounded-xl text-[14px] font-semibold transition-all duration-300 {{ request()->routeIs('my-orders') ? 'bg-red-50 text-red-700' : 'text-[#3a2a1a] hover:bg-[#f8f5f0]' }}">
+                    <span class="flex items-center gap-3"><i class="fas fa-clipboard-list text-[18px] w-6 text-center transition-colors duration-300 {{ request()->routeIs('my-orders') ? 'text-red-600' : 'text-[#8b7355] group-hover:text-red-600' }}"></i> Pesanan Saya</span>
+                    @if(request()->routeIs('my-orders')) <i class="fas fa-chevron-right text-[11px] text-red-500"></i> @endif
                 </a>
-                <a href="{{ route('cart.index') }}" class="mobile-nav-link {{ request()->routeIs('cart.index') ? 'mobile-nav-link-active' : '' }}">
-                    <i class="fas fa-shopping-cart mr-1.5 text-[11px]"></i>Keranjang
+                <a href="{{ route('cart.index') }}" class="group relative flex items-center justify-between px-4 py-3.5 rounded-xl text-[14px] font-semibold transition-all duration-300 {{ request()->routeIs('cart.index') ? 'bg-red-50 text-red-700' : 'text-[#3a2a1a] hover:bg-[#f8f5f0]' }}">
+                    <span class="flex items-center gap-3">
+                        <div class="relative flex items-center justify-center w-6">
+                            <i class="fas fa-shopping-cart text-[18px] transition-colors duration-300 {{ request()->routeIs('cart.index') ? 'text-red-600' : 'text-[#8b7355] group-hover:text-red-600' }}"></i>
+                            <span id="cartCountMobileMenu" class="absolute -top-2 -right-2 bg-yellow-400 text-red-600 text-[9px] w-[16px] h-[16px] rounded-full flex items-center justify-center font-bold shadow-sm">0</span>
+                        </div>
+                        Keranjang
+                    </span>
+                    @if(request()->routeIs('cart.index')) <i class="fas fa-chevron-right text-[11px] text-red-500"></i> @endif
                 </a>
-                <form action="{{ route('logout') }}" method="POST" class="mt-1">
-                    @csrf
-                    <button type="submit" class="w-full text-left mobile-action-btn mobile-action-btn-login flex items-center gap-2 bg-red-700 hover:bg-red-800">
-                        <i class="fas fa-sign-out-alt text-[11px]"></i> Keluar
-                    </button>
-                </form>
+                
+                <div class="mt-2">
+                    <form action="{{ route('logout') }}" method="POST">
+                        @csrf
+                        <button type="submit" class="w-full flex items-center justify-center gap-2 bg-red-50/50 border border-red-100 text-red-700 hover:bg-red-600 hover:text-white hover:border-red-600 transition-all duration-300 py-3.5 rounded-xl font-bold text-[13px]">
+                            <i class="fas fa-sign-out-alt"></i> Keluar
+                        </button>
+                    </form>
+                </div>
+                @else
+                <div class="mt-2">
+                    <a href="{{ route('login') }}" class="w-full flex items-center justify-center gap-2 bg-gradient-to-r from-red-600 to-red-700 text-white hover:from-red-700 hover:to-red-800 transition-all duration-300 py-3.5 rounded-xl font-bold text-[13px] shadow-lg shadow-red-600/20">
+                        <i class="fas fa-sign-in-alt"></i> MASUK
+                    </a>
+                </div>
+                @endauth
             </div>
-            @else
-            <a href="{{ route('login') }}" class="mobile-action-btn mobile-action-btn-login">MASUK</a>
-            @endauth
         </div>
     </div>
 </header>
@@ -161,15 +194,7 @@
         transform: scaleX(1);
     }
 
-    #mobileNavbarMenu .mobile-nav-link {
-        color: #2f2218;
-        border-bottom: 2px solid transparent;
-        text-decoration: none;
-    }
-
-    #mobileNavbarMenu .mobile-nav-link-active {
-        border-bottom-color: #dc2626;
-    }
+    /* Mobile nav link styles handled by Tailwind classes */
 
     .mobile-cart-btn {
         position: relative;
@@ -200,35 +225,7 @@
         line-height: 1;
     }
 
-    #mobileNavbarMenu .mobile-action-btn {
-        display: inline-flex;
-        align-items: center;
-        justify-content: center;
-        align-self: flex-start;
-        margin-top: 0.3rem;
-        padding: 0.26rem 0.95rem;
-        border-radius: 999px;
-        text-decoration: none;
-        font-size: 13px;
-        font-weight: 600;
-        width: auto;
-        max-width: max-content;
-        transition: background-color 0.25s ease, transform 0.25s ease;
-    }
-
-    #mobileNavbarMenu .mobile-action-btn-cart {
-        background: rgba(255, 255, 255, 0.45);
-        color: #2f2218;
-    }
-
-    #mobileNavbarMenu .mobile-action-btn-login {
-        background: #dc2626;
-        color: #fff;
-    }
-
-    #mobileNavbarMenu .mobile-action-btn:hover {
-        transform: translateY(-1px);
-    }
+    /* Mobile action button styles handled by Tailwind classes */
 
     #mainNavbar .nav-gofood-link {
         display: inline-flex;
@@ -255,23 +252,26 @@
     }
 
     #mobileNavbarMenu {
-        overflow: hidden;
-        max-height: 0;
+        display: grid;
+        grid-template-rows: 0fr;
         opacity: 0;
         margin-top: 0;
-        transform: translateY(-8px);
+        transform: translateY(-12px) scale(0.98);
         pointer-events: none;
-        border-color: transparent;
-        transition: max-height 0.35s ease, opacity 0.25s ease, transform 0.35s ease, margin-top 0.35s ease, border-color 0.35s ease;
+        transition: grid-template-rows 0.4s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.3s ease, transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), margin-top 0.4s ease;
+    }
+
+    #mobileNavbarMenu .mobile-menu-inner {
+        min-height: 0;
+        overflow: hidden;
     }
 
     #mobileNavbarMenu.mobile-open {
-        max-height: 420px;
+        grid-template-rows: 1fr;
         opacity: 1;
         margin-top: 0.5rem;
-        transform: translateY(0);
+        transform: translateY(0) scale(1);
         pointer-events: auto;
-        border-color: rgba(255, 255, 255, 0.3);
     }
 
     #mainNavbar.navbar-scrolled .navbar-shell {
@@ -397,8 +397,14 @@ document.addEventListener('DOMContentLoaded', function() {
     let activeBtn = null;
 
     function syncMobileCartCount() {
-        if (!desktopCartCount || !mobileCartCount) return;
-        mobileCartCount.textContent = desktopCartCount.textContent || '0';
+        if (!desktopCartCount) return;
+        if (mobileCartCount) {
+            mobileCartCount.textContent = desktopCartCount.textContent || '0';
+        }
+        const mobileMenuCartCount = document.getElementById('cartCountMobileMenu');
+        if (mobileMenuCartCount) {
+            mobileMenuCartCount.textContent = desktopCartCount.textContent || '0';
+        }
     }
 
     function refreshCartCount() {

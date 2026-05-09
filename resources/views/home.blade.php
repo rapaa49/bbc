@@ -1173,10 +1173,10 @@
             box-shadow: 0 4px 12px rgba(0, 0, 0, 0.03), 0 1px 2px rgba(0, 0, 0, 0.02);
             transition: all 0.3s ease;
             overflow: hidden;
-            min-height: 100%;
             position: relative;
             display: flex;
             flex-direction: column;
+            min-height: 100%;
         }
 
         .package-card:hover {
@@ -1304,7 +1304,7 @@
         .package-divider {
             height: 1px;
             background: rgba(0, 0, 0, 0.06);
-            margin: 0.25rem 0;
+            margin: auto 0 0.25rem 0;
         }
 
         .package-cta {
@@ -1636,30 +1636,47 @@
                                              alt="{{ $paket->name }}"
                                              loading="lazy">
                                     </div>
-                                    <div class="package-content">
-                                        <div class="package-top-meta">
-                                            <span class="package-pill portion"><i class="fas fa-users" style="font-size:0.55rem;margin-right:0.2rem;"></i>{{ $paket->portion }} Porsi</span>
-                                        </div>
-
-                                        <h4 class="package-name line-clamp-2">{{ $paket->name }}</h4>
-                                        <p class="package-desc line-clamp-2">{{ $paket->description }}</p>
-
-                                        <div class="package-divider"></div>
-
-                                        <div>
-                                            @if(!empty($paket->original_price))
-                                                <div class="package-old-price mb-0.5">Rp {{ number_format((float) $paket->original_price, 0, ',', '.') }}</div>
-                                            @endif
-                                            <div class="package-price-row">
-                                                <div class="package-price">Rp {{ number_format((float) $paket->price, 0, ',', '.') }}</div>
-                                                <div class="package-price-unit">/paket</div>
+                                    <div class="package-content" style="flex: 1 1 auto; display: flex; flex-direction: column;">
+                                        <div style="flex-grow: 1;">
+                                            <div class="package-top-meta">
+                                                <span class="package-pill portion"><i class="fas fa-users" style="font-size:0.55rem;margin-right:0.2rem;"></i>{{ $paket->portion }} Porsi</span>
                                             </div>
+
+                                            <h4 class="package-name line-clamp-2" style="margin-bottom: 0.5rem;">{{ $paket->name }}</h4>
+                                            
+                                            @if($paket->description)
+                                            <div class="package-desc" style="white-space: normal; line-clamp: none; -webkit-line-clamp: unset; height: auto; overflow: visible; display: block; margin-bottom: 1rem;">
+                                                <ul style="list-style-type: disc; padding-left: 1.2rem; margin: 0; text-align: left; display: flex; flex-direction: column; gap: 2px;">
+                                                    @foreach(explode("\n", trim($paket->description)) as $line)
+                                                        @if(trim($line) !== '')
+                                                            <li style="word-break: break-word; overflow-wrap: break-word; font-size: 0.85rem;">{{ trim(preg_replace('/^[-*\s]+/', '', $line)) }}</li>
+                                                        @endif
+                                                    @endforeach
+                                                </ul>
+                                            </div>
+                                            @else
+                                            <p class="package-desc line-clamp-2"></p>
+                                            @endif
                                         </div>
 
-                                        <button onclick="addPaketToCart({{ (int) $paket->id }})" class="package-cta">
-                                            <i class="fas fa-cart-plus" style="font-size:0.75rem;"></i>
-                                            Tambah ke Keranjang
-                                        </button>
+                                        <div style="margin-top: auto;">
+                                            <div class="package-divider" style="margin: 0 0 0.5rem 0;"></div>
+
+                                            <div>
+                                                @if(!empty($paket->original_price))
+                                                    <div class="package-old-price mb-0.5">Rp {{ number_format((float) $paket->original_price, 0, ',', '.') }}</div>
+                                                @endif
+                                                <div class="package-price-row">
+                                                    <div class="package-price">Rp {{ number_format((float) $paket->price, 0, ',', '.') }}</div>
+                                                    <div class="package-price-unit">/paket</div>
+                                                </div>
+                                            </div>
+
+                                            <button onclick="addPaketToCart({{ (int) $paket->id }})" class="package-cta" style="margin-top: 0.75rem;">
+                                                <i class="fas fa-cart-plus" style="font-size:0.75rem;"></i>
+                                                Tambah ke Keranjang
+                                            </button>
+                                        </div>
                                     </div>
                                 </div>
                             @endforeach
@@ -1722,7 +1739,7 @@
                             <div id="rekomendasiTrack" class="rekomendasi-track">
                             @foreach($recommendedItems->take(12) as $item)
                                                                                     <div class="rekomendasi-item h-full w-full">
-                                <div class="bg-white rounded-[1.5rem] p-4 shadow-[0_8px_30px_rgb(0,0,0,0.04)] hover:shadow-[0_20px_40px_rgb(0,0,0,0.1)] hover:-translate-y-2 transition-all duration-500 border border-gray-100 flex flex-col h-full relative group w-full">
+                                <div class="bg-white rounded-[1.5rem] p-4 shadow-[0_8px_30px_rgb(0,0,0,0.04)] hover:-translate-y-2 transition-all duration-500 border border-gray-100 flex flex-col h-full relative group w-full">
                                     <!-- Badge -->
                                     <div class="absolute top-7 left-7 z-10 bg-red-600/90 backdrop-blur-md text-white text-[9px] font-bold px-3 py-1.5 rounded-full shadow-md uppercase tracking-widest border border-red-500/50">
                                         Rekomendasi
@@ -2238,6 +2255,8 @@
 
             let loopWidth = 0;
             let stepWidth = 0;
+            let currentGap = 24;
+            let currentCenterOffset = 0;
             const clonesCount = originalItems.length;
             let currentIndex = clonesCount;
             let isAnimating = false;
@@ -2286,15 +2305,16 @@
                 const gap = parseFloat(getComputedStyle(track).columnGap || getComputedStyle(track).gap || '24') || 24;
                 const first = track.querySelector('.rekomendasi-item');
                 stepWidth = first ? (first.offsetWidth + gap) : 344;
-                
-                // Tambahkan offset agar item aktif berada di tengah layar
+
+                // Cache gap and centerOffset for consistent goTo calculations
+                currentGap = gap;
                 const viewportWidth = window.innerWidth;
-                const centerOffset = (viewportWidth - (stepWidth - gap)) / 2;
+                currentCenterOffset = (viewportWidth - (stepWidth - currentGap)) / 2;
 
                 loopWidth = stepWidth * originalItems.length;
                 currentIndex = clonesCount;
                 track.style.transition = 'none';
-                track.style.transform = `translateX(${centerOffset - (currentIndex * stepWidth)}px)`;
+                track.style.transform = `translateX(${currentCenterOffset - (currentIndex * stepWidth)}px)`;
                 updateActiveCard();
                 void track.offsetWidth;
                 track.style.transition = `transform ${transitionDuration}ms cubic-bezier(0.25, 0.46, 0.45, 0.94)`;
@@ -2302,20 +2322,12 @@
 
             function goTo(index, immediate = false) {
                 if (stepWidth <= 0) return;
-                const viewportWidth = window.innerWidth;
-                const centerOffset = (viewportWidth - (stepWidth - parseFloat(getComputedStyle(track).columnGap || getComputedStyle(track).gap || '24'))) / 2;
-                
+
                 track.style.transition = immediate ? 'none' : `transform ${transitionDuration}ms cubic-bezier(0.25, 0.46, 0.45, 0.94)`;
-                track.style.transform = `translateX(${centerOffset - (index * stepWidth)}px)`;
-                
+                track.style.transform = `translateX(${currentCenterOffset - (index * stepWidth)}px)`;
+
                 if (!immediate) {
                     updateActiveCard();
-                } else {
-                    const prevTransition = track.style.transition;
-                    track.style.transition = 'none';
-                    updateActiveCard();
-                    void track.offsetWidth;
-                    track.style.transition = prevTransition;
                 }
             }
 
@@ -2326,27 +2338,51 @@
                         scheduleNextStep();
                         return;
                     }
-
-                    isAnimating = true;
-                    currentIndex += slideStep;
-                    goTo(currentIndex);
+                    next();
                 }, slidePause);
             }
 
-            track.addEventListener('transitionend', (e) => {
-                if (e.target !== track) return;
-                
-                if (currentIndex >= clonesCount * 2) {
-                    currentIndex -= originalItems.length;
-                    goTo(currentIndex, true);
-                } else if (currentIndex < clonesCount) {
-                    currentIndex += originalItems.length;
-                    goTo(currentIndex, true);
-                }
+            function next() {
+                if (isAnimating) return;
+                isAnimating = true;
+                currentIndex += slideStep;
+                goTo(currentIndex);
 
-                isAnimating = false;
-                scheduleNextStep();
-            });
+                if (currentIndex >= clonesCount * 2) {
+                    setTimeout(() => {
+                        currentIndex -= originalItems.length;
+                        goTo(currentIndex, true);
+                        isAnimating = false;
+                        scheduleNextStep();
+                    }, transitionDuration);
+                } else {
+                    setTimeout(() => {
+                        isAnimating = false;
+                        scheduleNextStep();
+                    }, transitionDuration);
+                }
+            }
+
+            function prev() {
+                if (isAnimating) return;
+                isAnimating = true;
+                currentIndex -= slideStep;
+                goTo(currentIndex);
+
+                if (currentIndex < clonesCount) {
+                    setTimeout(() => {
+                        currentIndex += originalItems.length;
+                        goTo(currentIndex, true);
+                        isAnimating = false;
+                        scheduleNextStep();
+                    }, transitionDuration);
+                } else {
+                    setTimeout(() => {
+                        isAnimating = false;
+                        scheduleNextStep();
+                    }, transitionDuration);
+                }
+            }
 
             slider.addEventListener('mouseenter', () => {
                 pauseOnHover = true;
@@ -2369,17 +2405,13 @@
             prevBtn.addEventListener('click', () => {
                 if (loopWidth <= 0) return;
                 clearTimeout(resumeTimer);
-                isAnimating = true;
-                currentIndex -= slideStep;
-                goTo(currentIndex);
+                prev();
             });
 
             nextBtn.addEventListener('click', () => {
                 if (loopWidth <= 0) return;
                 clearTimeout(resumeTimer);
-                isAnimating = true;
-                currentIndex += slideStep;
-                goTo(currentIndex);
+                next();
             });
 
             window.addEventListener('resize', rebuild);

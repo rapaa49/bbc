@@ -43,12 +43,6 @@
         top: 0;
         left: 0;
         overflow-x: hidden;
-        scrollbar-width: none;
-        -ms-overflow-style: none;
-    }
-
-    .sidebar.admin-sidebar::-webkit-scrollbar {
-        display: none;
     }
 
     .sidebar.admin-sidebar .sidebar-top {
@@ -95,7 +89,6 @@
         padding: 14px 0 12px;
         position: relative;
         overflow-y: auto;
-        overflow-x: hidden;
         flex: 1;
     }
 
@@ -123,12 +116,9 @@
     .menu-dropdown-toggle {
         display: flex;
         align-items: center;
-        width: calc(100% - 20px);
+        width: 100%;
         margin: 5px 10px;
         box-sizing: border-box;
-        border: 1px solid transparent;
-        padding: 12px 13px;
-        border-radius: 14px;
     }
 
     .menu-dropdown-toggle .dropdown-arrow {
@@ -168,7 +158,7 @@
         font-size: 14px;
         font-weight: 500;
         box-sizing: border-box;
-        width: calc(100% - 20px);
+        max-width: calc(100% - 20px);
         transition: all 0.2s ease;
         position: relative;
     }
@@ -242,7 +232,6 @@
         transition: color 0.22s ease, background 0.22s ease, border-color 0.22s ease;
         z-index: 1;
         box-sizing: border-box;
-        width: calc(100% - 20px);
     }
 
     .sidebar.admin-sidebar .menu-item i {
@@ -252,8 +241,7 @@
         color: inherit;
     }
 
-    .sidebar.admin-sidebar .menu-item:hover,
-    .menu-dropdown-toggle:hover {
+    .sidebar.admin-sidebar .menu-item:hover {
         color: #8B0000;
         background: rgba(139, 0, 0, 0.04);
         border-color: rgba(139, 0, 0, 0.25);

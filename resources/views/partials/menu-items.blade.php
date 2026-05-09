@@ -25,9 +25,22 @@
                 </div>
                 
                 <h4 class="menu-card-title">{{ $menu->name }}</h4>
-                <p class="menu-card-desc">
+                
+                @if($isPaket && $menu->description)
+                <div class="menu-card-desc" style="white-space: normal; line-clamp: none; -webkit-line-clamp: unset; height: auto; overflow: visible; display: block; margin-bottom: 12px;">
+                    <ul style="list-style-type: disc; padding-left: 1.2rem; margin: 0; text-align: left; display: flex; flex-direction: column; gap: 2px;">
+                        @foreach(explode("\n", trim($menu->description)) as $line)
+                            @if(trim($line) !== '')
+                                <li style="word-break: break-word; overflow-wrap: break-word; font-size: 11px;">{{ trim(preg_replace('/^[-*\s]+/', '', $line)) }}</li>
+                            @endif
+                        @endforeach
+                    </ul>
+                </div>
+                @else
+                <p class="menu-card-desc" style="word-break: break-word; overflow-wrap: break-word; white-space: normal;">
                     {{ Str::limit($menu->description ?: 'Nikmati sajian lezat dengan racikan bumbu khas Bunderan Ciomas yang autentik dan menggugah selera.', 120) }}
                 </p>
+                @endif
                 
                 <div class="menu-card-footer">
                     <div class="menu-card-price">Rp {{ number_format((float) $menu->price, 0, ',', '.') }}</div>
