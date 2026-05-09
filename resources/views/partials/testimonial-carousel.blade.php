@@ -738,6 +738,7 @@
 
                 let loopWidth = 0;
                 let stepWidth = 0;
+                let currentCenterOffset = 0;
                 const clonesCount = baseItems.length;
                 let currentIndex = clonesCount;
                 let isAnimating = false;
@@ -781,11 +782,14 @@
                     const gap = parseFloat(getComputedStyle(track).columnGap || getComputedStyle(track).gap || '24') || 24;
                     const first = track.querySelector('.testimonial-card');
                     stepWidth = first ? (first.offsetWidth + gap) : 320;
+                    
+                    const containerPadding = parseFloat(getComputedStyle(carousel).paddingLeft) || 0;
+                    currentCenterOffset = (carousel.clientWidth - (first ? first.offsetWidth : 320)) / 2 - containerPadding;
 
                     loopWidth = stepWidth * baseItems.length;
                     currentIndex = clonesCount;
                     track.style.transition = 'none';
-                    track.style.transform = `translateX(${-currentIndex * stepWidth}px)`;
+                    track.style.transform = `translateX(${currentCenterOffset - (currentIndex * stepWidth)}px)`;
                     void track.offsetWidth;
                     track.style.transition = `transform ${transitionDuration}ms cubic-bezier(0.25, 0.46, 0.45, 0.94)`;
                 }
@@ -795,7 +799,7 @@
                     isAnimating = true;
 
                     track.style.transition = immediate ? 'none' : `transform ${transitionDuration}ms cubic-bezier(0.25, 0.46, 0.45, 0.94)`;
-                    track.style.transform = `translateX(${-index * stepWidth}px)`;
+                    track.style.transform = `translateX(${currentCenterOffset - (index * stepWidth)}px)`;
 
                     if (!immediate) {
                         setTimeout(() => {
