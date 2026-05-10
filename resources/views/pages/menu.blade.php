@@ -572,7 +572,26 @@
                 this.classList.add('filter-active');
                 this.classList.remove('filter-inactive');
 
-                menuContainer.innerHTML = '<div class="col-span-full text-center py-24"><i class="fas fa-spinner fa-spin text-4xl text-red-600"></i><p class="mt-4 text-gray-500 font-bold uppercase tracking-widest text-xs">Menyiapkan Menu...</p></div>';
+                // Generate 8 skeleton cards
+                const skeletonHtml = Array(8).fill(`
+                    <div class="menu-item w-full">
+                        <div class="menu-card border border-[#ece3d5]">
+                            <div class="menu-card-img bg-[#EFE1D1]" style="animation: pulse-pub-skel 1.5s infinite ease-in-out;"></div>
+                            <div class="menu-card-body">
+                                <div class="bg-[#EFE1D1] rounded" style="height: 10px; width: 30%; margin-bottom: 12px; animation: pulse-pub-skel 1.5s infinite ease-in-out;"></div>
+                                <div class="bg-[#EFE1D1] rounded" style="height: 20px; width: 80%; margin-bottom: 12px; animation: pulse-pub-skel 1.5s infinite ease-in-out; animation-delay: 0.1s;"></div>
+                                <div class="bg-[#EFE1D1] rounded" style="height: 12px; width: 100%; margin-bottom: 6px; animation: pulse-pub-skel 1.5s infinite ease-in-out; animation-delay: 0.2s;"></div>
+                                <div class="bg-[#EFE1D1] rounded" style="height: 12px; width: 90%; margin-bottom: 6px; animation: pulse-pub-skel 1.5s infinite ease-in-out; animation-delay: 0.2s;"></div>
+                                <div class="bg-[#EFE1D1] rounded" style="height: 12px; width: 60%; margin-bottom: 24px; animation: pulse-pub-skel 1.5s infinite ease-in-out; animation-delay: 0.2s;"></div>
+                                <div class="menu-card-footer" style="padding-top: 12px; margin-top: auto; border-top: 1px solid #f5f0e8;">
+                                    <div class="bg-[#EFE1D1] rounded" style="height: 24px; width: 40%; animation: pulse-pub-skel 1.5s infinite ease-in-out; animation-delay: 0.3s;"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                `).join('');
+
+                menuContainer.innerHTML = skeletonHtml;
                 if (paginationWrap) paginationWrap.classList.add('hidden');
                 currentPage = 1;
 

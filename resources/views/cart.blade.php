@@ -8,8 +8,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&amp;family=Plus+Jakarta+Sans:wght@400;500;600;700;800&amp;family=Inter:wght@300;400;500;600;700;800&family=Montserrat:wght@700;800&family=Pinyon+Script&display=swap" rel="stylesheet">
-    <style>
-    </style>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <script>
         tailwind.config = {
@@ -22,107 +21,187 @@
             }
         }
     </script>
-
     <style>
         .auth-tagline, .auth-subtitle, h5, h6 { font-family: "Poppins", sans-serif !important; }
         h1, h2, h3, h4 { font-family: "Inter", sans-serif !important; }
+
+        /* ── Cart item card ── */
+        .cart-item-card {
+            background: #fff;
+            border-radius: 16px;
+            border: 1px solid #ece3d5;
+            transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+            overflow: hidden;
+        }
+        .cart-item-card:hover {
+            border-color: #d6c9b8;
+            box-shadow: 0 8px 28px -8px rgba(26, 18, 11, 0.1);
+        }
+
+        /* ── Quantity control ── */
+        .qty-control {
+            display: inline-flex;
+            align-items: center;
+            background: #f8f5f0;
+            border: 1px solid #ece3d5;
+            border-radius: 12px;
+            padding: 3px;
+            gap: 0;
+        }
+        .qty-btn {
+            width: 32px;
+            height: 32px;
+            border-radius: 9px;
+            background: #fff;
+            border: none;
+            color: #5a4a3a;
+            font-weight: 700;
+            font-size: 15px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.2s ease;
+            box-shadow: 0 1px 3px rgba(26, 18, 11, 0.06);
+        }
+        .qty-btn:hover {
+            color: #8B0000;
+            box-shadow: 0 2px 6px rgba(139, 0, 0, 0.12);
+        }
+        .qty-input {
+            width: 40px;
+            text-align: center;
+            background: transparent;
+            border: none;
+            font-weight: 700;
+            font-size: 14px;
+            color: #1a120b;
+            outline: none;
+            -moz-appearance: textfield;
+        }
+        .qty-input::-webkit-inner-spin-button,
+        .qty-input::-webkit-outer-spin-button {
+            -webkit-appearance: none;
+            margin: 0;
+        }
+
+        /* ── Summary card ── */
+        .summary-card {
+            background: #fff;
+            border-radius: 20px;
+            border: 1px solid #ece3d5;
+            box-shadow: 0 8px 32px -12px rgba(26, 18, 11, 0.08);
+        }
+
+        /* ── Fade-in ── */
+        .fade-in-item {
+            opacity: 0;
+            transform: translateY(10px);
+            animation: fadeInItem 0.35s ease forwards;
+        }
+        @keyframes fadeInItem {
+            to { opacity: 1; transform: translateY(0); }
+        }
     </style>
 </head>
 <body class="bg-[#EFE1D1] text-[#2D3748] font-poppins">
     @include('partials.navbar')
 
-    <main class="max-w-7xl mx-auto px-4 sm:px-6 py-10">
-        <div class="text-center mb-12">
-            <span class="text-red-700 font-bold tracking-widest text-sm uppercase mb-2 block font-poppins">Pesanan Anda</span>
-            <h1 class="text-4xl md:text-5xl font-bold text-[#26180f] tracking-tight font-bold mb-4">
-                Keranjang Belanja
-            </h1>
-            <p class="text-sm sm:text-base text-gray-600 mt-1 font-poppins font-medium">Pastikan pesanan kamu sudah sesuai sebelum lanjut ke pembayaran.</p>
-        </div>
+    <main class="max-w-4xl mx-auto px-4 sm:px-5 pt-2 pb-12">
 
-        <div class="flex flex-col sm:flex-row sm:items-center justify-center gap-3 mb-8">
-            <div class="flex items-center gap-3">
-                <a href="{{ route('home') }}" class="inline-flex items-center gap-2 bg-white text-gray-700 border border-gray-200 px-5 py-2.5 rounded-xl font-bold shadow-sm hover:bg-gray-50 transition-all">
-                    <i class="fas fa-arrow-left"></i> Kembali
-                </a>
-                @if(count($items) > 0)
-                <button type="button" onclick="clearCart()" class="inline-flex items-center gap-2 bg-gray-800 text-white px-5 py-2.5 rounded-xl font-bold shadow-sm hover:bg-red-700 hover:shadow-md transition-all">
-                    <i class="fas fa-trash-alt"></i> Kosongkan
-                </button>
-                @endif
+        {{-- ── Header ── --}}
+        <div class="flex items-end justify-between mb-5">
+            <div>
+                <p class="text-[11px] font-bold text-[#8B0000] uppercase tracking-[0.18em] mb-1 font-poppins">Pesanan Anda</p>
+                <h1 class="text-2xl sm:text-[1.65rem] font-extrabold text-[#1a120b] tracking-tight leading-tight">Keranjang Belanja</h1>
+                <p class="text-[13px] text-[#8a7b6a] mt-1 font-poppins">Pastikan pesanan kamu sudah sesuai sebelum lanjut.</p>
             </div>
         </div>
 
-        <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
-            <section class="lg:col-span-2 space-y-4">
+        {{-- ── Action bar ── --}}
+        <div class="flex items-center gap-2 mb-5">
+            <a href="{{ route('home') }}" class="inline-flex items-center gap-2 bg-white text-[#1a120b] border border-[#ece3d5] px-4 py-2.5 rounded-xl text-xs font-bold hover:bg-[#f8f5f0] transition-all">
+                <i class="fas fa-arrow-left text-[10px] opacity-50"></i> Kembali
+            </a>
+            @if(count($items) > 0)
+            <button type="button" onclick="clearCart()" class="inline-flex items-center gap-2 bg-[#1a120b] text-white px-4 py-2.5 rounded-xl text-xs font-bold hover:bg-[#8B0000] transition-all">
+                <i class="fas fa-trash-alt text-[10px]"></i> Kosongkan
+            </button>
+            @endif
+        </div>
+
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+            {{-- ── Items ── --}}
+            <section class="lg:col-span-2 space-y-3">
                 @php
                     $items = $items ?? [];
                     $subtotal = $subtotal ?? 0;
                 @endphp
 
                 @if(count($items) === 0)
-                    <div class="bg-white rounded-[1.5rem] shadow-sm border border-gray-100 p-12 text-center">
-                        <div class="inline-flex items-center justify-center w-24 h-24 rounded-full bg-red-50 text-red-600 text-4xl mb-6 shadow-inner">
-                            <i class="fas fa-shopping-basket"></i>
+                    <div class="bg-white rounded-2xl border border-[#ece3d5] p-10 sm:p-14 flex flex-col items-center justify-center text-center">
+                        <div class="w-20 h-20 bg-[#f8f5f0] rounded-2xl flex items-center justify-center mb-5 border border-[#ece3d5]">
+                            <i class="fas fa-shopping-basket text-3xl text-[#c4b5a2]"></i>
                         </div>
-                        <h2 class="text-2xl font-bold text-gray-800 mb-2">Keranjang Kamu Masih Kosong</h2>
-                        <p class="text-gray-500 mb-8 max-w-md mx-auto">Sepertinya kamu belum memilih hidangan apapun. Yuk, jelajahi menu lezat kami dan temukan favoritmu!</p>
-                        <div class="flex justify-center gap-4">
-                            <a href="{{ route('home') }}#paket" class="inline-flex items-center justify-center gap-2 bg-red-700 text-white px-8 py-3.5 rounded-xl font-bold shadow-[0_8px_20px_rgba(185,28,28,0.25)] hover:bg-red-800 hover:-translate-y-1 transition-all duration-300">
-                                <i class="fas fa-box-open"></i> Lihat Paket
+                        <h2 class="text-lg font-bold text-[#1a120b] mb-1.5">Keranjang Kamu Masih Kosong</h2>
+                        <p class="text-sm text-[#8a7b6a] mb-6 max-w-xs font-poppins">Yuk, jelajahi menu lezat kami dan temukan favoritmu!</p>
+                        <div class="flex flex-col sm:flex-row justify-center gap-3">
+                            <a href="{{ route('home') }}#paket" class="inline-flex items-center justify-center gap-2 bg-[#8B0000] text-white px-6 py-3 rounded-xl text-sm font-bold shadow-[0_8px_20px_rgba(139,0,0,0.18)] hover:bg-[#6d0000] hover:-translate-y-0.5 transition-all">
+                                <i class="fas fa-box-open text-xs"></i> Lihat Paket
                             </a>
-                            <a href="{{ route('home') }}#menu" class="inline-flex items-center justify-center gap-2 bg-white text-gray-800 border border-gray-200 px-8 py-3.5 rounded-xl font-bold shadow-sm hover:bg-gray-50 hover:-translate-y-1 transition-all duration-300">
-                                <i class="fas fa-utensils"></i> Eksplor Menu
+                            <a href="{{ route('home') }}#menu" class="inline-flex items-center justify-center gap-2 bg-white text-[#1a120b] border border-[#ece3d5] px-6 py-3 rounded-xl text-sm font-bold hover:bg-[#f8f5f0] hover:-translate-y-0.5 transition-all">
+                                <i class="fas fa-utensils text-xs"></i> Eksplor Menu
                             </a>
                         </div>
                     </div>
                 @else
-                    @foreach($items as $item)
+                    @foreach($items as $index => $item)
                         @php
                             $lineTotal = ((float) ($item['price'] ?? 0)) * ((int) ($item['quantity'] ?? 0));
                             $img = $item['image'] ?? null;
                         @endphp
-                        <div class="bg-white rounded-[1.25rem] shadow-sm border border-gray-100 p-4 sm:p-5 transition-transform duration-300 hover:shadow-md hover:border-red-100 group">
-                            <div class="flex gap-4 sm:gap-6 items-center">
-                                <!-- Product Image -->
-                                <div class="w-24 h-24 sm:w-28 sm:h-28 rounded-[1rem] overflow-hidden bg-gray-50 shrink-0 relative shadow-inner">
-                                    @if($img)
-                                        <img src="{{ $img }}" alt="{{ $item['name'] }}" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110" />
-                                    @else
-                                        <img src="https://placehold.co/200x200/fdf5e6/3a2a1a?text=Item" alt="{{ $item['name'] }}" class="w-full h-full object-cover" />
-                                    @endif
-                                </div>
-
-                                <!-- Product Details -->
-                                <div class="min-w-0 flex-1 flex flex-col justify-center">
-                                    <div class="flex items-start justify-between gap-3 mb-2">
-                                        <div class="min-w-0">
-                                            <div class="flex items-center gap-2 mb-1">
-                                                <span class="shrink-0 text-[10px] font-bold px-2.5 py-1 rounded-md {{ ($item['type'] ?? '') === 'paket' ? 'bg-orange-100 text-orange-800' : 'bg-gray-100 text-gray-600' }}">
-                                                    {{ strtoupper($item['type'] ?? '') }}
-                                                </span>
+                        <div class="cart-item-card fade-in-item" style="animation-delay: {{ $index * 0.05 }}s">
+                            <div class="p-4 sm:p-5">
+                                <div class="flex gap-4 items-start">
+                                    {{-- Image --}}
+                                    <div class="w-20 h-20 sm:w-24 sm:h-24 rounded-xl overflow-hidden bg-[#f8f5f0] shrink-0 border border-[#ece3d5]">
+                                        @if($img)
+                                            <img src="{{ $img }}" alt="{{ $item['name'] }}" class="w-full h-full object-cover" />
+                                        @else
+                                            <div class="w-full h-full flex items-center justify-center text-[#c4b5a2]">
+                                                <i class="fas fa-utensils text-xl"></i>
                                             </div>
-                                            <h3 class="text-lg font-bold text-gray-800 leading-snug truncate group-hover:text-red-700 transition-colors">{{ $item['name'] }}</h3>
-                                            <div class="text-sm font-bold text-red-600 mt-1">Rp {{ number_format((float) ($item['price'] ?? 0), 0, ',', '.') }}</div>
-                                        </div>
-
-                                        <button type="button" onclick="removeItem('{{ $item['key'] }}')" class="w-8 h-8 flex items-center justify-center rounded-full text-gray-400 hover:bg-red-50 hover:text-red-600 transition-colors" aria-label="Hapus">
-                                            <i class="fas fa-times text-lg"></i>
-                                        </button>
+                                        @endif
                                     </div>
 
-                                    <div class="flex flex-col sm:flex-row sm:items-end sm:justify-between gap-4 mt-2">
-                                        <!-- Quantity Control -->
-                                        <div class="inline-flex items-center p-1 rounded-xl border border-gray-200 bg-gray-50 shadow-sm">
-                                            <button type="button" onclick="changeQty('{{ $item['key'] }}', -1)" class="w-8 h-8 rounded-lg bg-white text-gray-600 font-bold hover:text-red-600 hover:shadow-sm transition-all shadow-sm">-</button>
-                                            <input id="qty-{{ $item['key'] }}" type="number" min="1" value="{{ (int) ($item['quantity'] ?? 1) }}" class="w-12 text-center bg-transparent font-bold text-gray-800 border-none focus:ring-0 focus:outline-none text-sm" onchange="setQty('{{ $item['key'] }}', this.value)" />
-                                            <button type="button" onclick="changeQty('{{ $item['key'] }}', 1)" class="w-8 h-8 rounded-lg bg-white text-gray-600 font-bold hover:text-red-600 hover:shadow-sm transition-all shadow-sm">+</button>
+                                    {{-- Details --}}
+                                    <div class="min-w-0 flex-1">
+                                        <div class="flex items-start justify-between gap-2">
+                                            <div class="min-w-0">
+                                                <span class="text-[10px] font-bold px-2 py-0.5 rounded-md uppercase {{ ($item['type'] ?? '') === 'paket' ? 'bg-orange-50 text-orange-700 border border-orange-200/60' : 'bg-[#f8f5f0] text-[#8a7b6a] border border-[#ece3d5]' }}">
+                                                    {{ strtoupper($item['type'] ?? '') }}
+                                                </span>
+                                                <h3 class="text-[15px] font-bold text-[#1a120b] leading-snug mt-1.5 truncate">{{ $item['name'] }}</h3>
+                                                <p class="text-[13px] font-bold text-[#8B0000] mt-0.5">Rp {{ number_format((float) ($item['price'] ?? 0), 0, ',', '.') }}</p>
+                                            </div>
+                                            <button type="button" onclick="removeItem('{{ $item['key'] }}')" class="w-8 h-8 flex items-center justify-center rounded-lg text-[#c4b5a2] hover:bg-red-50 hover:text-[#8B0000] transition-all shrink-0" aria-label="Hapus">
+                                                <i class="fas fa-times"></i>
+                                            </button>
                                         </div>
 
-                                        <!-- Line Total -->
-                                        <div class="text-right">
-                                            <div class="text-xs text-gray-500 font-medium mb-1">Subtotal Item</div>
-                                            <div class="font-bold text-gray-800 text-lg">Rp {{ number_format((float) $lineTotal, 0, ',', '.') }}</div>
+                                        <div class="flex flex-col sm:flex-row sm:items-end sm:justify-between gap-3 mt-3">
+                                            {{-- Qty --}}
+                                            <div class="qty-control">
+                                                <button type="button" onclick="changeQty('{{ $item['key'] }}', -1)" class="qty-btn">−</button>
+                                                <input id="qty-{{ $item['key'] }}" type="number" min="1" value="{{ (int) ($item['quantity'] ?? 1) }}" class="qty-input" onchange="setQty('{{ $item['key'] }}', this.value)" />
+                                                <button type="button" onclick="changeQty('{{ $item['key'] }}', 1)" class="qty-btn">+</button>
+                                            </div>
+
+                                            {{-- Line total --}}
+                                            <div class="text-right">
+                                                <p class="text-[10px] text-[#a89880] font-medium uppercase tracking-wider">Subtotal</p>
+                                                <p class="text-[15px] font-extrabold text-[#1a120b]">Rp {{ number_format((float) $lineTotal, 0, ',', '.') }}</p>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
@@ -132,34 +211,40 @@
                 @endif
             </section>
 
-            <!-- Sidebar Summary -->
+            {{-- ── Summary sidebar ── --}}
             <aside class="lg:col-span-1">
-                <div class="bg-white rounded-[1.5rem] shadow-lg shadow-gray-200/50 border border-gray-100 p-6 sm:p-8 sticky top-24">
-                    <h2 class="text-xl font-bold text-gray-800 border-b border-gray-100 pb-4 mb-6">Ringkasan Pesanan</h2>
+                <div class="summary-card p-5 sm:p-6 sticky top-24">
+                    <h2 class="text-lg font-bold text-[#1a120b] border-b border-[#f0ebe4] pb-3 mb-4">Ringkasan Pesanan</h2>
                     
-                    <div class="space-y-4 text-sm font-medium">
-                        <div class="flex items-center justify-between text-gray-600">
-                            <span>Subtotal Belanja</span>
-                            <span class="font-bold text-gray-800">Rp {{ number_format((float) $subtotal, 0, ',', '.') }}</span>
+                    <div class="space-y-3 text-sm">
+                        <div class="flex items-center justify-between text-[#8a7b6a]">
+                            <span class="font-medium">Subtotal Belanja</span>
+                            <span class="font-bold text-[#1a120b]">Rp {{ number_format((float) $subtotal, 0, ',', '.') }}</span>
                         </div>
-                        <div class="flex items-center justify-between text-gray-600">
-                            <span>Biaya Layanan</span>
-                            <span class="font-bold text-green-600">Gratis</span>
+                        <div class="flex items-center justify-between text-[#8a7b6a]">
+                            <span class="font-medium">Biaya Layanan</span>
+                            <span class="font-bold text-emerald-600">Gratis</span>
                         </div>
                         
-                        <div class="pt-4 mt-2 border-t border-gray-100 border-dashed">
+                        <div class="pt-3 mt-1 border-t border-dashed border-[#ece3d5]">
                             <div class="flex items-center justify-between">
-                                <span class="text-base text-gray-800 font-bold">Total Pembayaran</span>
-                                <span class="text-xl font-bold text-red-700">Rp {{ number_format((float) $subtotal, 0, ',', '.') }}</span>
+                                <span class="text-[15px] text-[#1a120b] font-bold">Total</span>
+                                <span class="text-xl font-extrabold text-[#8B0000]">Rp {{ number_format((float) $subtotal, 0, ',', '.') }}</span>
                             </div>
                         </div>
                     </div>
 
-                    <div class="mt-8 space-y-3">
-                        <a href="{{ route('checkout.index') }}" class="w-full inline-flex items-center justify-center gap-2 bg-red-700 text-white px-5 py-4 rounded-xl font-bold shadow-[0_8px_20px_rgba(185,28,28,0.25)] hover:bg-red-800 hover:-translate-y-1 transition-all duration-300">
-                            Lanjut Pembayaran <i class="fas fa-arrow-right"></i>
-                        </a>
-                        <a href="{{ route('home') }}#menu" class="w-full inline-flex items-center justify-center bg-gray-50 text-gray-700 hover:text-gray-900 border border-gray-200 px-5 py-3.5 rounded-xl font-bold hover:bg-gray-100 transition-all duration-300">
+                    <div class="mt-6 space-y-2.5">
+                        @if(count($items) > 0)
+                            <a href="{{ route('checkout.index') }}" onclick="document.body.classList.add('public-skeleton-loading');" class="w-full inline-flex items-center justify-center gap-2 bg-[#8B0000] text-white px-5 py-3.5 rounded-xl text-sm font-bold shadow-[0_8px_20px_rgba(139,0,0,0.18)] hover:bg-[#6d0000] hover:-translate-y-0.5 transition-all">
+                                Lanjut Pembayaran <i class="fas fa-arrow-right text-xs"></i>
+                            </a>
+                        @else
+                            <button type="button" disabled class="w-full inline-flex items-center justify-center gap-2 bg-gray-200 text-gray-400 px-5 py-3.5 rounded-xl text-sm font-bold cursor-not-allowed">
+                                Lanjut Pembayaran <i class="fas fa-arrow-right text-xs"></i>
+                            </button>
+                        @endif
+                        <a href="{{ route('home') }}#menu" class="w-full inline-flex items-center justify-center bg-[#f8f5f0] text-[#1a120b] border border-[#ece3d5] px-5 py-3 rounded-xl text-sm font-bold hover:bg-[#f0ebe4] transition-all">
                             Tambah Menu Lain
                         </a>
                     </div>
@@ -204,6 +289,7 @@
 
         function setQty(key, qty) {
             const quantity = Math.max(1, parseInt(qty || '1', 10));
+            document.body.classList.add('public-skeleton-loading');
             postJson('{{ route('cart.update') }}', { key, quantity })
                 .then(res => {
                     if (!res.ok) throw new Error('failed');
@@ -217,6 +303,7 @@
         }
 
         function removeItem(key) {
+            document.body.classList.add('public-skeleton-loading');
             postJson('{{ route('cart.remove') }}', { key })
                 .then(res => {
                     if (!res.ok) throw new Error('failed');
@@ -230,6 +317,7 @@
         }
 
         function clearCart() {
+            document.body.classList.add('public-skeleton-loading');
             postJson('{{ route('cart.clear') }}')
                 .then(res => {
                     if (!res.ok) throw new Error('failed');
@@ -248,7 +336,3 @@
     </script>
 </body>
 </html>
-
-
-
-

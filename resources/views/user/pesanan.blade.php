@@ -22,73 +22,169 @@
         }
     </script>
     <style>
-        .hide-scrollbar::-webkit-scrollbar {
-            display: none;
-        }
-        .hide-scrollbar {
-            -ms-overflow-style: none;
-            scrollbar-width: none;
-        }
-        .order-card {
-            transition: box-shadow 0.2s ease, border-color 0.2s ease;
-        }
-        .order-card:hover {
-            box-shadow: 0 18px 40px -28px rgba(15, 23, 42, 0.28);
-            border-color: rgba(180, 35, 24, 0.2);
-        }
-    </style>
-
-    <style>
         .auth-tagline, .auth-subtitle, h5, h6 { font-family: "Poppins", sans-serif !important; }
         h1, h2, h3, h4 { font-family: "Inter", sans-serif !important; }
+
+        /* ── Scrollbar hide ── */
+        .hide-scrollbar::-webkit-scrollbar { display: none; }
+        .hide-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+
+        /* ── Tab styles ── */
+        /* ── Tabs: 2x2 grid on mobile, inline on desktop ── */
+        .order-tabs {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 6px;
+        }
+        @media (min-width: 640px) {
+            .order-tabs {
+                display: flex;
+                gap: 6px;
+            }
+        }
+        .tab-item {
+            position: relative;
+            padding: 10px 14px;
+            border-radius: 12px;
+            font-size: 12.5px;
+            font-weight: 600;
+            color: #8a7b6a;
+            background: rgba(255,255,255,0.45);
+            border: 1.5px solid #e8ddd0;
+            transition: all 0.25s ease;
+            white-space: nowrap;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+            text-align: center;
+        }
+        .tab-item:hover {
+            color: #5a4a3a;
+            background: rgba(255, 255, 255, 0.7);
+        }
+        .tab-item.active {
+            color: #1a120b;
+            background: #fff;
+            border-color: #d6c9b8;
+            box-shadow: 0 2px 8px rgba(26, 18, 11, 0.06);
+        }
+        .tab-item i {
+            font-size: 11px;
+            opacity: 0.6;
+        }
+        .tab-item.active i {
+            opacity: 1;
+            color: #8B0000;
+        }
+        @media (min-width: 640px) {
+            .tab-item {
+                padding: 10px 16px;
+                font-size: 13px;
+                flex-shrink: 0;
+            }
+        }
+
+        /* ── Order card ── */
+        .order-card-v2 {
+            background: #fff;
+            border-radius: 16px;
+            border: 1px solid #ece3d5;
+            transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+            overflow: hidden;
+        }
+        .order-card-v2:hover {
+            border-color: #d6c9b8;
+            box-shadow: 0 8px 28px -8px rgba(26, 18, 11, 0.1);
+        }
+
+        /* ── Star rating ── */
+        .star-rating-btn {
+            color: #d6cec4;
+            transition: color 0.15s ease, transform 0.15s ease;
+            cursor: pointer;
+            padding: 2px;
+            background: none;
+            border: none;
+        }
+        .star-rating-btn:hover {
+            transform: scale(1.15);
+        }
+        .star-rating-btn.lit {
+            color: #8B0000;
+        }
+
+        /* ── Fade-in animation ── */
+        .fade-in-card {
+            opacity: 0;
+            transform: translateY(10px);
+            animation: fadeInCard 0.35s ease forwards;
+        }
+        @keyframes fadeInCard {
+            to { opacity: 1; transform: translateY(0); }
+        }
     </style>
 </head>
 <body class="bg-[#EFE1D1] text-[#2D3748] font-poppins">
     @include('partials.navbar')
 
-    <main class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12">
-        <div class="mb-8">
-            <span class="text-red-700 font-bold tracking-widest text-xs sm:text-sm uppercase mb-1 block font-poppins text-center sm:text-left">Riwayat</span>
-            <h1 class="text-3xl sm:text-4xl font-bold text-[#26180f] tracking-tight font-bold text-center sm:text-left flex flex-wrap justify-center sm:justify-start gap-x-4">
-                Pesanan
-                Saya
-            </h1>
+    <main class="max-w-3xl mx-auto px-4 sm:px-5 pt-2 pb-12">
+
+        {{-- ── Header ── --}}
+        <div class="flex items-end justify-between mb-4">
+            <div>
+                <p class="text-[11px] font-bold text-[#8B0000] uppercase tracking-[0.18em] mb-1 font-poppins">Riwayat</p>
+                <h1 class="text-2xl sm:text-[1.65rem] font-extrabold text-[#1a120b] tracking-tight leading-tight">Pesanan Saya</h1>
+            </div>
+            <a href="{{ route('menu.public') }}" onclick="document.body.classList.add('public-skeleton-loading');" class="hidden sm:inline-flex items-center gap-2 text-xs font-bold text-[#8B0000] hover:text-[#6d0000] transition px-3 py-2 rounded-lg hover:bg-[#8B0000]/5">
+                <i class="fas fa-plus text-[10px]"></i> Pesan Lagi
+            </a>
         </div>
 
-        <div class="bg-white rounded-xl shadow-sm overflow-hidden mb-6 overflow-x-auto hide-scrollbar">
-            <div class="flex border-b border-gray-100 min-w-max">
-                <a href="{{ route('my-orders', ['tab' => 'semua']) }}" class="flex-1 text-center py-4 px-6 text-sm font-semibold transition {{ $tab === 'semua' ? 'text-red-700 border-b-2 border-red-700' : 'text-gray-500 hover:text-gray-800 hover:bg-gray-50' }}">
-                    Semua
+        {{-- ── Tabs ── --}}
+        <div class="mb-5">
+            <div class="order-tabs">
+                <a href="{{ route('my-orders', ['tab' => 'semua']) }}" onclick="document.body.classList.add('public-skeleton-loading');" class="tab-item {{ $tab === 'semua' ? 'active' : '' }}">
+                    <i class="fas fa-layer-group"></i>Semua
                 </a>
-                <a href="{{ route('my-orders', ['tab' => 'belum-dibayar']) }}" class="flex-1 text-center py-4 px-6 text-sm font-semibold transition {{ $tab === 'belum-dibayar' ? 'text-red-700 border-b-2 border-red-700' : 'text-gray-500 hover:text-gray-800 hover:bg-gray-50' }}">
-                    Belum Dibayar
+                <a href="{{ route('my-orders', ['tab' => 'belum-dibayar']) }}" onclick="document.body.classList.add('public-skeleton-loading');" class="tab-item {{ $tab === 'belum-dibayar' ? 'active' : '' }}">
+                    <i class="fas fa-clock"></i>Belum Dibayar
                 </a>
-                <a href="{{ route('my-orders', ['tab' => 'diproses']) }}" class="flex-1 text-center py-4 px-6 text-sm font-semibold transition {{ $tab === 'diproses' ? 'text-red-700 border-b-2 border-red-700' : 'text-gray-500 hover:text-gray-800 hover:bg-gray-50' }}">
-                    Diproses
+                <a href="{{ route('my-orders', ['tab' => 'diproses']) }}" onclick="document.body.classList.add('public-skeleton-loading');" class="tab-item {{ $tab === 'diproses' ? 'active' : '' }}">
+                    <i class="fas fa-fire"></i>Diproses
                 </a>
-                <a href="{{ route('my-orders', ['tab' => 'selesai']) }}" class="flex-1 text-center py-4 px-6 text-sm font-semibold transition {{ $tab === 'selesai' ? 'text-red-700 border-b-2 border-red-700' : 'text-gray-500 hover:text-gray-800 hover:bg-gray-50' }}">Untuk Diulas</a>
+                <a href="{{ route('my-orders', ['tab' => 'selesai']) }}" onclick="document.body.classList.add('public-skeleton-loading');" class="tab-item {{ $tab === 'selesai' ? 'active' : '' }}">
+                    <i class="fas fa-check-circle"></i>Untuk Diulas
+                </a>
             </div>
         </div>
 
-        <div class="mt-6 space-y-4">
-            @forelse($orders as $order)
+        {{-- ── Order list ── --}}
+        <div class="space-y-3">
+            @forelse($orders as $index => $order)
                 @php
                     $isPending = $order->status === 'pending';
                     $statusLabel = 'Menunggu Konfirmasi';
-                    $statusColor = 'bg-yellow-100 text-yellow-700';
+                    $statusBg = 'bg-yellow-50 text-yellow-700 border-yellow-200/60';
+                    $statusIcon = 'fas fa-hourglass-half';
                     
                     if ($order->status === 'pending') {
                         $statusLabel = 'Belum Dibayar';
-                        $statusColor = 'bg-red-100 text-red-700';
+                        $statusBg = 'bg-[#fff5f5] text-[#8B0000] border-[#8B0000]/10';
+                        $statusIcon = 'fas fa-clock';
                     } elseif (in_array($order->status, ['confirmed', 'shipped'])) {
                         $statusLabel = 'Sedang Diproses';
-                        $statusColor = 'bg-blue-100 text-blue-700';
+                        $statusBg = 'bg-blue-50 text-blue-600 border-blue-200/60';
+                        $statusIcon = 'fas fa-fire';
                     } elseif ($order->status === 'completed') {
-                        $statusLabel = 'Diterima / Untuk Diulas';
-                        $statusColor = 'bg-green-100 text-green-700';
+                        $statusLabel = 'Selesai';
+                        $statusBg = 'bg-emerald-50 text-emerald-600 border-emerald-200/60';
+                        $statusIcon = 'fas fa-check-circle';
                     } elseif ($order->status === 'rejected') {
                         $statusLabel = 'Dibatalkan';
-                        $statusColor = 'bg-gray-200 text-gray-700';
+                        $statusBg = 'bg-gray-50 text-gray-500 border-gray-200/60';
+                        $statusIcon = 'fas fa-times-circle';
                     }
 
                     $items = is_array($order->items) ? $order->items : json_decode($order->items, true);
@@ -97,112 +193,131 @@
                     $reviewedOrderIds = $reviewedOrderIds ?? [];
                     $isReviewed = in_array($order->order_id, $reviewedOrderIds, true);
                 @endphp
-                <div class="order-card bg-white rounded-xl shadow-sm overflow-hidden border border-[#f1e7db]">
-                    <div class="p-5 sm:p-6">
-                        <div class="flex flex-col sm:flex-row gap-4">
-                            <div class="w-20 h-20 sm:w-24 sm:h-24 rounded-xl overflow-hidden bg-white shadow shrink-0 border border-[#f1e7db]">
-                                @if($firstItem && isset($firstItem['image']))
-                                    <img src="{{ asset('images/' . $firstItem['image']) }}" alt="{{ $firstItem['name'] }}" class="w-full h-full object-cover">
-                                @else
-                                    <div class="w-full h-full flex items-center justify-center text-gray-400">
-                                        <i class="fas fa-image text-2xl"></i>
+
+                <div class="order-card-v2 fade-in-card" style="animation-delay: {{ $index * 0.05 }}s">
+                    {{-- Card header --}}
+                    <div class="flex items-center justify-between px-4 sm:px-5 py-3 border-b border-[#f5f0ea]">
+                        <div class="flex items-center gap-2 min-w-0">
+                            <span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-lg text-[10px] font-bold uppercase tracking-wider border {{ $statusBg }}">
+                                <i class="{{ $statusIcon }} text-[9px]"></i>{{ $statusLabel }}
+                            </span>
+                        </div>
+                        <span class="text-[11px] text-[#8a7b6a] font-medium shrink-0 ml-2">{{ optional($order->created_at)->format('d M Y, H:i') }}</span>
+                    </div>
+
+                    {{-- Card body --}}
+                    <div class="px-4 sm:px-5 py-4">
+                        @if($order->status === 'completed')
+                            {{-- All items for completed --}}
+                            <div class="space-y-3">
+                                @foreach($items as $iIt => $it)
+                                    <div class="flex gap-3 items-center">
+                                        <div class="w-[52px] h-[52px] rounded-xl overflow-hidden bg-[#f8f5f0] shrink-0 border border-[#ece3d5]">
+                                            @if(isset($it['image']) && $it['image'])
+                                                <img src="{{ asset('images/' . $it['image']) }}" alt="{{ $it['name'] ?? '' }}" class="w-full h-full object-cover">
+                                            @else
+                                                <div class="w-full h-full flex items-center justify-center text-[#c4b5a2]">
+                                                    <i class="fas fa-utensils"></i>
+                                                </div>
+                                            @endif
+                                        </div>
+                                        <div class="min-w-0 flex-1">
+                                            <p class="text-[13px] font-semibold text-[#1a120b] truncate">{{ $it['name'] ?? 'Pesanan Custom' }}</p>
+                                            <p class="text-[11px] text-[#8a7b6a] mt-0.5">{{ (int)($it['quantity'] ?? 1) }}x &middot; Rp {{ number_format((float)($it['price'] ?? 0), 0, ',', '.') }}</p>
+                                        </div>
                                     </div>
+                                    @if(!$loop->last)
+                                        <div class="h-px bg-[#f5f0ea] ml-[64px]"></div>
+                                    @endif
+                                @endforeach
+                            </div>
+                        @else
+                            {{-- First item only --}}
+                            <div class="flex gap-3 items-center">
+                                <div class="w-[52px] h-[52px] rounded-xl overflow-hidden bg-[#f8f5f0] shrink-0 border border-[#ece3d5]">
+                                    @if($firstItem && isset($firstItem['image']))
+                                        <img src="{{ asset('images/' . $firstItem['image']) }}" alt="{{ $firstItem['name'] }}" class="w-full h-full object-cover">
+                                    @else
+                                        <div class="w-full h-full flex items-center justify-center text-[#c4b5a2]">
+                                            <i class="fas fa-utensils"></i>
+                                        </div>
+                                    @endif
+                                </div>
+                                <div class="min-w-0 flex-1">
+                                    @if($firstItem)
+                                        <p class="text-[13px] font-semibold text-[#1a120b] truncate">{{ $firstItem['name'] }}</p>
+                                        <p class="text-[11px] text-[#8a7b6a] mt-0.5">{{ (int)($firstItem['quantity'] ?? 1) }}x &middot; Rp {{ number_format((float)($firstItem['price'] ?? 0), 0, ',', '.') }}</p>
+                                    @else
+                                        <p class="text-[13px] font-semibold text-[#1a120b]">Pesanan Custom</p>
+                                    @endif
+                                    @if($itemCount > 1)
+                                        <p class="text-[11px] text-[#a89880] mt-0.5">+ {{ $itemCount - 1 }} produk lainnya</p>
+                                    @endif
+                                </div>
+                            </div>
+                        @endif
+                    </div>
+
+                    {{-- Card footer --}}
+                    <div class="px-4 sm:px-5 py-3 bg-[#fdfbf8] border-t border-[#f5f0ea]">
+                        <div class="flex items-center justify-between gap-3">
+                            {{-- Left: ID + total --}}
+                            <div class="min-w-0">
+                                <p class="text-[10px] text-[#a89880] font-medium uppercase tracking-wider truncate">{{ $order->order_id }}</p>
+                                <p class="text-[15px] font-extrabold text-[#1a120b] mt-0.5">Rp {{ number_format((float) $order->total_price, 0, ',', '.') }}</p>
+                            </div>
+
+                            {{-- Right: actions --}}
+                            <div class="flex items-center gap-2 shrink-0">
+                                @if($order->status === 'completed' && !$isReviewed)
+                                    <div class="hidden sm:flex items-center gap-0.5 quick-rating" data-order-id="{{ $order->order_id }}" data-rating="0">
+                                        @for($i=1; $i<=5; $i++)
+                                            <button type="button" data-value="{{ $i }}" onclick="submitQuickRating(this, '{{ $order->order_id }}', '{{ addslashes($order->customer_name) }}', {{ $i }})" class="star-rating-btn quick-star-btn" title="{{ $i }} Bintang"><i class="fas fa-star text-sm"></i></button>
+                                        @endfor
+                                    </div>
+                                    <a href="{{ route('transaksi.show', $order->order_id) }}" onclick="document.body.classList.add('public-skeleton-loading');" class="inline-flex items-center gap-1.5 px-4 py-2 bg-[#8B0000] text-white text-[11px] font-bold rounded-lg hover:bg-[#6d0000] transition-all shadow-[0_4px_12px_rgba(139,0,0,0.2)] hover:shadow-[0_6px_16px_rgba(139,0,0,0.3)] hover:-translate-y-0.5">
+                                        <i class="fas fa-pen text-[9px]"></i> Ulasan
+                                    </a>
+                                @elseif($order->status === 'completed' && $isReviewed)
+                                    <span class="inline-flex items-center gap-1 text-[11px] text-emerald-600 font-semibold mr-1"><i class="fas fa-check-circle text-[10px]"></i> Diulas</span>
+                                    <a href="{{ route('menu.public') }}" onclick="document.body.classList.add('public-skeleton-loading');" class="inline-flex items-center gap-1.5 px-4 py-2 border border-[#8B0000]/20 text-[#8B0000] text-[11px] font-bold rounded-lg hover:bg-[#8B0000]/5 transition-all">
+                                        <i class="fas fa-redo text-[9px]"></i> Beli Lagi
+                                    </a>
+                                @else
+                                    <a href="{{ route('transaksi.show', $order->order_id) }}" onclick="document.body.classList.add('public-skeleton-loading');" class="inline-flex items-center gap-1.5 px-4 py-2 border border-[#1a120b]/10 text-[#1a120b] text-[11px] font-bold rounded-lg hover:bg-[#1a120b]/[0.03] transition-all">
+                                        Detail <i class="fas fa-arrow-right text-[9px] opacity-40"></i>
+                                    </a>
                                 @endif
                             </div>
-                            <div class="min-w-0 flex-1">
-                                <div class="flex items-start justify-between gap-3">
-                                    <div class="min-w-0">
-                                        <div class="text-sm sm:text-base font-bold uppercase truncate">{{ $order->order_id }}</div>
-                                        <div class="text-xs text-[#3a2a1a]/70 mt-1">{{ optional($order->created_at)->format('d M Y, H:i') }}</div>
-                                    </div>
-                                    <div class="text-right shrink-0">
-                                        <div class="text-sm sm:text-base font-bold text-[#b42318]">Rp {{ number_format((float) $order->total_price, 0, ',', '.') }}</div>
-                                        <span class="mt-2 inline-flex items-center px-3 py-1 rounded-full text-[10px] font-semibold uppercase tracking-wider {{ $statusColor }}">{{ $statusLabel }}</span>
-                                    </div>
-                                </div>
+                        </div>
 
-                                <div class="mt-3 space-y-3">
-                                    @if($order->status === 'completed')
-                                        @foreach($items as $iIt => $it)
-                                            @if($iIt > 0)
-                                                <div class="h-px bg-[#f1e7db]"></div>
-                                            @endif
-                                            <div class="flex gap-3 items-center">
-                                                <div class="w-12 h-12 sm:w-14 sm:h-14 bg-white rounded-lg flex items-center justify-center text-gray-400 overflow-hidden shrink-0 border border-gray-200">
-                                                    @if(isset($it['image']) && $it['image'])
-                                                        <img src="{{ asset('images/' . $it['image']) }}" alt="{{ $it['name'] ?? '' }}" class="w-full h-full object-cover">
-                                                    @else
-                                                        <i class="fas fa-image text-xl"></i>
-                                                    @endif
-                                                </div>
-                                                <div>
-                                                    <div class="font-semibold text-sm text-[#3a2a1a]">{{ $it['name'] ?? 'Pesanan Custom' }}</div>
-                                                    <div class="text-xs text-gray-500">{{ (int)($it['quantity'] ?? 1) }} barang x Rp {{ number_format((float)($it['price'] ?? 0), 0, ',', '.') }}</div>
-                                                </div>
-                                            </div>
-                                        @endforeach
-                                    @else
-                                        <div class="flex gap-3 items-center">
-                                            <div class="w-12 h-12 sm:w-14 sm:h-14 bg-white rounded-lg flex items-center justify-center text-gray-400 overflow-hidden shrink-0 border border-gray-200">
-                                                @if($firstItem && isset($firstItem['image']))
-                                                    <img src="{{ asset('images/' . $firstItem['image']) }}" alt="{{ $firstItem['name'] }}" class="w-full h-full object-cover">
-                                                @else
-                                                    <i class="fas fa-image text-xl"></i>
-                                                @endif
-                                            </div>
-                                            <div>
-                                                @if($firstItem)
-                                                    <div class="font-semibold text-sm text-[#3a2a1a]">{{ $firstItem['name'] }}</div>
-                                                    <div class="text-xs text-gray-500">{{ (int)($firstItem['quantity'] ?? 1) }} barang x Rp {{ number_format((float)($firstItem['price'] ?? 0), 0, ',', '.') }}</div>
-                                                @else
-                                                    <div class="font-semibold text-sm text-[#3a2a1a]">Pesanan Custom</div>
-                                                @endif
-                                                @if($itemCount > 1)
-                                                    <p class="text-xs text-gray-400 mt-1 italic">+ {{ $itemCount - 1 }} produk lainnya</p>
-                                                @endif
-                                            </div>
-                                        </div>
-                                    @endif
-                                </div>
-
-                                <div class="mt-4 flex flex-col sm:flex-row sm:items-end sm:justify-between gap-3">
-                                    @if($order->status === 'completed' && !$isReviewed)
-                                        <div class="flex flex-col items-start gap-1">
-                                            <span class="text-[10px] text-[#3a2a1a]/60 font-semibold uppercase tracking-[0.2em]">Ulasan Cepat</span>
-                                            <div class="flex gap-1 quick-rating" data-order-id="{{ $order->order_id }}" data-rating="0">
-                                                @for($i=1; $i<=5; $i++)
-                                                    <button type="button" data-value="{{ $i }}" onclick="submitQuickRating(this, '{{ $order->order_id }}', '{{ addslashes($order->customer_name) }}', {{ $i }})" class="quick-star-btn text-[#e1d4c8] hover:text-[#b42318] transition" title="{{ $i }} Bintang"><i class="fas fa-star text-base"></i></button>
-                                                @endfor
-                                            </div>
-                                        </div>
-                                    @endif
-
-                                    <div class="flex flex-col sm:items-end gap-2">
-                                        @if($order->status === 'completed' && !$isReviewed)
-                                            <a href="{{ route('transaksi.show', $order->order_id) }}" class="w-full sm:w-auto text-center px-4 py-2 bg-[#b42318] text-white text-xs font-bold rounded-lg hover:bg-[#8b1a12] transition shadow-[0_12px_24px_-18px_rgba(180,35,24,0.8)]">Tulis Ulasan</a>
-                                        @elseif($order->status === 'completed' && $isReviewed)
-                                            <a href="{{ route('menu.public') }}" class="w-full sm:w-auto text-center px-4 py-2 border border-[#b42318]/30 text-[#b42318] text-xs font-bold rounded-lg hover:bg-[#b42318]/10 transition">Beli Lagi</a>
-                                        @elseif($order->status === 'completed')
-                                            <a href="{{ route('transaksi.show', $order->order_id) }}" class="w-full sm:w-auto text-center px-4 py-2 bg-[#b42318] text-white text-xs font-bold rounded-lg hover:bg-[#8b1a12] transition shadow-[0_12px_24px_-18px_rgba(180,35,24,0.8)]">Tulis Ulasan</a>
-                                        @else
-                                            <a href="{{ route('transaksi.show', $order->order_id) }}" class="w-full sm:w-auto text-center px-4 py-2 border border-[#b42318]/30 text-[#b42318] text-xs font-bold rounded-lg hover:bg-[#b42318]/10 transition">Lihat Detail</a>
-                                        @endif
-                                    </div>
+                        {{-- Mobile quick rating --}}
+                        @if($order->status === 'completed' && !$isReviewed)
+                            <div class="sm:hidden mt-3 pt-3 border-t border-[#f0ebe4] flex items-center justify-between">
+                                <span class="text-[10px] text-[#a89880] font-semibold uppercase tracking-wider">Beri Rating</span>
+                                <div class="flex items-center gap-1 quick-rating" data-order-id="{{ $order->order_id }}" data-rating="0">
+                                    @for($i=1; $i<=5; $i++)
+                                        <button type="button" data-value="{{ $i }}" onclick="submitQuickRating(this, '{{ $order->order_id }}', '{{ addslashes($order->customer_name) }}', {{ $i }})" class="star-rating-btn quick-star-btn" title="{{ $i }} Bintang"><i class="fas fa-star text-base"></i></button>
+                                    @endfor
                                 </div>
                             </div>
-                        </div>
+                        @endif
                     </div>
                 </div>
             @empty
-                <div class="bg-white rounded-xl shadow-sm p-12 flex flex-col items-center justify-center text-center">
-                    <div class="w-24 h-24 bg-red-50 rounded-full flex items-center justify-center mb-4">
-                        <i class="fas fa-box-open text-4xl text-red-300"></i>
+                {{-- Empty state --}}
+                <div class="bg-white rounded-2xl border border-[#ece3d5] p-10 sm:p-14 flex flex-col items-center justify-center text-center">
+                    <div class="w-20 h-20 bg-[#f8f5f0] rounded-2xl flex items-center justify-center mb-5 border border-[#ece3d5]">
+                        <i class="fas fa-box-open text-3xl text-[#c4b5a2]"></i>
                     </div>
-                    <h3 class="text-lg font-bold text-[#3a2a1a] mb-2">Belum ada pesanan</h3>
-                    <p class="text-sm text-gray-500 mb-6">Anda belum pernah melakukan pemesanan untuk status ini.</p>
-                    <a href="{{ route('menu.public') }}" class="px-6 py-2.5 bg-red-600 text-white text-sm font-bold rounded-lg hover:bg-red-700 transition">Belanja Sekarang</a>
+                    <h3 class="text-lg font-bold text-[#1a120b] mb-1.5">Belum ada pesanan</h3>
+                    <p class="text-sm text-[#8a7b6a] mb-6 max-w-xs font-poppins">Anda belum pernah melakukan pemesanan untuk status ini. Yuk, mulai pesan sekarang!</p>
+                    <a href="{{ route('menu.public') }}" onclick="document.body.classList.add('public-skeleton-loading');" class="inline-flex items-center gap-2 px-6 py-3 bg-[#8B0000] text-white text-sm font-bold rounded-xl hover:bg-[#6d0000] transition-all shadow-[0_8px_20px_rgba(139,0,0,0.18)] hover:shadow-[0_10px_24px_rgba(139,0,0,0.25)] hover:-translate-y-0.5">
+                        <i class="fas fa-utensils text-xs"></i> Belanja Sekarang
+                    </a>
                 </div>
             @endforelse
+        </div>
     </main>
 
 <script>
@@ -211,9 +326,9 @@
         stars.forEach((star, index) => {
             if (index < value) {
                 star.classList.remove('text-gray-300');
-                star.classList.add('text-[#b42318]');
+                star.classList.add('text-[#8B0000]');
             } else {
-                star.classList.remove('text-[#b42318]');
+                star.classList.remove('text-[#8B0000]');
                 star.classList.add('text-gray-300');
             }
         });
@@ -247,9 +362,9 @@
                 alert("Terima kasih atas ulasan Anda!");
                 const buttons = container.querySelectorAll("button");
                 buttons.forEach((b, idx) => {
-                    b.classList.remove("text-gray-300", "text-[#b42318]");
+                    b.classList.remove("text-gray-300", "text-[#8B0000]");
                     if(idx < rating) {
-                        b.classList.add("text-[#b42318]");
+                        b.classList.add("text-[#8B0000]");
                     } else {
                         b.classList.add("text-gray-300");
                     }
@@ -258,6 +373,7 @@
                 container.dataset.rating = String(rating);
                 updateQuickStars(container, rating);
                 container.style.opacity = "1";
+                document.body.classList.add('public-skeleton-loading');
                 setTimeout(() => {
                     window.location.href = "{{ route('my-orders', ['tab' => 'semua']) }}";
                 }, 800);
@@ -295,14 +411,3 @@
 </script>
 </body>
 </html>
-
-
-
-
-
-
-
-
-
-
-

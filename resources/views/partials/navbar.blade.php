@@ -1,3 +1,76 @@
+<!-- PUBLIC SKELETON LOADER -->
+<style>
+    body.public-skeleton-loading {
+        overflow: hidden !important;
+        pointer-events: none !important;
+    }
+    body.public-skeleton-loading h1:not(#mainNavbar *):not(footer *),
+    body.public-skeleton-loading h2:not(#mainNavbar *):not(footer *),
+    body.public-skeleton-loading h3:not(#mainNavbar *):not(footer *),
+    body.public-skeleton-loading h4:not(#mainNavbar *):not(footer *),
+    body.public-skeleton-loading p:not(#mainNavbar *):not(footer *),
+    body.public-skeleton-loading span:not(#mainNavbar *):not(footer *):not(.fas):not(.fab):not(.far):not(.fa),
+    body.public-skeleton-loading li:not(#mainNavbar *):not(footer *),
+    body.public-skeleton-loading label:not(#mainNavbar *):not(footer *),
+    body.public-skeleton-loading button:not(#mainNavbar *):not(footer *),
+    body.public-skeleton-loading input:not(#mainNavbar *):not(footer *),
+    body.public-skeleton-loading textarea:not(#mainNavbar *):not(footer *),
+    body.public-skeleton-loading select:not(#mainNavbar *):not(footer *) {
+        color: transparent !important;
+        background-color: #EFE1D1 !important;
+        background-image: none !important;
+        border-color: transparent !important;
+        box-shadow: none !important;
+        border-radius: 6px;
+        animation: pulse-pub-skel 1.5s infinite ease-in-out;
+    }
+    body.public-skeleton-loading img:not(#mainNavbar *):not(footer *) {
+        opacity: 0 !important;
+        background-color: #EFE1D1 !important;
+        border-radius: 6px;
+        animation: pulse-pub-skel 1.5s infinite ease-in-out;
+    }
+    body.public-skeleton-loading i:not(#mainNavbar *):not(footer *),
+    body.public-skeleton-loading svg:not(#mainNavbar *):not(footer *) {
+        opacity: 0 !important;
+    }
+    @keyframes pulse-pub-skel {
+        0% { opacity: 1; }
+        50% { opacity: 0.5; }
+        100% { opacity: 1; }
+    }
+</style>
+<script>
+    if (document.body) { document.body.classList.add('public-skeleton-loading'); }
+    (function() {
+        function hide() { if (document.body) document.body.classList.remove('public-skeleton-loading'); }
+        if (document.readyState === 'complete') { hide(); }
+        else {
+            var t = setTimeout(hide, 3000);
+            window.addEventListener('load', function() { clearTimeout(t); hide(); });
+        }
+    })();
+</script>
+
+@php
+    $initialCartCount = 0;
+    if (auth()->check()) {
+        $userCart = \App\Models\UserCart::where('user_id', auth()->id())->first();
+        if ($userCart && is_array($userCart->items)) {
+            foreach ($userCart->items as $it) {
+                $initialCartCount += (int) ($it['quantity'] ?? 0);
+            }
+        }
+    } else {
+        $cartData = session()->get('cart', []);
+        if (is_array($cartData)) {
+            foreach ($cartData as $it) {
+                $initialCartCount += (int) ($it['quantity'] ?? 0);
+            }
+        }
+    }
+@endphp
+
 <!-- NAVBAR -->
 <header id="mainNavbar" class="fixed inset-x-0 top-4 z-50 px-3">
     <div class="navbar-shell max-w-[1180px] mx-auto flex items-center justify-between gap-2.5 rounded-[36px] border border-white/20 bg-white/10 pl-4 pr-4 sm:pl-5 sm:pr-5 py-2 shadow-2xl shadow-black/15 backdrop-blur-3xl transition-all duration-500">
@@ -22,7 +95,7 @@
             </a>
             <a href="{{ route('cart.index') }}" aria-label="Keranjang" class="mobile-cart-btn">
                 <i class="fas fa-shopping-cart text-lg"></i>
-                <span id="cartCountMobile" class="mobile-cart-count">0</span>
+                <span id="cartCountMobile" class="mobile-cart-count">{{ $initialCartCount }}</span>
             </a>
             @endauth
 
@@ -38,7 +111,7 @@
                 <div class="relative inline-flex items-center" id="userDropdownWrap">
                     <button type="button" id="userDropdownBtn" class="relative flex items-center justify-center w-8 h-8 rounded-full bg-red-600/10 text-red-700 hover:bg-red-600 hover:text-white transition-all duration-300" aria-label="Menu pengguna">
                         <i class="fas fa-user text-xs"></i>
-                        <span id="cartCount" class="absolute -top-1.5 -right-1.5 bg-yellow-400 text-red-600 text-[9px] w-4 h-4 rounded-full flex items-center justify-center font-bold">0</span>
+                        <span id="cartCount" class="absolute -top-1.5 -right-1.5 bg-yellow-400 text-red-600 text-[9px] w-4 h-4 rounded-full flex items-center justify-center font-bold">{{ $initialCartCount }}</span>
                     </button>
                     <div id="userDropdownMenu" class="hidden absolute right-0 top-full mt-2 w-44 bg-white/95 backdrop-blur-xl rounded-xl shadow-lg shadow-black/10 border border-white/40 py-2 z-50">
                         <div class="px-3 py-1.5 border-b border-gray-100">
@@ -109,7 +182,7 @@
                     <span class="flex items-center gap-3">
                         <div class="relative flex items-center justify-center w-6">
                             <i class="fas fa-shopping-cart text-[18px] transition-colors duration-300 {{ request()->routeIs('cart.index') ? 'text-red-600' : 'text-[#8b7355] group-hover:text-red-600' }}"></i>
-                            <span id="cartCountMobileMenu" class="absolute -top-2 -right-2 bg-yellow-400 text-red-600 text-[9px] w-[16px] h-[16px] rounded-full flex items-center justify-center font-bold shadow-sm">0</span>
+                            <span id="cartCountMobileMenu" class="absolute -top-2 -right-2 bg-yellow-400 text-red-600 text-[9px] w-[16px] h-[16px] rounded-full flex items-center justify-center font-bold shadow-sm">{{ $initialCartCount }}</span>
                         </div>
                         Keranjang
                     </span>
