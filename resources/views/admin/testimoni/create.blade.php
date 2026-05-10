@@ -80,15 +80,25 @@
             gap: 40px;
         }
 
+        @media (max-width: 992px) {
+            .main-content {
+                margin-left: 0;
+                padding: 24px;
+                padding-top: 80px;
+            }
+        }
+
         @media (max-width: 768px) {
             .form-layout {
                 grid-template-columns: 1fr;
                 gap: 20px;
             }
             .main-content {
-                margin-left: 0;
-                padding: 20px;
+                padding: 16px;
                 padding-top: 80px;
+            }
+            .form-card {
+                padding: 24px;
             }
         }
 

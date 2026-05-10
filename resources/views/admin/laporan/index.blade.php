@@ -280,24 +280,43 @@
         }
 
         @media (max-width: 992px) {
-            .main-content { margin-left: 0; padding: 20px; }
+            .main-content { margin-left: 0; padding: 80px 20px 20px; }
             .dashboard-container { flex-direction: column; }
             .page-header { flex-direction: column; align-items: flex-start; gap: 16px; }
             .header-actions { width: 100%; justify-content: flex-start; }
         }
 
         @media (max-width: 768px) {
-            .main-content { padding: 16px; }
+            .main-content { padding: 80px 16px 16px; }
             .stats-grid { gap: 10px; }
             .stat-card { padding: 16px; }
             .stat-icon { width: 42px; height: 42px; font-size: 16px; }
             .stat-value { font-size: 17px; }
             .card { padding: 16px; }
-            .data-table th, .data-table td { padding: 10px; font-size: 12px; }
             .filter-bar { flex-direction: column; align-items: stretch; gap: 12px; }
             .filter-group input { width: 100%; }
             .filter-actions { justify-content: flex-start; }
             .chart-box canvas { height: 240px !important; }
+
+            .data-table thead { display: none; }
+            .data-table, .data-table tbody, .data-table tr, .data-table td { display: block; width: 100%; }
+            .data-table tr { margin-bottom: 16px; background: var(--surface); border: 1px solid var(--border); border-radius: 8px; padding: 12px; box-shadow: 0 1px 3px rgba(0,0,0,0.04); }
+            .data-table td { text-align: right; padding: 8px 0; border-bottom: 1px dashed var(--border-light); display: flex; justify-content: space-between; align-items: center; }
+            .data-table td:last-child { border-bottom: none; justify-content: flex-end; padding-top: 12px; }
+            .data-table td::before { font-weight: 600; font-size: 11px; color: var(--text-secondary); text-transform: uppercase; }
+
+            /* Yearly Sales Report */
+            .card:nth-of-type(2) .data-table td:nth-child(1)::before { content: "Tahun"; }
+            .card:nth-of-type(2) .data-table td:nth-child(2)::before { content: "Jumlah Pesanan"; }
+            .card:nth-of-type(2) .data-table td:nth-child(3)::before { content: "Total Penjualan"; }
+            .card:nth-of-type(2) .data-table td:nth-child(4)::before { content: "Penjualan Paket"; }
+
+            /* History Penjualan */
+            .card:nth-of-type(3) .data-table td:nth-child(1)::before { content: "ID Pesanan"; }
+            .card:nth-of-type(3) .data-table td:nth-child(2)::before { content: "Tanggal"; }
+            .card:nth-of-type(3) .data-table td:nth-child(3)::before { content: "Pelanggan"; }
+            .card:nth-of-type(3) .data-table td:nth-child(4)::before { content: "Qty"; }
+            .card:nth-of-type(3) .data-table td:nth-child(5)::before { content: "Total"; }
         }
         
         @media (max-width: 576px) {

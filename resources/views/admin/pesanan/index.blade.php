@@ -388,17 +388,30 @@
         .pagination .page-item.disabled .page-link { color: #cbd5e1; background: #f8fafc; cursor: not-allowed; }
 
         @media (max-width: 992px) {
-            .main-content { margin-left: 0; padding: 20px; }
+            .main-content { margin-left: 0; padding: 80px 20px 20px; }
             .dashboard-container { flex-direction: column; }
             .stats-grid { grid-template-columns: repeat(3, 1fr); gap: 12px; }
         }
 
         @media (max-width: 768px) {
-            .main-content { padding: 16px; }
+            .main-content { padding: 80px 16px 16px; }
             .stats-grid { grid-template-columns: repeat(2, 1fr); }
-            .data-table th, .data-table td { padding: 10px; font-size: 12px; }
             .filter-bar { flex-direction: column; align-items: stretch; }
             .filter-bar input, .filter-bar select, .filter-bar button, .filter-bar a { width: 100%; }
+            
+            .data-table thead { display: none; }
+            .data-table, .data-table tbody, .data-table tr, .data-table td { display: block; width: 100%; }
+            .data-table tr { margin-bottom: 16px; background: var(--surface); border: 1px solid var(--border); border-radius: 8px; padding: 12px; box-shadow: 0 1px 3px rgba(0,0,0,0.04); }
+            .data-table td { text-align: right; padding: 8px 0; border-bottom: 1px dashed var(--border-light); display: flex; justify-content: space-between; align-items: center; }
+            .data-table td:last-child { border-bottom: none; justify-content: flex-end; padding-top: 12px; }
+            .data-table td::before { font-weight: 600; font-size: 11px; color: var(--text-secondary); text-transform: uppercase; }
+            .data-table td:nth-child(1)::before { content: "ID Pesanan"; }
+            .data-table td:nth-child(2)::before { content: "Pelanggan"; }
+            .data-table td:nth-child(3)::before { content: "Total"; }
+            .data-table td:nth-child(4)::before { content: "Status"; }
+            .data-table td:nth-child(5)::before { content: "Bukti Pembayaran"; }
+            .data-table td:nth-child(6)::before { content: "Tanggal"; }
+            .data-table td:nth-child(7)::before { content: "Aksi"; }
         }
     </style>
 </head>

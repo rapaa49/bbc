@@ -252,20 +252,32 @@
 
         /* Responsive */
         @media (max-width: 992px) {
-            .main-content { margin-left: 0; padding: 20px; }
+            .main-content { margin-left: 0; padding: 80px 20px 20px; }
             .dashboard-container { flex-direction: column; }
             .page-header { flex-direction: column; align-items: flex-start; gap: 16px; }
             .header-actions { width: 100%; justify-content: flex-start; }
         }
 
         @media (max-width: 768px) {
-            .main-content { padding: 16px; }
+            .main-content { padding: 80px 16px 16px; }
             .card { padding: 16px; }
             .filter-bar { flex-direction: column; align-items: stretch; }
             .filter-bar input, .filter-bar button, .filter-bar a { width: 100%; }
-            .data-table th, .data-table td { padding: 10px; font-size: 12px; }
             .admin-reply-form { flex-direction: column; align-items: stretch; }
             .review-text { max-width: 100%; }
+
+            .data-table thead { display: none; }
+            .data-table, .data-table tbody, .data-table tr, .data-table td { display: block; width: 100%; }
+            .data-table tr { margin-bottom: 16px; background: var(--surface); border: 1px solid var(--border); border-radius: 8px; padding: 12px; box-shadow: 0 1px 3px rgba(0,0,0,0.04); }
+            .data-table td { text-align: right; padding: 8px 0; border-bottom: 1px dashed var(--border-light); display: flex; justify-content: space-between; align-items: center; }
+            .data-table td:last-child { border-bottom: none; justify-content: flex-end; padding-top: 12px; }
+            .data-table td::before { font-weight: 600; font-size: 11px; color: var(--text-secondary); text-transform: uppercase; }
+            
+            .data-table td:nth-child(1)::before { content: "Nama"; }
+            .data-table td:nth-child(2)::before { content: "Rating"; }
+            .data-table td:nth-child(3)::before { content: "Ulasan"; }
+            .data-table td:nth-child(4)::before { content: "Balasan Admin"; }
+            .data-table td:nth-child(5)::before { content: "Aksi"; }
         }
     </style>
 </head>

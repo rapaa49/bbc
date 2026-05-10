@@ -293,9 +293,19 @@
             color: #2c3e50;
         }
 
+        @media (max-width: 992px) {
+            .main-content {
+                margin-left: 0;
+                padding: 80px 20px 20px;
+            }
+        }
+
         @media (max-width: 768px) {
             .detail-grid {
                 grid-template-columns: 1fr;
+            }
+            .main-content {
+                padding: 80px 16px 16px;
             }
         }
     </style>

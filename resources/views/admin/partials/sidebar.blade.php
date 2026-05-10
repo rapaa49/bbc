@@ -373,6 +373,29 @@
         .sidebar.admin-sidebar .menu {
             padding: 10px 0;
         }
+
+        .sidebar-close {
+            display: block;
+        }
+
+        .sidebar-mobile-toggle.is-hidden {
+            display: none !important;
+        }
+    }
+
+    .sidebar-close {
+        display: none;
+        background: transparent;
+        border: none;
+        color: #64748b;
+        font-size: 20px;
+        cursor: pointer;
+        margin-left: auto;
+        padding: 4px;
+        transition: color 0.2s;
+    }
+    .sidebar-close:hover {
+        color: #ef4444;
     }
 </style>
 
@@ -389,6 +412,9 @@
             <div class="brand-title">ADMIN BBC</div>
             <div class="brand-subtitle">Panel Manajemen</div>
         </div>
+        <button class="sidebar-close" id="sidebarClose" aria-label="Close menu">
+            <i class="fas fa-times"></i>
+        </button>
     </div>
 
     <nav class="menu">
@@ -473,6 +499,7 @@
         const sidebar = document.getElementById('adminSidebar');
         const toggleBtn = document.getElementById('sidebarToggle');
         const overlay = document.getElementById('sidebarOverlay');
+        const closeBtn = document.getElementById('sidebarClose');
         const menu = sidebar.querySelector('.menu');
         const slider = menu.querySelector('.menu-slider');
         const items = menu.querySelectorAll('.menu-item');
@@ -486,12 +513,14 @@
             sidebar.classList.add('is-open');
             overlay.classList.add('is-visible');
             document.body.style.overflow = 'hidden';
+            if (toggleBtn) toggleBtn.classList.add('is-hidden');
         }
 
         function closeSidebar() {
             sidebar.classList.remove('is-open');
             overlay.classList.remove('is-visible');
             document.body.style.overflow = '';
+            if (toggleBtn) toggleBtn.classList.remove('is-hidden');
         }
 
         if (toggleBtn) {
@@ -507,6 +536,10 @@
 
         if (overlay) {
             overlay.addEventListener('click', closeSidebar);
+        }
+
+        if (closeBtn) {
+            closeBtn.addEventListener('click', closeSidebar);
         }
 
         function positionSlider(element, animate) {
