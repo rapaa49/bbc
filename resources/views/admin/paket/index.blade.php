@@ -424,9 +424,13 @@
                                             <a href="/paket/{{ $paket->id }}/edit" class="btn-sm btn-edit" title="Edit">
                                                 <i class="fas fa-pen"></i>
                                             </a>
-                                            <button class="btn-sm btn-delete" onclick="if(confirm('Hapus paket ini?')) window.location.href='/paket/{{ $paket->id }}/delete'" title="Hapus">
-                                                <i class="fas fa-trash"></i>
-                                            </button>
+                                            <form method="POST" action="/paket/{{ $paket->id }}" id="delete-paket-{{ $paket->id }}" style="display:inline;" onsubmit="confirmFormSubmit(event, 'delete-paket-{{ $paket->id }}', 'Hapus paket ini?')">
+                                                @csrf
+                                                @method('DELETE')
+                                                <button type="submit" class="btn-sm btn-delete" title="Hapus">
+                                                    <i class="fas fa-trash"></i>
+                                                </button>
+                                            </form>
                                         </div>
                                     </td>
                                 </tr>

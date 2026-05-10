@@ -421,21 +421,21 @@
 
                         <div class="action-buttons">
                             @if($pesanan->status === 'pending')
-                                <button class="btn btn-confirm" onclick="if(confirm('Konfirmasi pesanan ini?')) window.location.href='/pesanan/{{ $pesanan->id }}/confirm'">
+                                <button class="btn btn-confirm" onclick="confirmAction(event, 'Konfirmasi pesanan ini?', '/pesanan/{{ $pesanan->id }}/confirm')">
                                     <i class="fas fa-check"></i>
                                     Konfirmasi Pesanan
                                 </button>
-                                <button class="btn btn-reject" onclick="alert('Tolak pesanan - fitur akan diaktifkan segera')">
+                                <button class="btn btn-reject" onclick="event.preventDefault(); Swal.fire('Info', 'Tolak pesanan - fitur akan diaktifkan segera', 'info');">
                                     <i class="fas fa-times"></i>
                                     Tolak Pesanan
                                 </button>
                             @elseif($pesanan->status === 'confirmed')
-                                <button class="btn btn-ship" onclick="if(confirm('Tandai pesanan sebagai dikirim?')) window.location.href='/pesanan/{{ $pesanan->id }}/ship'">
+                                <button class="btn btn-ship" onclick="confirmAction(event, 'Tandai pesanan sebagai dikirim?', '/pesanan/{{ $pesanan->id }}/ship')">
                                     <i class="fas fa-truck"></i>
                                     Tandai Dikirim
                                 </button>
                             @elseif($pesanan->status === 'shipped')
-                                <button class="btn btn-complete" onclick="if(confirm('Tandai pesanan sebagai selesai?')) window.location.href='/pesanan/{{ $pesanan->id }}/complete'">
+                                <button class="btn btn-complete" onclick="confirmAction(event, 'Tandai pesanan sebagai selesai?', '/pesanan/{{ $pesanan->id }}/complete')">
                                     <i class="fas fa-check-double"></i>
                                     Tandai Selesai
                                 </button>

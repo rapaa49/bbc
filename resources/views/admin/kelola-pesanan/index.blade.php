@@ -467,6 +467,10 @@
                                             <td><span class="badge {{ $badge }}">{{ $label }}</span></td>
                                             <td>
                                                 <div class="action-buttons">
+                                                    @if(!empty($o->payment_proof))
+                                                        <a href="{{ asset('uploads/payment_proofs/' . $o->payment_proof) }}" target="_blank" class="btn-sm" style="background:#10b981;color:white;border:none;" title="Lihat Bukti"><i class="fas fa-receipt"></i></a>
+                                                    @endif
+
                                                     @if(($o->status ?? '') === 'pending')
                                                         <button class="btn-sm btn-confirm" onclick="confirmOrder({{ $o->id }})"><i class="fas fa-check"></i> Konfirmasi</button>
                                                         <button class="btn-sm btn-reject" onclick="openRejectModal({{ $o->id }})"><i class="fas fa-times"></i> Tolak</button>
@@ -540,6 +544,10 @@
                                             <td><span class="badge {{ $badge }}">{{ $label }}</span></td>
                                             <td>
                                                 <div class="action-buttons">
+                                                    @if(!empty($o->payment_proof))
+                                                        <a href="{{ asset('uploads/payment_proofs/' . $o->payment_proof) }}" target="_blank" class="btn-sm" style="background:#10b981;color:white;border:none;" title="Lihat Bukti"><i class="fas fa-receipt"></i></a>
+                                                    @endif
+
                                                     @if(($o->status ?? '') === 'pending')
                                                         <button class="btn-sm btn-confirm" onclick="confirmOrder({{ $o->id }})"><i class="fas fa-check"></i></button>
                                                         <button class="btn-sm btn-reject" onclick="openRejectModal({{ $o->id }})"><i class="fas fa-times"></i></button>
@@ -633,27 +641,19 @@
         });
 
         function confirmOrder(orderId) {
-            if (confirm('Konfirmasi pesanan ini?')) {
-                window.location.href = `/pesanan/${orderId}/confirm`;
-            }
+            confirmAction(null, 'Konfirmasi pesanan ini?', `/pesanan/${orderId}/confirm`);
         }
 
         function shipOrder(orderId) {
-            if (confirm('Kirim pesanan ini?')) {
-                window.location.href = `/pesanan/${orderId}/ship`;
-            }
+            confirmAction(null, 'Kirim pesanan ini?', `/pesanan/${orderId}/ship`);
         }
 
         function paidOrder(orderId) {
-            if (confirm('Tandai pesanan ini sebagai sudah dibayar?')) {
-                window.location.href = `/pesanan/${orderId}/paid`;
-            }
+            confirmAction(null, 'Tandai pesanan ini sebagai sudah dibayar?', `/pesanan/${orderId}/paid`);
         }
 
         function completeOrder(orderId) {
-            if (confirm('Tandai pesanan ini sebagai selesai?')) {
-                window.location.href = `/pesanan/${orderId}/complete`;
-            }
+            confirmAction(null, 'Tandai pesanan ini sebagai selesai?', `/pesanan/${orderId}/complete`);
         }
 
         // Close modal when clicking outside

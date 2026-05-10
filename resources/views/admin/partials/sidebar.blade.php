@@ -29,7 +29,7 @@
 
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
 <style>
-    /* ── GLOBAL SKELETON LOADING ── */
+    /* â”€â”€ GLOBAL SKELETON LOADING â”€â”€ */
     .main-content {
         opacity: 0;
         visibility: hidden;
@@ -154,7 +154,7 @@
 
     /* Dropdown styles */
     .menu-dropdown {
-        /* Intentionally no position:relative — it breaks offsetTop for the slider */
+        /* Intentionally no position:relative â€” it breaks offsetTop for the slider */
     }
 
     .menu-dropdown-toggle {
@@ -756,3 +756,43 @@
         }
     })();
 </script>
+
+<script>
+    function confirmAction(e, text, url) {
+        if(e) e.preventDefault();
+        Swal.fire({
+            title: 'Konfirmasi',
+            text: text,
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#8B0000',
+            cancelButtonColor: '#64748b',
+            confirmButtonText: 'Ya, Lanjutkan',
+            cancelButtonText: 'Batal'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                if(url) window.location.href = url;
+            }
+        });
+    }
+
+    function confirmFormSubmit(e, formId, text) {
+        e.preventDefault();
+        Swal.fire({
+            title: 'Konfirmasi',
+            text: text,
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#8B0000',
+            cancelButtonColor: '#64748b',
+            confirmButtonText: 'Ya, Lanjutkan',
+            cancelButtonText: 'Batal'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                document.getElementById(formId).submit();
+            }
+        });
+    }
+</script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+

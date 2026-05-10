@@ -650,27 +650,19 @@
         });
 
         function confirmOrder(orderId) {
-            if (confirm('Konfirmasi pesanan ini?')) {
-                window.location.href = "{{ route('pesanan.confirm', ':id') }}".replace(':id', orderId);
-            }
+            confirmAction(null, 'Konfirmasi pesanan ini?', "{{ route('pesanan.confirm', ':id') }}".replace(':id', orderId));
         }
 
         function shipOrder(orderId) {
-            if (confirm('Kirim pesanan ini?')) {
-                window.location.href = "{{ route('pesanan.ship', ':id') }}".replace(':id', orderId);
-            }
+            confirmAction(null, 'Kirim pesanan ini?', "{{ route('pesanan.ship', ':id') }}".replace(':id', orderId));
         }
 
         function paidOrder(orderId) {
-            if (confirm('Tandai pesanan ini sebagai sudah dibayar (Lunas)?')) {
-                window.location.href = "{{ route('pesanan.paid', ':id') }}".replace(':id', orderId);
-            }
+            confirmAction(null, 'Tandai pesanan ini sebagai sudah dibayar (Lunas)?', "{{ route('pesanan.paid', ':id') }}".replace(':id', orderId));
         }
 
         function completeOrder(orderId) {
-            if (confirm('Tandai pesanan ini sebagai selesai?')) {
-                window.location.href = "{{ route('pesanan.complete', ':id') }}".replace(':id', orderId);
-            }
+            confirmAction(null, 'Tandai pesanan ini sebagai selesai?', "{{ route('pesanan.complete', ':id') }}".replace(':id', orderId));
         }
 
         function viewPaymentProof(imageUrl) {

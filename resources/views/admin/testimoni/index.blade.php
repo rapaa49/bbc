@@ -351,7 +351,7 @@
                                     <a class="btn-sm edit" href="{{ route('admin.testimoni.influencer.edit', $item->id) }}" title="Edit">
                                         <i class="fas fa-edit"></i>
                                     </a>
-                                    <form method="POST" action="{{ route('admin.testimoni.influencer.destroy', $item->id) }}" onsubmit="return confirm('Hapus testimoni influencer ini?')">
+                                    <form method="POST" id="form-influencer-{{ $item->id }}" action="{{ route('admin.testimoni.influencer.destroy', $item->id) }}" onsubmit="confirmFormSubmit(event, 'form-influencer-{{ $item->id }}', 'Hapus testimoni influencer ini?')">
                                         @csrf
                                         @method('DELETE')
                                         <button type="submit" class="btn-sm delete" title="Hapus">

@@ -348,7 +348,7 @@
                                 </form>
                             </td>
                             <td>
-                                <form method="POST" action="{{ route('admin.testimoni.customer.destroy', $item->id) }}" onsubmit="return confirm('Hapus ulasan pelanggan ini?')">
+                                <form method="POST" id="form-customer-{{ $item->id }}" action="{{ route('admin.testimoni.customer.destroy', $item->id) }}" onsubmit="confirmFormSubmit(event, 'form-customer-{{ $item->id }}', 'Hapus ulasan pelanggan ini?')">
                                     @csrf
                                     @method('DELETE')
                                     <button type="submit" class="btn-sm delete" title="Hapus">

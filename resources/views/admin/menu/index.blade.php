@@ -431,9 +431,13 @@
                                             <a href="/admin/menu-management/{{ $menu->id }}/edit" class="btn-sm btn-edit" title="Edit">
                                                 <i class="fas fa-pen"></i>
                                             </a>
-                                            <button class="btn-sm btn-delete" onclick="if(confirm('Hapus menu ini?')) window.location.href='/admin/menu-management/{{ $menu->id }}/delete'" title="Hapus">
-                                                <i class="fas fa-trash"></i>
-                                            </button>
+                                            <form method="POST" action="/admin/menu-management/{{ $menu->id }}" id="delete-menu-{{ $menu->id }}" style="display:inline;" onsubmit="confirmFormSubmit(event, 'delete-menu-{{ $menu->id }}', 'Hapus menu ini?')">
+                                                @csrf
+                                                @method('DELETE')
+                                                <button type="submit" class="btn-sm btn-delete" title="Hapus">
+                                                    <i class="fas fa-trash"></i>
+                                                </button>
+                                            </form>
                                         </div>
                                     </td>
                                 </tr>

@@ -358,9 +358,13 @@
                                         <a href="/kelola-admin/{{ $admin->id }}/edit" class="btn-sm edit" title="Edit">
                                             <i class="fas fa-edit"></i>
                                         </a>
-                                        <button class="btn-sm delete" title="Hapus" onclick="if(confirm('Hapus admin ini?')) window.location.href='/kelola-admin/{{ $admin->id }}/delete'">
-                                            <i class="fas fa-trash"></i>
-                                        </button>
+                                        <form method="POST" action="/kelola-admin/{{ $admin->id }}" id="delete-admin-{{ $admin->id }}" style="display:inline;" onsubmit="confirmFormSubmit(event, 'delete-admin-{{ $admin->id }}', 'Hapus admin ini?')">
+                                            @csrf
+                                            @method('DELETE')
+                                            <button type="submit" class="btn-sm delete" title="Hapus">
+                                                <i class="fas fa-trash"></i>
+                                            </button>
+                                        </form>
                                     </div>
                                 </td>
                             </tr>
