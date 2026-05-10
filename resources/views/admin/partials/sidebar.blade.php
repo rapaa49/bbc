@@ -2,7 +2,7 @@
     $activeMenu = $activeMenu ?? '';
     $pendingCount = $pendingCount ?? 0;
 
-    $adminUser = auth('admin')->user();
+    $adminUser = auth('admin')->user() ?? (object)['name' => 'Admin', 'username' => 'Admin', 'email' => ''];
     $adminName = $adminUser->name ?? $adminUser->username ?? 'Admin';
     $adminEmail = $adminUser->email ?? '';
 
