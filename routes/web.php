@@ -156,10 +156,10 @@ Route::get('/admin/dashboard', function (Request $request) {
         'monthlySalesLabels',
         'monthlySalesData'
     ));
-})->name('admin.dashboard');
+})->name('admin.dashboard')->middleware(['auth:admin', 'admin']);
 
 // Admin routes
-Route::group(function () {
+Route::middleware(['auth:admin', 'admin'])->group(function () {
     Route::prefix('admin')->group(function () {
         Route::get('/kelola-pesanan', function (Request $request) {
             $recentOrders = \App\Models\Pesanan::orderByDesc('created_at')->limit(5)->get();
