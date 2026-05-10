@@ -159,7 +159,7 @@ Route::get('/admin/dashboard', function (Request $request) {
 })->name('admin.dashboard');
 
 // Admin routes
-Route::group([], function () {
+Route::group(function () {
     Route::prefix('admin')->group(function () {
         Route::get('/kelola-pesanan', function (Request $request) {
             $recentOrders = \App\Models\Pesanan::orderByDesc('created_at')->limit(5)->get();
