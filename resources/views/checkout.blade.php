@@ -23,108 +23,162 @@
         }
     </script>
     <style>
-        .checkout-shell {
+        :root {
+            --brand-red: #8B0000;
+            --brand-red-light: #A52A2A;
+            --brand-cream: #EFE1D1;
+            --brand-brown: #3A2A1A;
+            --brand-brown-light: #644B3C;
+        }
+
+        body {
+            background-color: var(--brand-cream);
+            background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%238b0000' fill-opacity='0.03'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+        }
+
+        .checkout-container {
+            animation: fadeIn 0.6s ease-out;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .premium-card {
+            background: rgba(255, 255, 255, 0.7);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.5);
+            border-radius: 24px;
+            box-shadow: 0 10px 25px -5px rgba(58, 42, 26, 0.05), 0 8px 10px -6px rgba(58, 42, 26, 0.05);
+        }
+
+        .input-group {
             position: relative;
+            margin-bottom: 1.5rem;
         }
 
-        .checkout-shell::before,
-        .checkout-shell::after {
-            content: '';
-            position: absolute;
-            border-radius: 999px;
-            pointer-events: none;
-            filter: blur(2px);
-            opacity: 0.75;
-        }
-
-        .checkout-shell::before {
-            width: 210px;
-            height: 210px;
-            top: -60px;
-            left: -40px;
-            background: radial-gradient(circle at 35% 35%, rgba(239, 47, 36, 0.2), rgba(239, 47, 36, 0));
-        }
-
-        .checkout-shell::after {
-            width: 180px;
-            height: 180px;
-            right: -35px;
-            bottom: -40px;
-            background: radial-gradient(circle at 35% 35%, rgba(139, 0, 0, 0.15), rgba(139, 0, 0, 0));
-        }
-
-        .checkout-card {
-            border: 1px solid rgba(139, 0, 0, 0.08);
-            box-shadow: 0 16px 34px rgba(58, 32, 24, 0.1);
-        }
-
-        .section-tag {
-            display: inline-flex;
-            align-items: center;
-            gap: 0.45rem;
-            border-radius: 999px;
-            background: rgba(239, 47, 36, 0.1);
-            color: #8b0000;
-            font-size: 0.7rem;
-            font-weight: 800;
-            letter-spacing: 0.1em;
-            text-transform: uppercase;
-            padding: 0.35rem 0.7rem;
-        }
-
-        .field-label {
-            font-size: 0.72rem;
-            font-weight: 800;
-            letter-spacing: 0.08em;
-            text-transform: uppercase;
-            color: #4a2d21;
-            margin-bottom: 0.35rem;
+        .input-label {
             display: block;
+            font-size: 0.75rem;
+            font-weight: 700;
+            color: var(--brand-brown-light);
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            margin-bottom: 0.5rem;
+            margin-left: 0.25rem;
         }
 
-        .checkout-input {
+        .modern-input {
             width: 100%;
-            border-radius: 0.8rem;
-            border: 1px solid rgba(139, 0, 0, 0.12);
-            background: rgba(255, 255, 255, 0.88);
-            padding: 0.72rem 0.9rem;
-            font-size: 0.92rem;
-            color: #3a2a1a;
-            outline: none;
-            transition: border-color 0.22s ease, box-shadow 0.22s ease, background-color 0.22s ease;
-        }
-
-        .checkout-input:focus {
-            border-color: rgba(239, 47, 36, 0.55);
-            box-shadow: 0 0 0 4px rgba(239, 47, 36, 0.1);
             background: #fff;
+            border: 1.5px solid #E2D1C3;
+            border-radius: 14px;
+            padding: 0.75rem 1rem;
+            font-size: 0.95rem;
+            color: var(--brand-brown);
+            transition: all 0.25s ease;
+            outline: none;
         }
 
-        .order-summary-card {
-            background: rgba(255, 255, 255, 0.9);
-            border: 1px solid rgba(139, 0, 0, 0.1);
-            box-shadow: 0 14px 26px rgba(58, 32, 24, 0.1);
-        }
-
-        .checkout-cta {
-            background: linear-gradient(135deg, #ef2f24 0%, #c91f17 100%);
-            box-shadow: 0 14px 24px rgba(239, 47, 36, 0.28);
-            transition: transform 0.25s ease, box-shadow 0.25s ease, filter 0.25s ease;
-        }
-
-        .checkout-cta:hover {
+        .modern-input:focus {
+            border-color: var(--brand-red);
+            box-shadow: 0 0 0 4px rgba(139, 0, 0, 0.08);
             transform: translateY(-1px);
-            box-shadow: 0 18px 30px rgba(239, 47, 36, 0.34);
-            filter: brightness(1.02);
         }
-    </style>
 
-    <style>
-        .auth-tagline, .auth-subtitle, h5, h6 { font-family: "Poppins", sans-serif !important; }
-        h1, h2, h3, h4 { font-family: "Inter", sans-serif !important; }
+        .modern-input::placeholder {
+            color: #A89080;
+            opacity: 0.6;
+        }
+
+        .section-header {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 1.5rem;
+        }
+
+        .section-icon {
+            width: 36px;
+            height: 36px;
+            border-radius: 10px;
+            background: rgba(139, 0, 0, 0.1);
+            color: var(--brand-red);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.9rem;
+        }
+
+        .section-title {
+            font-family: 'Inter', sans-serif;
+            font-size: 1.1rem;
+            font-weight: 800;
+            color: var(--brand-brown);
+            letter-spacing: -0.01em;
+        }
+
+        .summary-item {
+            display: flex;
+            justify-content: space-between;
+            padding: 0.75rem 0;
+            border-bottom: 1px dashed #E2D1C3;
+        }
+
+        .summary-item:last-child {
+            border-bottom: none;
+        }
+
+        .btn-order {
+            background: linear-gradient(135deg, #8B0000 0%, #6B0000 100%);
+            color: white;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            padding: 1rem;
+            border-radius: 16px;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            box-shadow: 0 8px 20px -6px rgba(139, 0, 0, 0.4);
+            border: none;
+            width: 100%;
+        }
+
+        .btn-order:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 12px 28px -8px rgba(139, 0, 0, 0.5);
+            filter: brightness(1.1);
+        }
+
+        .btn-order:active {
+            transform: translateY(0);
+        }
+
+        .location-btn {
+            font-size: 0.7rem;
+            background: rgba(139, 0, 0, 0.05);
+            color: var(--brand-red);
+            padding: 0.4rem 0.8rem;
+            border-radius: 8px;
+            font-weight: 700;
+            border: 1.5px solid rgba(139, 0, 0, 0.1);
+            transition: all 0.2s ease;
+        }
+
+        .location-btn:hover {
+            background: var(--brand-red);
+            color: white;
+            border-color: var(--brand-red);
+        }
+
+        /* Responsive spacing */
+        @media (max-width: 640px) {
+            .checkout-shell { padding-top: 1rem; }
+            .premium-card { padding: 1.5rem !important; }
+        }
     </style>
 </head>
-<body class="bg-[#EFE1D1] text-[#2D3748] font-poppins">
+<body class="font-poppins">
     @include('partials.navbar')
 
     @php
@@ -132,151 +186,166 @@
         $subtotal = $subtotal ?? 0;
     @endphp
 
-<main class="checkout-shell max-w-6xl mx-auto px-4 sm:px-6 py-10 sm:py-12 mt-16 md:mt-20"> 
-        <div class="mb-12 mt-4 flex flex-col md:flex-row md:items-end justify-between gap-6">
-            <div class="text-left">
-                <span class="text-red-700 font-bold tracking-widest text-sm uppercase mb-2 block font-poppins">Penyelesaian</span>
-                <h1 class="text-4xl md:text-5xl font-bold text-[#26180f] tracking-tight font-bold mb-4">
-                    Penyelesaian Pesanan
+    <main class="checkout-container max-w-6xl mx-auto px-4 pt-12 pb-16">
+        {{-- Page Header --}}
+        <div class="flex flex-col md:flex-row md:items-center justify-between mb-10 gap-6">
+            <div>
+                <nav class="flex items-center gap-2 mb-3 text-[11px] font-bold uppercase tracking-widest text-red-800/60">
+                    <a href="{{ route('home') }}" class="hover:text-red-800 transition">Beranda</a>
+                    <i class="fas fa-chevron-right text-[8px]"></i>
+                    <a href="{{ route('cart.index') }}" class="hover:text-red-800 transition">Keranjang</a>
+                    <i class="fas fa-chevron-right text-[8px]"></i>
+                    <span class="text-red-800">Checkout</span>
+                </nav>
+                <h1 class="text-3xl md:text-4xl font-extrabold text-brand-brown tracking-tight leading-tight">
+                    Selesaikan <span class="text-red-800">Pesanan</span>
                 </h1>
-                <p class="text-sm sm:text-base text-[#644b3c] mt-2 font-poppins font-medium">Lengkapi detail pemesanan agar proses konfirmasi lebih cepat.</p>      
+                <p class="text-sm text-brand-brown-light mt-2 font-medium">Lengkapi informasi di bawah untuk memproses pesanan Anda.</p>
             </div>
-            <div class="flex items-center">
-                <a href="{{ route('cart.index') }}" class="px-5 py-2.5 rounded-xl border border-[#3a2a1a] text-[#3a2a1a] font-bold hover:bg-[#3a2a1a] hover:text-[#EFE1D1] transition flex items-center gap-2 text-sm shadow-sm mt-3 md:mt-0">
-                    <i class="fa-solid fa-arrow-left"></i> Kembali ke Keranjang
-                </a>
-            </div>
+            
+            <a href="{{ route('cart.index') }}" class="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl bg-white border border-[#E2D1C3] text-brand-brown font-bold text-sm hover:bg-[#F9F4EE] transition shadow-sm self-start md:self-center">
+                <i class="fas fa-arrow-left text-xs opacity-60"></i> Kembali
+            </a>
         </div>
 
-        <div class="checkout-card bg-[#F9EDDE] rounded-[1.8rem] p-4 sm:p-6 md:p-8 lg:p-10 relative z-10">
-            <form action="{{ route('checkout.store') }}" method="POST" class="grid grid-cols-1 lg:grid-cols-5 gap-6 lg:gap-8 items-start">
-                @csrf
+        <form action="{{ route('checkout.store') }}" method="POST">
+            @csrf
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+                
+                {{-- Form Section --}}
+                <div class="lg:col-span-8 space-y-6">
+                    <div class="premium-card p-6 md:p-8">
+                        <div class="section-header">
+                            <div class="section-icon"><i class="fas fa-user-check"></i></div>
+                            <h2 class="section-title">Detail Pemesan</h2>
+                        </div>
 
-                <section class="lg:col-span-3">
-                    <div class="section-tag mb-4">
-                        <i class="fas fa-user-pen"></i>
-                        Informasi Pemesan
-                    </div>
-
-                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                        <div>
-                            <label class="field-label">Nama Lengkap</label>
-                            <input name="customer_name" required placeholder="Masukkan Nama Lengkap" class="checkout-input" />
-                        </div>
-                        <div>
-                            <label class="field-label">Nomor HP</label>
-                            <input name="customer_phone" required inputmode="numeric" pattern="[0-9]*" placeholder="Contoh: 08xxxxxxxxxx" class="checkout-input" oninput="this.value=this.value.replace(/\D/g,'')" />
-                        </div>
-                        <div>
-                            <label class="field-label">Nomor Rekening Pembeli</label>
-                            <input name="buyer_bank_account" required inputmode="numeric" pattern="[0-9]*" placeholder="Contoh: 1234567890" class="checkout-input" oninput="this.value=this.value.replace(/\D/g,'')" />
-                        </div>
-                        <div>
-                            <label class="field-label">Email</label>
-                            <input name="customer_email" required type="email" placeholder="nama@email.com" class="checkout-input" />
-                        </div>
-                        <div>
-                            <label class="field-label">Nama Acara</label>
-                            <input name="event_name" required placeholder="Contoh: Arisan Keluarga" class="checkout-input" />
-                        </div>
-                        <div>
-                            <label class="field-label">Tanggal Acara</label>
-                            <input name="event_date" required type="date" class="checkout-input" />
-                        </div>
-                        <div>
-                            <label class="field-label">Jam Pengiriman</label>
-                            <input name="delivery_time" required type="time" class="checkout-input" />
-                        </div>
-                        <div class="sm:col-span-2">
-                            <div class="flex items-center justify-between mb-0.35rem">
-                                <label class="field-label mb-0">Alamat Lengkap Pengiriman</label>
-                                <button type="button" onclick="getLocation()" class="text-xs bg-red-100 text-red-700 px-2 py-1 rounded hover:bg-red-200 transition font-bold" id="btn-location">
-                                    <i class="fas fa-location-crosshairs mr-1"></i> Gunakan Lokasi Saat Ini
-                                </button>
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-x-6">
+                            <div class="input-group">
+                                <label class="input-label">Nama Lengkap</label>
+                                <input name="customer_name" required placeholder="Nama Anda" class="modern-input" />
                             </div>
-                            <textarea id="delivery_address" name="delivery_address" required rows="3" placeholder="Isi alamat lengkap agar pesanan mudah ditemukan" class="checkout-input resize-none mt-1"></textarea>
-                            <input type="hidden" id="latitude" name="latitude">
-                            <input type="hidden" id="longitude" name="longitude">
-                        </div>
-                        <div>
-                            <label class="field-label">Metode Pengiriman</label>
-                            <select name="delivery_method" required class="checkout-input">
-                                <option value="">Pilih Metode Pengiriman</option>
-                                <option value="antar">Antar</option>
-                                <option value="pickup">Ambil di Tempat</option>
-                            </select>
-                        </div>
-                        <div>
-                            <label class="field-label">Metode Pembayaran</label>
-                            <select name="payment_method" required class="checkout-input">
-                                <option value="">Pilih Metode Pembayaran</option>
-                                <option value="cash">Cash</option>
-                                <option value="transfer">Transfer</option>
-                            </select>
-                        </div>
-                        <div class="sm:col-span-2">
-                            <label class="field-label">Catatan Tambahan</label>
-                            <textarea name="notes" rows="3" placeholder="Contoh: Tolong dikirim sebelum pukul 11.00" class="checkout-input resize-none"></textarea>
-                        </div>
-                    </div>
-                </section>
-
-                <section class="lg:col-span-2 lg:sticky lg:top-28">
-                    <div class="section-tag mb-4">
-                        <i class="fas fa-receipt"></i>
-                        Ringkasan Pesanan
-                    </div>
-
-                    <div class="order-summary-card rounded-2xl overflow-hidden">
-                        <div class="px-4 sm:px-5 py-3 border-b border-[#f0dfcb]">
-                            <div class="grid grid-cols-3 text-[11px] sm:text-xs font-bold text-[#3a2a1a] uppercase tracking-wide">
-                                <div class="col-span-2">Produk</div>
-                                <div class="text-right">Subtotal</div>
+                            <div class="input-group">
+                                <label class="input-label">Nomor HP / WhatsApp</label>
+                                <input name="customer_phone" required inputmode="numeric" pattern="[0-9]*" placeholder="08xxxxxxxxxx" class="modern-input" oninput="this.value=this.value.replace(/\D/g,'')" />
+                            </div>
+                            <div class="input-group">
+                                <label class="input-label">Rekening Pembeli (Opsional)</label>
+                                <input name="buyer_bank_account" required inputmode="numeric" pattern="[0-9]*" placeholder="Untuk verifikasi transfer" class="modern-input" oninput="this.value=this.value.replace(/\D/g,'')" />
+                            </div>
+                            <div class="input-group">
+                                <label class="input-label">Alamat Email</label>
+                                <input name="customer_email" required type="email" placeholder="nama@email.com" class="modern-input" />
                             </div>
                         </div>
 
-                        <div class="divide-y divide-[#EFE1D1]">
-                            @forelse($items as $item)
-                                @php
-                                    $lineTotal = ((float) ($item['price'] ?? 0)) * ((int) ($item['quantity'] ?? 0));
-                                @endphp
-                                <div class="px-4 sm:px-5 py-3.5">
-                                    <div class="grid grid-cols-3 gap-3 items-start">
-                                        <div class="col-span-2">
-                                            <div class="text-sm font-bold text-[#3a2a1a] leading-tight">{{ $item['name'] }}</div>
-                                            <div class="text-xs text-gray-600 mt-1">Jumlah: x{{ (int) ($item['quantity'] ?? 0) }}</div>
+                        <div class="h-px bg-gradient-to-r from-transparent via-[#E2D1C3] to-transparent my-4"></div>
+
+                        <div class="section-header mt-8">
+                            <div class="section-icon"><i class="fas fa-calendar-day"></i></div>
+                            <h2 class="section-title">Informasi Acara & Pengiriman</h2>
+                        </div>
+
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-x-6">
+                            <div class="input-group md:col-span-2">
+                                <label class="input-label">Nama Acara</label>
+                                <input name="event_name" required placeholder="Misal: Ulang Tahun, Rapat Kantor, dll" class="modern-input" />
+                            </div>
+                            <div class="input-group">
+                                <label class="input-label">Tanggal Acara</label>
+                                <input name="event_date" required type="date" class="modern-input" />
+                            </div>
+
+                            
+                            <div class="input-group md:col-span-2">
+                                <div class="flex items-center justify-between mb-2">
+                                    <label class="input-label !mb-0">Alamat Lengkap</label>
+                                    <button type="button" onclick="getLocation()" id="btn-location" class="location-btn">
+                                        <i class="fas fa-location-arrow mr-1"></i> Pakai Lokasi GPS
+                                    </button>
+                                </div>
+                                <textarea id="delivery_address" name="delivery_address" required rows="3" placeholder="Nama jalan, nomor rumah, RT/RW, patokan..." class="modern-input resize-none"></textarea>
+                                <input type="hidden" id="latitude" name="latitude">
+                                <input type="hidden" id="longitude" name="longitude">
+                                {{-- Hidden fields to maintain backend functionality as per user requirement --}}
+                                <input type="hidden" name="delivery_time" value="ASAP">
+                                <input type="hidden" name="delivery_method" value="antar">
+                                <input type="hidden" name="payment_method" value="transfer">
+                            </div>
+
+                            <div class="input-group md:col-span-2">
+                                <label class="input-label">Catatan Tambahan (Opsional)</label>
+                                <textarea name="notes" rows="2" placeholder="Misal: Kurangi pedas, kirim sebelum jam 12, dll..." class="modern-input resize-none"></textarea>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                {{-- Summary Section --}}
+                <div class="lg:col-span-4 lg:sticky lg:top-32 space-y-6">
+                    <div class="premium-card overflow-hidden">
+                        <div class="bg-brand-brown p-5">
+                            <h3 class="text-red-800 font-bold tracking-tight flex items-center gap-2">
+                                <i class="fas fa-shopping-basket text-red-800"></i> Ringkasan Pesanan
+                            </h3>
+                        </div>
+                        
+                        <div class="p-5">
+                            <div class="max-h-[300px] overflow-y-auto pr-2 space-y-4 mb-6">
+                                @forelse($items as $item)
+                                    @php
+                                        $lineTotal = ((float) ($item['price'] ?? 0)) * ((int) ($item['quantity'] ?? 0));
+                                    @endphp
+                                    <div class="flex items-start gap-3">
+                                        <div class="w-10 h-10 rounded-lg bg-gray-50 border border-[#E2D1C3] flex items-center justify-center shrink-0">
+                                            <i class="fas fa-box text-xs text-[#A89080]"></i>
                                         </div>
-                                        <div class="text-right">
-                                            <div class="text-sm font-bold text-red-700">Rp {{ number_format((float) $lineTotal, 0, ',', '.') }}</div>
+                                        <div class="flex-1 min-w-0">
+                                            <p class="text-xs font-bold text-red-800 leading-tight truncate">{{ $item['name'] }}</p>
+                                            <p class="text-[10px] text-red-700/70 mt-0.5">Qty: {{ (int) ($item['quantity'] ?? 0) }}</p>
+                                        </div>
+                                        <div class="text-right shrink-0">
+                                            <p class="text-xs font-bold text-red-800">Rp {{ number_format((float) $lineTotal, 0, ',', '.') }}</p>
                                         </div>
                                     </div>
-                                </div>
-                            @empty
-                                <div class="px-4 py-6 text-center text-sm text-gray-600">
-                                    Keranjang kosong.
-                                </div>
-                            @endforelse
-                        </div>
-
-                        <div class="px-4 sm:px-5 py-4 border-t border-[#EFE1D1] bg-[#fff9f2]">
-                            <div class="flex items-center justify-between text-sm">
-                                <span class="font-bold text-[#3a2a1a]">Subtotal</span>
-                                <span class="font-bold text-[#3a2a1a]">Rp {{ number_format((float) $subtotal, 0, ',', '.') }}</span>
+                                @empty
+                                    <div class="py-10 text-center">
+                                        <i class="fas fa-shopping-cart text-3xl text-gray-200 mb-3 block"></i>
+                                        <p class="text-xs text-gray-400 font-medium">Belum ada item pilihan.</p>
+                                    </div>
+                                @endforelse
                             </div>
-                            <div class="flex items-center justify-between mt-2 pt-2 border-t border-[#efd7c2]">
-                                <span class="font-bold text-[#3a2a1a]">Total Pembayaran</span>
-                                <span class="text-base font-bold text-[#b42318]">Rp {{ number_format((float) $subtotal, 0, ',', '.') }}</span>
+
+                            <div class="space-y-3 pt-4 border-t border-[#E2D1C3]">
+                                <div class="flex justify-between items-center text-sm">
+                                    <span class="text-red-700/80 font-medium">Subtotal</span>
+                                    <span class="text-red-800 font-bold">Rp {{ number_format((float) $subtotal, 0, ',', '.') }}</span>
+                                </div>
+                                <div class="flex justify-between items-center text-sm">
+                                    <span class="text-red-700/80 font-medium">Biaya Layanan</span>
+                                    <span class="text-emerald-600 font-bold">Gratis</span>
+                                </div>
+                                <div class="flex justify-between items-center pt-3 mt-1 border-t border-brand-brown/5">
+                                    <span class="text-base font-extrabold text-red-800">Total Tagihan</span>
+                                    <span class="text-xl font-black text-red-800">Rp {{ number_format((float) $subtotal, 0, ',', '.') }}</span>
+                                </div>
+                            </div>
+
+                            <div class="mt-8 space-y-3">
+                                <button type="submit" class="btn-order">
+                                    Konfirmasi & Pesan <i class="fas fa-check-circle ml-2"></i>
+                                </button>
+                                <p class="text-[10px] text-center text-brand-brown-light px-4 leading-relaxed">
+                                    Dengan menekan tombol di atas, Anda setuju dengan ketentuan pemesanan di Bakso Bunderan Ciomas.
+                                </p>
                             </div>
                         </div>
                     </div>
 
-                    <div class="mt-5 grid grid-cols-1 gap-3">
-                        <button type="submit" class="checkout-cta text-white px-10 py-3 rounded-xl font-bold tracking-wide">Order Now</button>
-                        <a href="{{ route('cart.index') }}" class="text-center text-sm font-semibold text-red-700 hover:underline">Kembali ke Keranjang</a>
-                    </div>
-                </section>
-            </form>
-        </div>
+
+                </div>
+            </div>
+        </form>
     </main>
 
     <script>
@@ -291,7 +360,7 @@
                 return;
             }
 
-            btn.innerHTML = '<i class="fas fa-spinner fa-spin mr-1"></i> Mencari...';
+            btn.innerHTML = '<i class="fas fa-circle-notch fa-spin mr-1"></i> Mengakses GPS...';
             btn.disabled = true;
 
             navigator.geolocation.getCurrentPosition(
@@ -308,21 +377,21 @@
                         if (data && data.display_name) {
                             addressInput.value = data.display_name;
                         } else {
-                            addressInput.value = `Latitude: ${lat}, Longitude: ${lng}`;
+                            addressInput.value = `📍 (${lat}, ${lng})`;
                         }
                     } catch (error) {
-                        addressInput.value = `Latitude: ${lat}, Longitude: ${lng}`;
+                        addressInput.value = `📍 (${lat}, ${lng})`;
                     }
 
-                    btn.innerHTML = '<i class="fas fa-check mr-1"></i> Lokasi Ditemukan';
+                    btn.innerHTML = '<i class="fas fa-check-circle mr-1"></i> Lokasi Berhasil';
                     setTimeout(() => {
-                        btn.innerHTML = '<i class="fas fa-location-crosshairs mr-1"></i> Gunakan Lokasi Saat Ini';
+                        btn.innerHTML = '<i class="fas fa-location-arrow mr-1"></i> Pakai Lokasi GPS';
                         btn.disabled = false;
-                    }, 2000);
+                    }, 3000);
                 },
                 (error) => {
                     alert("Gagal mendapatkan lokasi. Pastikan izin lokasi diberikan.");
-                    btn.innerHTML = '<i class="fas fa-location-crosshairs mr-1"></i> Gunakan Lokasi Saat Ini';
+                    btn.innerHTML = '<i class="fas fa-location-arrow mr-1"></i> Pakai Lokasi GPS';
                     btn.disabled = false;
                 },
                 { enableHighAccuracy: true }
@@ -330,7 +399,7 @@
         }
 
         (function () {
-            const form = document.querySelector('form[action="{{ route('checkout.store') }}"]');
+            const form = document.querySelector('form');
             if (!form) return;
 
             const labels = {
@@ -340,41 +409,33 @@
                 customer_email: 'Email',
                 event_name: 'Nama Acara',
                 event_date: 'Tanggal Acara',
-                delivery_time: 'Jam Pengiriman',
-                delivery_address: 'Alamat Lengkap Pengiriman',
-                delivery_method: 'Metode Pengiriman',
-                payment_method: 'Metode Pembayaran'
+                delivery_address: 'Alamat Lengkap Pengiriman'
             };
 
-            const requiredFieldNames = Object.keys(labels);
-
             form.addEventListener('submit', function (event) {
-                for (const fieldName of requiredFieldNames) {
-                    const field = form.elements[fieldName];
-                    if (!field) continue;
-
-                    const value = String(field.value || '').trim();
-                    if (value === '') {
+                const formData = new FormData(form);
+                for (let [key, value] of formData.entries()) {
+                    if (labels[key] && String(value).trim() === '') {
                         event.preventDefault();
-                        alert(`Mohon Isi ${labels[fieldName]} Terlebih Dahulu.`);
-                        field.focus();
+                        alert(`Mohon lengkapi ${labels[key]} terlebih dahulu.`);
+                        form.elements[key]?.focus();
                         return;
                     }
                 }
 
-                const emailField = form.elements['customer_email'];
-                if (emailField && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(String(emailField.value || '').trim())) {
+                const email = form.elements['customer_email'].value;
+                if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
                     event.preventDefault();
-                    alert('Format Email Belum Valid. Mohon Periksa Kembali.');
-                    emailField.focus();
+                    alert('Format email tidak valid.');
+                    form.elements['customer_email'].focus();
                     return;
                 }
 
-                const phoneField = form.elements['customer_phone'];
-                if (phoneField && !/^\d+$/.test(String(phoneField.value || '').trim())) {
-                    event.preventDefault();
-                    alert('Nomor HP Hanya Boleh Diisi Angka.');
-                    phoneField.focus();
+                // Show skeleton or loader if exists
+                if (document.body.classList.contains('public-skeleton-loading')) {
+                    // already loading
+                } else {
+                    document.body.classList.add('public-skeleton-loading');
                 }
             });
         })();

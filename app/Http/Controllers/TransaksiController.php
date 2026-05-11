@@ -46,6 +46,8 @@ class TransaksiController extends Controller
 
         if ($tab === 'belum-dibayar') {
             $query->where('status', 'pending');
+        } elseif ($tab === 'menunggu-konfirmasi') {
+            $query->whereIn('status', ['paid', 'rejected']);
         } elseif ($tab === 'diproses') {
             $query->whereIn('status', ['confirmed', 'shipped']);
         } elseif ($tab === 'selesai') {
@@ -168,13 +170,13 @@ class TransaksiController extends Controller
             try {
                 $pesanan->update([
                     'payment_proof' => $filename,
-                    'status' => 'confirmed'
+                    'status' => 'paid'
                 ]);
             } catch (\Exception $e) {
                 // If payment_proof column doesn't exist, just update status
                 if (str_contains($e->getMessage(), 'payment_proof')) {
                     $pesanan->update([
-                        'status' => 'confirmed'
+                        'status' => 'paid'
                     ]);
                     Log::warning("Kolom payment_proof belum ada di database, hanya update status: " . $e->getMessage());
                 } else {

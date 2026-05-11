@@ -97,8 +97,8 @@
         /* ── Stats Grid ── */
         .stats-grid {
             display: grid;
-            grid-template-columns: repeat(5, 1fr);
-            gap: 16px;
+            grid-template-columns: repeat(6, 1fr);
+            gap: 12px;
             margin-bottom: 24px;
         }
 
@@ -130,9 +130,10 @@
 
         /* Colors matching the badge colors but softer */
         .stat-card.pending .stat-icon { background: #fef9c3; color: #ca8a04; }
-        .stat-card.confirmed .stat-icon { background: #e0f2fe; color: #0284c7; }
+        .stat-card.paid .stat-icon { background: #e0f2fe; color: #0284c7; }
+        .stat-card.confirmed .stat-icon { background: #dcfce7; color: #166534; }
         .stat-card.shipped .stat-icon { background: #f3e8ff; color: #9333ea; }
-        .stat-card.completed .stat-icon { background: #dcfce7; color: #16a34a; }
+        .stat-card.completed .stat-icon { background: #eff6ff; color: #2563eb; }
         .stat-card.rejected .stat-icon { background: #fee2e2; color: #dc2626; }
 
         .stat-content { min-width: 0; }
@@ -258,9 +259,10 @@
         }
 
         .badge-pending { background: #fef9c3; color: #854d0e; }
-        .badge-confirmed { background: #e0f2fe; color: #0369a1; }
+        .badge-paid { background: #e0f2fe; color: #0369a1; }
+        .badge-confirmed { background: #dcfce7; color: #166534; }
         .badge-shipped { background: #f3e8ff; color: #6b21a8; }
-        .badge-completed { background: #dcfce7; color: #166534; }
+        .badge-completed { background: #eff6ff; color: #2563eb; }
         .badge-rejected { background: #fee2e2; color: #991b1b; }
 
         /* ── Action Buttons ── */
@@ -292,7 +294,8 @@
         .btn-paid { background: #f0fdf4; color: #16a34a; border: 1px solid #dcfce7; }
         .btn-complete { background: #eff6ff; color: #2563eb; border: 1px solid #dbeafe; }
 
-        .price { font-weight: 600; color: #059669; }
+        .price { font-weight: 700; color: #dc2626; }
+        .btn-view-proof { background: #f0fdf4; color: #166534; border: 1px solid #dcfce7; text-decoration: none; font-size: 11px; }
 
         /* ── Modals ── */
         .modal {
@@ -455,10 +458,17 @@
                         <div class="stat-value">{{ $stats['pending'] }}</div>
                     </div>
                 </div>
-                <div class="stat-card confirmed">
-                    <div class="stat-icon"><i class="fas fa-check-circle"></i></div>
+                <div class="stat-card paid">
+                    <div class="stat-icon"><i class="fas fa-money-bill-wave"></i></div>
                     <div class="stat-content">
-                        <div class="stat-label">Dikonfirmasi</div>
+                        <div class="stat-label">Dibayar</div>
+                        <div class="stat-value">{{ $stats['paid'] ?? 0 }}</div>
+                    </div>
+                </div>
+                <div class="stat-card confirmed">
+                    <div class="stat-icon"><i class="fas fa-cog"></i></div>
+                    <div class="stat-content">
+                        <div class="stat-label">Proses</div>
                         <div class="stat-value">{{ $stats['confirmed'] }}</div>
                     </div>
                 </div>
@@ -494,7 +504,8 @@
                     <select name="status">
                         <option value="">Semua Status</option>
                         <option value="pending" {{ request('status') === 'pending' ? 'selected' : '' }}>Menunggu</option>
-                        <option value="confirmed" {{ request('status') === 'confirmed' ? 'selected' : '' }}>Dikonfirmasi</option>
+                        <option value="paid" {{ request('status') === 'paid' ? 'selected' : '' }}>Dibayar</option>
+                        <option value="confirmed" {{ request('status') === 'confirmed' ? 'selected' : '' }}>Proses</option>
                         <option value="shipped" {{ request('status') === 'shipped' ? 'selected' : '' }}>Dikirim</option>
                         <option value="completed" {{ request('status') === 'completed' ? 'selected' : '' }}>Selesai</option>
                         <option value="rejected" {{ request('status') === 'rejected' ? 'selected' : '' }}>Ditolak</option>
@@ -526,7 +537,8 @@
                                         <span class="badge badge-{{ $pesanan->status }}">
                                             @switch($pesanan->status)
                                                 @case('pending') Menunggu @break
-                                                @case('confirmed') Dikonfirmasi @break
+                                                @case('paid') Dibayar @break
+                                                @case('confirmed') Proses @break
                                                 @case('shipped') Dikirim @break
                                                 @case('completed') Selesai @break
                                                 @case('rejected') Ditolak @break
@@ -535,8 +547,8 @@
                                     </td>
                                     <td>
                                         @if($pesanan->payment_proof)
-                                            <button onclick="viewPaymentProof('{{ asset('uploads/payment_proofs/' . $pesanan->payment_proof) }}')" class="btn-sm btn-view" style="background:#4CAF50;color:white;border:none;padding:6px 12px;border-radius:6px;cursor:pointer;font-size:12px;">
-                                                <i class="fas fa-eye"></i> Lihat Bukti
+                                            <button type="button" class="btn-sm btn-view-proof" onclick="viewPaymentProof('{{ asset('uploads/payment_proofs/' . $pesanan->payment_proof) }}')">
+                                                Lihat Bukti
                                             </button>
                                         @else
                                             <span style="color:#94a3b8;font-size:12px;">-</span>
@@ -545,24 +557,15 @@
                                     <td>{{ $pesanan->created_at->format('d M Y') }}</td>
                                     <td>
                                         <div class="action-buttons">
-                                            @if($pesanan->status === 'pending')
-                                                <button class="btn-sm btn-confirm" onclick="confirmOrder({{ $pesanan->id }})">
-                                                    <i class="fas fa-check"></i> Konfirmasi
-                                                </button>
-                                                <button class="btn-sm btn-reject" onclick="openRejectModal({{ $pesanan->id }})">
-                                                    <i class="fas fa-times"></i> Tolak
-                                                </button>
+                                            @if($pesanan->status === 'paid')
+                                                <button class="btn-sm btn-confirm" onclick="confirmOrder({{ $pesanan->id }})" title="Konfirmasi"><i class="fas fa-check"></i></button>
+                                                <button class="btn-sm btn-reject" onclick="openRejectModal({{ $pesanan->id }})" title="Tolak"><i class="fas fa-times"></i></button>
+                                            @elseif($pesanan->status === 'pending')
+                                                <span style="color:#f59e0b;font-size:11px;font-weight:600;">Menunggu Pembayaran</span>
                                             @elseif($pesanan->status === 'confirmed')
-                                                <button class="btn-sm btn-ship" onclick="shipOrder({{ $pesanan->id }})">
-                                                    <i class="fas fa-truck"></i> Kirim
-                                                </button>
-                                                <button class="btn-sm btn-paid" onclick="paidOrder({{ $pesanan->id }})">
-                                                    <i class="fas fa-money-bill"></i> Lunas
-                                                </button>
+                                                <button class="btn-sm btn-ship" onclick="shipOrder({{ $pesanan->id }})" title="Kirim"><i class="fas fa-truck"></i></button>
                                             @elseif($pesanan->status === 'shipped')
-                                                <button class="btn-sm btn-complete" onclick="completeOrder({{ $pesanan->id }})">
-                                                    <i class="fas fa-check-double"></i> Selesai
-                                                </button>
+                                                <button class="btn-sm btn-complete" onclick="completeOrder({{ $pesanan->id }})" title="Selesai"><i class="fas fa-check-double"></i></button>
                                             @else
                                                 <span style="color:#cbd5e1;font-size:12px;">Tidak ada aksi</span>
                                             @endif
@@ -590,16 +593,17 @@
 
     <!-- Payment Proof Modal -->
     <div id="paymentProofModal" class="modal">
-        <div class="modal-content" style="max-width: 700px;">
+        <div class="modal-content" style="max-width: 400px;">
             <div class="modal-header">
                 <h2>Bukti Pembayaran</h2>
                 <button type="button" onclick="closePaymentProofModal()" style="background:none;border:none;font-size:24px;cursor:pointer;color:#6b7280;">&times;</button>
             </div>
             <div class="modal-body" style="text-align:center;">
-                <img id="paymentProofImage" src="" alt="Bukti Pembayaran" style="max-width:100%;max-height:500px;border-radius:8px;border:1px solid #e2e8f0;">
+                <img id="paymentProofImage" src="" alt="Bukti Pembayaran" style="max-width:100%;border-radius:8px;border:1px solid #e2e8f0;">
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn-close" onclick="closePaymentProofModal()">Tutup</button>
+                <button type="button" class="btn btn-secondary" onclick="closePaymentProofModal()">Tutup</button>
+                <a id="downloadProof" href="" download class="btn btn-primary">Download</a>
             </div>
         </div>
     </div>
@@ -631,6 +635,8 @@
 
         function openRejectModal(orderId) {
             currentRejectOrderId = orderId;
+            const form = document.getElementById('rejectForm');
+            if (form) form.action = `/pesanan/${orderId}/reject`;
             document.getElementById('rejectModal').classList.add('active');
         }
 
@@ -642,10 +648,18 @@
         }
 
         document.getElementById('rejectForm').addEventListener('submit', function(e) {
-            e.preventDefault();
-            if (currentRejectOrderId) {
-                this.action = "{{ route('pesanan.reject', ':id') }}".replace(':id', currentRejectOrderId);
-                this.submit();
+            // Direct submission, no double alert
+            const textarea = document.getElementById('reason');
+            if (!textarea.value.trim()) {
+                e.preventDefault();
+                alert('Silakan isi alasan penolakan.');
+                return;
+            }
+            // Show a simple loading state on the button
+            const submitBtn = this.querySelector('button[type="submit"]');
+            if (submitBtn) {
+                submitBtn.disabled = true;
+                submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Memproses...';
             }
         });
 
@@ -657,9 +671,6 @@
             confirmAction(null, 'Kirim pesanan ini?', "{{ route('pesanan.ship', ':id') }}".replace(':id', orderId));
         }
 
-        function paidOrder(orderId) {
-            confirmAction(null, 'Tandai pesanan ini sebagai sudah dibayar (Lunas)?', "{{ route('pesanan.paid', ':id') }}".replace(':id', orderId));
-        }
 
         function completeOrder(orderId) {
             confirmAction(null, 'Tandai pesanan ini sebagai selesai?', "{{ route('pesanan.complete', ':id') }}".replace(':id', orderId));
@@ -668,7 +679,9 @@
         function viewPaymentProof(imageUrl) {
             const modal = document.getElementById('paymentProofModal');
             const image = document.getElementById('paymentProofImage');
+            const download = document.getElementById('downloadProof');
             image.src = imageUrl;
+            download.href = imageUrl;
             modal.classList.add('active');
         }
 

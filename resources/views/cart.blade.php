@@ -107,7 +107,7 @@
 <body class="bg-[#EFE1D1] text-[#2D3748] font-poppins">
     @include('partials.navbar')
 
-    <main class="max-w-4xl mx-auto px-4 sm:px-5 pt-2 pb-12">
+    <main class="max-w-4xl mx-auto px-4 sm:px-5 pt-12 pb-12">
 
         {{-- ── Header ── --}}
         <div class="flex items-end justify-between mb-5">
@@ -144,13 +144,10 @@
                             <i class="fas fa-shopping-basket text-3xl text-[#c4b5a2]"></i>
                         </div>
                         <h2 class="text-lg font-bold text-[#1a120b] mb-1.5">Keranjang Kamu Masih Kosong</h2>
-                        <p class="text-sm text-[#8a7b6a] mb-6 max-w-xs font-poppins">Yuk, jelajahi menu lezat kami dan temukan favoritmu!</p>
+                        <p class="text-sm text-[#8a7b6a] mb-6 max-w-xs font-poppins">Yuk, jelajahi paket lezat kami dan temukan favoritmu!</p>
                         <div class="flex flex-col sm:flex-row justify-center gap-3">
                             <a href="{{ route('home') }}#paket" class="inline-flex items-center justify-center gap-2 bg-[#8B0000] text-white px-6 py-3 rounded-xl text-sm font-bold shadow-[0_8px_20px_rgba(139,0,0,0.18)] hover:bg-[#6d0000] hover:-translate-y-0.5 transition-all">
                                 <i class="fas fa-box-open text-xs"></i> Lihat Paket
-                            </a>
-                            <a href="{{ route('home') }}#menu" class="inline-flex items-center justify-center gap-2 bg-white text-[#1a120b] border border-[#ece3d5] px-6 py-3 rounded-xl text-sm font-bold hover:bg-[#f8f5f0] hover:-translate-y-0.5 transition-all">
-                                <i class="fas fa-utensils text-xs"></i> Eksplor Menu
                             </a>
                         </div>
                     </div>
@@ -244,8 +241,8 @@
                                 Lanjut Pembayaran <i class="fas fa-arrow-right text-xs"></i>
                             </button>
                         @endif
-                        <a href="{{ route('home') }}#menu" class="w-full inline-flex items-center justify-center bg-[#f8f5f0] text-[#1a120b] border border-[#ece3d5] px-5 py-3 rounded-xl text-sm font-bold hover:bg-[#f0ebe4] transition-all">
-                            Tambah Menu Lain
+                        <a href="{{ route('home') }}#paket" class="w-full inline-flex items-center justify-center bg-[#f8f5f0] text-[#1a120b] border border-[#ece3d5] px-5 py-3 rounded-xl text-sm font-bold hover:bg-[#f0ebe4] transition-all">
+                            Tambah Paket Lain
                         </a>
                     </div>
                 </div>

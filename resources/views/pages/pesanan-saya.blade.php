@@ -19,7 +19,7 @@
 <body class="font-poppins bg-[#EFE1D1] text-[#3a2a1a] overflow-x-hidden" style="font-family: 'Poppins', sans-serif;">
     @include('partials.navbar')
 
-    <section class="py-24 bg-[#EFE1D1]">
+    <section class="pt-12 pb-24 bg-[#EFE1D1]">
         <div class="max-w-4xl mx-auto px-6">
             <div class="text-center mb-10">
                 <span class="text-red-700 font-bold tracking-widest text-sm uppercase mb-2 block font-poppins">Riwayat</span>
@@ -68,14 +68,15 @@
 
                                 <div class="mt-3">
                                     @php
-                                        $status = (string) ($order->status ?? '');
-                                        $statusLabel = 'Diproses';
-                                        if ($status === 'pending') $statusLabel = 'Belum Bayar';
-                                        elseif ($status === 'completed') $statusLabel = 'Selesai';
-                                        elseif ($status === 'rejected') $statusLabel = 'Dibatalkan';
-                                        elseif ($status === 'shipped') $statusLabel = 'Dikirim';
-                                        elseif ($status === 'confirmed') $statusLabel = 'Diproses';
-                                    @endphp
+                                         $status = (string) ($order->status ?? '');
+                                         $statusLabel = 'Sedang Di Proses';
+                                         if ($status === 'pending') $statusLabel = 'Belum Bayar';
+                                         elseif ($status === 'paid') $statusLabel = 'Menunggu Konfirmasi';
+                                         elseif ($status === 'confirmed') $statusLabel = 'Sedang Di Proses';
+                                         elseif ($status === 'shipped') $statusLabel = 'Sedang Dikirim';
+                                         elseif ($status === 'completed') $statusLabel = 'Selesai';
+                                         elseif ($status === 'rejected') $statusLabel = 'Dibatalkan';
+                                     @endphp
                                     <span class="inline-flex items-center px-3 py-1 rounded-full text-xs font-bold bg-white/70">{{ $statusLabel }}</span>
                                 </div>
 
@@ -85,9 +86,21 @@
                                             Bayar
                                         </a>
                                     @elseif(($tab ?? '') === 'beri-penilaian')
-                                        <a href="{{ route('pages.tentang') }}#testimoni" class="bg-red-600 text-white text-xs font-bold px-4 py-2 rounded-lg hover:bg-red-700 transition">
-                                            Beri Nilai
-                                        </a>
+                                        <div class="mt-4 pt-4 border-t border-[#3a2a1a]/5 flex items-center justify-between gap-4">
+                                            <div>
+                                                <p class="text-[10px] font-bold text-[#3a2a1a]/50 uppercase tracking-widest mb-2">Ulasan Cepat</p>
+                                                <div class="flex gap-1" id="stars-{{ $order->id }}">
+                                                    @for($i=1; $i<=5; $i++)
+                                                        <button type="button" class="text-xl text-stone-300 hover:text-amber-400 hover:scale-110 transition-all" onclick="window.location.href='{{ route('transaksi.show', ['orderId' => $order->order_id]) }}?action=review&rating={{ $i }}'">
+                                                            <i class="fas fa-star"></i>
+                                                        </button>
+                                                    @endfor
+                                                </div>
+                                            </div>
+                                            <a href="{{ route('transaksi.show', ['orderId' => $order->order_id]) }}?action=review" class="bg-[#8B0000] text-white text-[13px] font-bold px-6 py-3 rounded-2xl hover:bg-[#a52a2a] transition shadow-lg shadow-red-900/20 flex items-center gap-2">
+                                                <i class="fas fa-pencil-alt text-xs"></i> Tulis Ulasan
+                                            </a>
+                                        </div>
                                     @else
                                         <a href="{{ route('transaksi.show', ['orderId' => $order->order_id]) }}" class="bg-red-600 text-white text-xs font-bold px-4 py-2 rounded-lg hover:bg-red-700 transition">
                                             Detail

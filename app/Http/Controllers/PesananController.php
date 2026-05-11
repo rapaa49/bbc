@@ -50,7 +50,7 @@ class PesananController extends Controller
             }
         } else {
             $tab = 'belum-bayar';
-            $query->where('status', 'pending');
+            $query->whereIn('status', ['pending', 'paid']);
         }
 
         $orders = $query->orderByDesc('created_at')->get();
@@ -81,7 +81,7 @@ class PesananController extends Controller
             });
         }
 
-        if (in_array($status, ['pending', 'confirmed', 'shipped', 'completed', 'rejected'], true)) {
+        if (in_array($status, ['pending', 'paid', 'confirmed', 'shipped', 'completed', 'rejected'], true)) {
             $query->where('status', $status);
         }
 
@@ -90,6 +90,7 @@ class PesananController extends Controller
         // Group by status for stats
         $stats = [
             'pending' => Pesanan::where('status', 'pending')->count(),
+            'paid' => Pesanan::where('status', 'paid')->count(),
             'confirmed' => Pesanan::where('status', 'confirmed')->count(),
             'shipped' => Pesanan::where('status', 'shipped')->count(),
             'completed' => Pesanan::where('status', 'completed')->count(),
@@ -126,7 +127,10 @@ class PesananController extends Controller
             'reason' => 'required|string'
         ]);
 
-        Pesanan::findOrFail($id)->update(['status' => 'rejected']);
+        Pesanan::findOrFail($id)->update([
+            'status' => 'rejected',
+            'rejection_reason' => $request->input('reason')
+        ]);
 
         return redirect()->route('pesanan.index')->with('success', 'Pesanan berhasil ditolak. Alasan: ' . $request->input('reason'));
     }
@@ -156,11 +160,12 @@ class PesananController extends Controller
     {
         $pesanan = Pesanan::findOrFail($id);
 
-        if ($pesanan->status !== 'confirmed') {
-            return redirect()->route('pesanan.index')->with('error', 'Status pesanan tidak bisa ditandai sudah dibayar.');
+        // Allow marking as paid if it's still pending, uploaded (paid), or already confirmed
+        if (!in_array($pesanan->status, ['pending', 'paid', 'confirmed'])) {
+            return redirect()->route('admin.kelola_pesanan.index')->with('error', 'Status pesanan tidak bisa ditandai sudah dibayar.');
         }
 
-        $pesanan->update(['status' => 'completed']);
+        $pesanan->update(['status' => 'confirmed']);
 
         $token = (string) config('services.fonnte.token');
         $target = trim((string) ($pesanan->customer_phone ?? ''));

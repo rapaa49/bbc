@@ -32,15 +32,17 @@
         /* ── Tab styles ── */
         /* ── Tabs: 2x2 grid on mobile, inline on desktop ── */
         .order-tabs {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 6px;
+            display: flex;
+            overflow-x: auto;
+            gap: 8px;
+            padding-bottom: 8px;
+            -ms-overflow-style: none;
+            scrollbar-width: none;
         }
-        @media (min-width: 640px) {
-            .order-tabs {
-                display: flex;
-                gap: 6px;
-            }
+        .order-tabs::-webkit-scrollbar { display: none; }
+        .tab-item {
+            flex-shrink: 0;
+            min-width: max-content;
         }
         .tab-item {
             position: relative;
@@ -149,7 +151,10 @@
                     <i class="fas fa-layer-group"></i>Semua
                 </a>
                 <a href="{{ route('my-orders', ['tab' => 'belum-dibayar']) }}" onclick="document.body.classList.add('public-skeleton-loading');" class="tab-item {{ $tab === 'belum-dibayar' ? 'active' : '' }}">
-                    <i class="fas fa-clock"></i>Belum Dibayar
+                    <i class="fas fa-clock"></i>Belum Bayar
+                </a>
+                <a href="{{ route('my-orders', ['tab' => 'menunggu-konfirmasi']) }}" onclick="document.body.classList.add('public-skeleton-loading');" class="tab-item {{ $tab === 'menunggu-konfirmasi' ? 'active' : '' }}">
+                    <i class="fas fa-hourglass-half"></i>Menunggu Konfirmasi
                 </a>
                 <a href="{{ route('my-orders', ['tab' => 'diproses']) }}" onclick="document.body.classList.add('public-skeleton-loading');" class="tab-item {{ $tab === 'diproses' ? 'active' : '' }}">
                     <i class="fas fa-fire"></i>Diproses
@@ -270,18 +275,21 @@
                             {{-- Right: actions --}}
                             <div class="flex items-center gap-2 shrink-0">
                                 @if($order->status === 'completed' && !$isReviewed)
-                                    <div class="hidden sm:flex items-center gap-0.5 quick-rating" data-order-id="{{ $order->order_id }}" data-rating="0">
-                                        @for($i=1; $i<=5; $i++)
-                                            <button type="button" data-value="{{ $i }}" onclick="submitQuickRating(this, '{{ $order->order_id }}', '{{ addslashes($order->customer_name) }}', {{ $i }})" class="star-rating-btn quick-star-btn" title="{{ $i }} Bintang"><i class="fas fa-star text-sm"></i></button>
-                                        @endfor
+                                    <div class="hidden sm:flex flex-col items-end gap-1.5">
+                                        <p class="text-[9px] font-bold text-[#8a7b6a]/50 uppercase tracking-widest">Ulasan Cepat</p>
+                                        <div class="flex items-center gap-0.5 quick-rating" data-order-id="{{ $order->order_id }}" data-rating="0">
+                                            @for($i=1; $i<=5; $i++)
+                                                <button type="button" data-value="{{ $i }}" onclick="submitQuickRating(this, '{{ $order->order_id }}', '{{ addslashes($order->customer_name) }}', {{ $i }})" class="star-rating-btn quick-star-btn" title="{{ $i }} Bintang"><i class="fas fa-star text-sm"></i></button>
+                                            @endfor
+                                        </div>
                                     </div>
-                                    <a href="{{ route('transaksi.show', $order->order_id) }}" onclick="document.body.classList.add('public-skeleton-loading');" class="inline-flex items-center gap-1.5 px-4 py-2 bg-[#8B0000] text-white text-[11px] font-bold rounded-lg hover:bg-[#6d0000] transition-all shadow-[0_4px_12px_rgba(139,0,0,0.2)] hover:shadow-[0_6px_16px_rgba(139,0,0,0.3)] hover:-translate-y-0.5">
-                                        <i class="fas fa-pen text-[9px]"></i> Ulasan
+                                    <a href="{{ route('transaksi.show', $order->order_id) }}?action=review" onclick="document.body.classList.add('public-skeleton-loading');" class="inline-flex items-center gap-1.5 px-4 py-2.5 bg-[#8B0000] text-white text-[11px] font-bold rounded-xl hover:bg-[#6d0000] transition-all shadow-[0_4px_12px_rgba(139,0,0,0.15)] hover:shadow-[0_6px_16px_rgba(139,0,0,0.25)] hover:-translate-y-0.5">
+                                        <i class="fas fa-pencil-alt text-[9px]"></i> Tulis Ulasan
                                     </a>
                                 @elseif($order->status === 'completed' && $isReviewed)
-                                    <span class="inline-flex items-center gap-1 text-[11px] text-emerald-600 font-semibold mr-1"><i class="fas fa-check-circle text-[10px]"></i> Diulas</span>
-                                    <a href="{{ route('menu.public') }}" onclick="document.body.classList.add('public-skeleton-loading');" class="inline-flex items-center gap-1.5 px-4 py-2 border border-[#8B0000]/20 text-[#8B0000] text-[11px] font-bold rounded-lg hover:bg-[#8B0000]/5 transition-all">
-                                        <i class="fas fa-redo text-[9px]"></i> Beli Lagi
+                                    <span class="inline-flex items-center gap-1 text-[11px] text-emerald-600 font-semibold mr-1"><i class="fas fa-check-circle text-[10px]"></i> Sudah Diulas</span>
+                                    <a href="{{ route('menu.public') }}" onclick="document.body.classList.add('public-skeleton-loading');" class="inline-flex items-center gap-1.5 px-4 py-2 border border-[#8B0000]/20 text-[#8B0000] text-[11px] font-bold rounded-xl hover:bg-[#8B0000]/5 transition-all">
+                                        <i class="fas fa-redo text-[9px]"></i> Pesan Lagi
                                     </a>
                                 @else
                                     <a href="{{ route('transaksi.show', $order->order_id) }}" onclick="document.body.classList.add('public-skeleton-loading');" class="inline-flex items-center gap-1.5 px-4 py-2 border border-[#1a120b]/10 text-[#1a120b] text-[11px] font-bold rounded-lg hover:bg-[#1a120b]/[0.03] transition-all">
@@ -294,7 +302,7 @@
                         {{-- Mobile quick rating --}}
                         @if($order->status === 'completed' && !$isReviewed)
                             <div class="sm:hidden mt-3 pt-3 border-t border-[#f0ebe4] flex items-center justify-between">
-                                <span class="text-[10px] text-[#a89880] font-semibold uppercase tracking-wider">Beri Rating</span>
+                                <span class="text-[10px] text-[#a89880] font-semibold uppercase tracking-wider">Ulasan Cepat</span>
                                 <div class="flex items-center gap-1 quick-rating" data-order-id="{{ $order->order_id }}" data-rating="0">
                                     @for($i=1; $i<=5; $i++)
                                         <button type="button" data-value="{{ $i }}" onclick="submitQuickRating(this, '{{ $order->order_id }}', '{{ addslashes($order->customer_name) }}', {{ $i }})" class="star-rating-btn quick-star-btn" title="{{ $i }} Bintang"><i class="fas fa-star text-base"></i></button>

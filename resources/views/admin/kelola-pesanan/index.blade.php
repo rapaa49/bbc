@@ -219,6 +219,11 @@
         .btn-ship { background: #fffbeb; color: #d97706; border: 1px solid #fef3c7; }
         .btn-paid { background: #f0fdf4; color: #16a34a; border: 1px solid #dcfce7; }
         .btn-complete { background: #eff6ff; color: #2563eb; border: 1px solid #dbeafe; }
+        .btn-view-proof { background: #f0fdf4; color: #166534; border: 1px solid #dcfce7; text-decoration: none; font-size: 11px; }
+
+        /* ── Proof Modal ── */
+        #proofModal .modal-content { max-width: 400px; }
+        #proofImage { width: 100%; border-radius: 8px; display: block; }
 
         /* ── Quick Actions ── */
         .action-list {
@@ -459,6 +464,8 @@
                                             if ($status === 'completed') { $label = 'Selesai'; $badge = 'badge-selesai'; }
                                             elseif ($status === 'shipped') { $label = 'Dikirim'; $badge = 'badge-dikirim'; }
                                             elseif ($status === 'rejected') { $label = 'Cancel'; $badge = 'badge-cancel'; }
+                                            elseif ($status === 'paid') { $label = 'Dibayar'; $badge = 'badge-paid'; }
+                                            elseif ($status === 'pending') { $label = 'Belum Bayar'; $badge = 'badge-pending'; }
                                         @endphp
                                         <tr>
                                             <td style="font-weight:500;">{{ $o->order_id }}</td>
@@ -466,19 +473,20 @@
                                             <td style="font-weight:600;">Rp {{ number_format((float) $o->total_price, 0, ',', '.') }}</td>
                                             <td><span class="badge {{ $badge }}">{{ $label }}</span></td>
                                             <td>
-                                                <div class="action-buttons">
+                                                <div class="action-buttons" style="display:flex; gap:6px;">
                                                     @if(!empty($o->payment_proof))
-                                                        <a href="{{ asset('uploads/payment_proofs/' . $o->payment_proof) }}" target="_blank" class="btn-sm" style="background:#10b981;color:white;border:none;" title="Lihat Bukti"><i class="fas fa-receipt"></i></a>
+                                                        <button type="button" class="btn-sm btn-view-proof" onclick="viewProof('{{ asset('uploads/payment_proofs/' . $o->payment_proof) }}')">Lihat Bukti</button>
                                                     @endif
 
-                                                    @if(($o->status ?? '') === 'pending')
-                                                        <button class="btn-sm btn-confirm" onclick="confirmOrder({{ $o->id }})"><i class="fas fa-check"></i> Konfirmasi</button>
-                                                        <button class="btn-sm btn-reject" onclick="openRejectModal({{ $o->id }})"><i class="fas fa-times"></i> Tolak</button>
+                                                    @if(($o->status ?? '') === 'paid')
+                                                        <button class="btn-sm btn-confirm" onclick="confirmOrder({{ $o->id }})" title="Konfirmasi"><i class="fas fa-check"></i></button>
+                                                        <button class="btn-sm btn-reject" onclick="openRejectModal({{ $o->id }})"><i class="fas fa-times"></i></button>
+                                                    @elseif(($o->status ?? '') === 'pending')
+                                                        <span style="color:#f59e0b;font-size:11px;font-weight:600;">Menunggu Pembayaran</span>
                                                     @elseif(($o->status ?? '') === 'confirmed')
-                                                        <button class="btn-sm btn-ship" onclick="shipOrder({{ $o->id }})"><i class="fas fa-truck"></i> Kirim</button>
-                                                        <button class="btn-sm btn-paid" onclick="paidOrder({{ $o->id }})"><i class="fas fa-money-bill"></i> Lunas</button>
+                                                        <button class="btn-sm btn-ship" onclick="shipOrder({{ $o->id }})" title="Kirim"><i class="fas fa-truck"></i></button>
                                                     @elseif(($o->status ?? '') === 'shipped')
-                                                        <button class="btn-sm btn-complete" onclick="completeOrder({{ $o->id }})"><i class="fas fa-check-double"></i> Selesai</button>
+                                                        <button class="btn-sm btn-complete" onclick="completeOrder({{ $o->id }})" title="Selesai"><i class="fas fa-check-double"></i></button>
                                                     @else
                                                         <span style="color:#94a3b8;font-size:12px;">Tidak ada aksi</span>
                                                     @endif
@@ -495,7 +503,6 @@
                         </div>
                     </section>
 
-                    <!-- CARD 2: ALL ORDERS / HISTORY -->
                     <section class="card">
                         <div class="card-title">
                             <i class="fas fa-list-ul"></i> Pencarian & Semua Riwayat Pesanan
@@ -506,6 +513,7 @@
                             <select name="status">
                                 <option value="">Semua Status</option>
                                 <option value="pending" {{ request('status') === 'pending' ? 'selected' : '' }}>Menunggu</option>
+                                <option value="paid" {{ request('status') === 'paid' ? 'selected' : '' }}>Dibayar</option>
                                 <option value="confirmed" {{ request('status') === 'confirmed' ? 'selected' : '' }}>Dikonfirmasi</option>
                                 <option value="shipped" {{ request('status') === 'shipped' ? 'selected' : '' }}>Dikirim</option>
                                 <option value="completed" {{ request('status') === 'completed' ? 'selected' : '' }}>Selesai</option>
@@ -523,7 +531,7 @@
                                         <th>Pelanggan</th>
                                         <th>Total</th>
                                         <th>Status</th>
-                                        <th style="width: 200px;">Aksi</th>
+                                        <th style="width: 250px;">Aksi</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -536,6 +544,7 @@
                                             if ($status === 'completed') { $label = 'Selesai'; $badge = 'badge-selesai'; }
                                             elseif ($status === 'shipped') { $label = 'Dikirim'; $badge = 'badge-dikirim'; }
                                             elseif ($status === 'rejected') { $label = 'Cancel'; $badge = 'badge-cancel'; }
+                                            elseif ($status === 'paid') { $label = 'Dibayar'; $badge = 'badge-paid'; }
                                         @endphp
                                         <tr>
                                             <td style="font-weight:500;">{{ $o->order_id }}</td>
@@ -543,17 +552,19 @@
                                             <td style="font-weight:600;">Rp {{ number_format((float) $o->total_price, 0, ',', '.') }}</td>
                                             <td><span class="badge {{ $badge }}">{{ $label }}</span></td>
                                             <td>
-                                                <div class="action-buttons">
+                                                <div class="action-buttons" style="display:flex; gap:6px;">
                                                     @if(!empty($o->payment_proof))
-                                                        <a href="{{ asset('uploads/payment_proofs/' . $o->payment_proof) }}" target="_blank" class="btn-sm" style="background:#10b981;color:white;border:none;" title="Lihat Bukti"><i class="fas fa-receipt"></i></a>
+                                                        <button type="button" class="btn-sm btn-view-proof" onclick="viewProof('{{ asset('uploads/payment_proofs/' . $o->payment_proof) }}')">Lihat Bukti</button>
                                                     @endif
 
-                                                    @if(($o->status ?? '') === 'pending')
-                                                        <button class="btn-sm btn-confirm" onclick="confirmOrder({{ $o->id }})"><i class="fas fa-check"></i></button>
-                                                        <button class="btn-sm btn-reject" onclick="openRejectModal({{ $o->id }})"><i class="fas fa-times"></i></button>
+                                                    @if(($o->status ?? '') === 'pending' || ($o->status ?? '') === 'paid')
+                                                        <button class="btn-sm btn-confirm" onclick="confirmOrder({{ $o->id }})" title="Konfirmasi"><i class="fas fa-check"></i></button>
+                                                        @if(false && ($o->status ?? '') === 'pending')
+                                                            <button class="btn-sm btn-paid" onclick="paidOrder({{ $o->id }})" title="Lunas"><i class="fas fa-money-bill"></i></button>
+                                                        @endif
+                                                        <button class="btn-sm btn-reject" onclick="openRejectModal({{ $o->id }})" title="Tolak"><i class="fas fa-times"></i></button>
                                                     @elseif(($o->status ?? '') === 'confirmed')
                                                         <button class="btn-sm btn-ship" onclick="shipOrder({{ $o->id }})" title="Kirim"><i class="fas fa-truck"></i></button>
-                                                        <button class="btn-sm btn-paid" onclick="paidOrder({{ $o->id }})" title="Lunas"><i class="fas fa-money-bill"></i></button>
                                                     @elseif(($o->status ?? '') === 'shipped')
                                                         <button class="btn-sm btn-complete" onclick="completeOrder({{ $o->id }})" title="Selesai"><i class="fas fa-check-double"></i></button>
                                                     @else
@@ -617,11 +628,30 @@
         </div>
     </div>
 
+    <!-- MODAL VIEW PROOF -->
+    <div id="proofModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Bukti Pembayaran</h2>
+            </div>
+            <div class="modal-body" style="text-align: center;">
+                <img id="proofImage" src="" alt="Bukti Pembayaran" style="max-width: 100%; border-radius: 8px;">
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" onclick="closeProofModal()">Tutup</button>
+                <a id="downloadProof" href="" download class="btn btn-primary">Download</a>
+            </div>
+        </div>
+    </div>
+
+
     <script>
         let currentRejectOrderId = null;
 
         function openRejectModal(orderId) {
             currentRejectOrderId = orderId;
+            const form = document.getElementById('rejectForm');
+            if (form) form.action = `/pesanan/${orderId}/reject`;
             document.getElementById('rejectModal').classList.add('active');
         }
 
@@ -633,10 +663,18 @@
         }
 
         document.getElementById('rejectForm').addEventListener('submit', function(e) {
-            e.preventDefault();
-            if (currentRejectOrderId) {
-                this.action = `/pesanan/${currentRejectOrderId}/reject`;
-                this.submit();
+            // Direct submission, no double alert
+            const textarea = document.getElementById('reason');
+            if (!textarea.value.trim()) {
+                e.preventDefault();
+                alert('Silakan isi alasan penolakan.');
+                return;
+            }
+            // Show a simple loading state on the button
+            const submitBtn = this.querySelector('button[type="submit"]');
+            if (submitBtn) {
+                submitBtn.disabled = true;
+                submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Memproses...';
             }
         });
 
@@ -648,17 +686,28 @@
             confirmAction(null, 'Kirim pesanan ini?', `/pesanan/${orderId}/ship`);
         }
 
-        function paidOrder(orderId) {
-            confirmAction(null, 'Tandai pesanan ini sebagai sudah dibayar?', `/pesanan/${orderId}/paid`);
-        }
 
         function completeOrder(orderId) {
             confirmAction(null, 'Tandai pesanan ini sebagai selesai?', `/pesanan/${orderId}/complete`);
         }
 
-        // Close modal when clicking outside
+        function viewProof(imageUrl) {
+            document.getElementById('proofImage').src = imageUrl;
+            document.getElementById('downloadProof').href = imageUrl;
+            document.getElementById('proofModal').classList.add('active');
+        }
+
+        function closeProofModal() {
+            document.getElementById('proofModal').classList.remove('active');
+        }
+
+
+        // Close modals when clicking outside
         document.getElementById('rejectModal').addEventListener('click', function(e) {
             if (e.target === this) closeRejectModal();
+        });
+        document.getElementById('proofModal').addEventListener('click', function(e) {
+            if (e.target === this) closeProofModal();
         });
     </script>
 </body>

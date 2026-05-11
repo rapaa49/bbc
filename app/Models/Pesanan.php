@@ -22,6 +22,7 @@ class Pesanan extends Model
         'special_request',
         'status', // pending, confirmed, rejected, shipped, completed
         'payment_proof',
+        'rejection_reason',
     ];
 
     protected $casts = [
