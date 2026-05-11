@@ -213,25 +213,18 @@ class TransaksiController extends Controller
                     'countryCode' => '62',
                 ];
                 
-                // Add image if payment proof exists
+                // Add image URL if payment proof exists
                 if (isset($filename) && file_exists(public_path('uploads/payment_proofs/' . $filename))) {
-                    $imagePath = public_path('uploads/payment_proofs/' . $filename);
-                    Log::info("Sending image file: " . $imagePath);
+                    $imageUrl = url('uploads/payment_proofs/' . $filename);
+                    Log::info("Sending image URL: " . $imageUrl);
                     
-                    $response = Http::withHeaders([
-                        'Authorization' => $tokenFonnte,
-                    ])->attach('file', file_get_contents($imagePath), $filename, [
-                        'Content-Type' => 'image/jpeg',
-                    ])->post('https://api.fonnte.com/send', [
-                        'target' => $nomorAdmin,
-                        'message' => $pesan,
-                        'countryCode' => '62',
-                    ]);
-                } else {
-                    $response = Http::withHeaders([
-                        'Authorization' => $tokenFonnte,
-                    ])->post('https://api.fonnte.com/send', $data);
+                    $data['file'] = $imageUrl;
+                    $data['url'] = $imageUrl;
                 }
+                
+                $response = Http::withHeaders([
+                    'Authorization' => $tokenFonnte,
+                ])->post('https://api.fonnte.com/send', $data);
 
                 Log::info("Notifikasi WA bukti pembayaran terkirim ke {$nomorAdmin}. Response: " . $response->body());
             } catch (\Exception $e) {
