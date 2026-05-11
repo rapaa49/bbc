@@ -82,9 +82,14 @@ class TransaksiController extends Controller
 
             // Proses Kirim Notifikasi WA ke Nomor Admin Otomatis
             // Menggunakan Fonnte (Satu Nomor Pengirim/Bot, Satu Nomor Admin/Penerima)
-            $nomorAdmin = ''; 
-            $tokenFonnte = 'iVYAMrABUfg37ybY3mMp'; // Ganti dengan Token Fonnte akun Bot (Pengirim)
-            $pesan = "Halo Admin, pesanan baru ID *{$pesanan->order_id}* a/n *{$pesanan->customer_name}* senilai Rp " . number_format($pesanan->total_price, 0, ',', '.') . " telah dibayar dan siap diproses.\n\nSilakan cek Dashboard!";
+            $nomorAdmin = '6282123368495'; 
+            $tokenFonnte = 'bNje3r35BUGGfCq1o19M'; // Ganti dengan Token Fonnte akun Bot (Pengirim)
+            $pesan = "📦 *Pesanan Baru Dikonfirmasi*\n\n" .
+                     "Order ID: {$pesanan->order_id}\n" .
+                     "Customer: {$pesanan->customer_name}\n" .
+                     "Total: Rp " . number_format($pesanan->total_price, 0, ',', '.') . "\n\n" .
+                     "Status: Pembayaran Diterima\n\n" .
+                     "Silakan verifikasi di dashboard admin.";
 
             try {
                 $response = Http::withHeaders([
@@ -92,6 +97,7 @@ class TransaksiController extends Controller
                 ])->post('https://api.fonnte.com/send', [
                     'target' => $nomorAdmin,
                     'message' => $pesan,
+                    'countryCode' => '62',
                 ]);
                 
                 Log::info("Notifikasi WA terkirim ke {$nomorAdmin}. Response: " . $response->body());
@@ -119,9 +125,14 @@ class TransaksiController extends Controller
             $pesanan->update(['status' => 'confirmed']);
 
             // Similar notification as pay method
-            $nomorAdmin = '';
-            $tokenFonnte = 'iVYAMrABUfg37ybY3mMp';
-            $pesan = "Halo Admin, transfer untuk pesanan ID *{$pesanan->order_id}* a/n *{$pesanan->customer_name}* senilai Rp " . number_format($pesanan->total_price, 0, ',', '.') . " telah dikonfirmasi.\n\nSilakan cek Dashboard!";
+            $nomorAdmin = '6282123368495';
+            $tokenFonnte = 'bNje3r35BUGGfCq1o19M';
+            $pesan = "💳 *Transfer Dikonfirmasi*\n\n" .
+                     "Order ID: {$pesanan->order_id}\n" .
+                     "Customer: {$pesanan->customer_name}\n" .
+                     "Total: Rp " . number_format($pesanan->total_price, 0, ',', '.') . "\n\n" .
+                     "Status: Transfer Diterima\n\n" .
+                     "Silakan cek dashboard admin untuk proses lebih lanjut.";
 
             try {
                 $response = Http::withHeaders([
@@ -129,6 +140,7 @@ class TransaksiController extends Controller
                 ])->post('https://api.fonnte.com/send', [
                     'target' => $nomorAdmin,
                     'message' => $pesan,
+                    'countryCode' => '62',
                 ]);
 
                 Log::info("Notifikasi WA transfer terkirim ke {$nomorAdmin}. Response: " . $response->body());
@@ -183,17 +195,41 @@ class TransaksiController extends Controller
             }
 
             // Kirim notifikasi WA ke Admin
-            $nomorAdmin = '';
-            $tokenFonnte = 'iVYAMrABUfg37ybY3mMp';
-            $pesan = "Halo Admin, bukti pembayaran untuk pesanan ID *{$pesanan->order_id}* a/n *{$pesanan->customer_name}* senilai Rp " . number_format($pesanan->total_price, 0, ',', '.') . " telah diupload.\n\nSilakan verifikasi di Dashboard!";
+            $nomorAdmin = '6282123368495';
+            $tokenFonnte = 'bNje3r35BUGGfCq1o19M';
+            $pesan = "📸 *Bukti Pembayaran Diterima*\n\n" .
+                     "Order ID: {$pesanan->order_id}\n" .
+                     "Customer: {$pesanan->customer_name}\n" .
+                     "Total: Rp " . number_format($pesanan->total_price, 0, ',', '.') . "\n\n" .
+                     "Status: Bukti Transfer Terupload\n\n" .
+                     "Silakan verifikasi bukti pembayaran di dashboard admin.";
 
             try {
-                $response = Http::withHeaders([
-                    'Authorization' => $tokenFonnte,
-                ])->post('https://api.fonnte.com/send', [
+                $data = [
                     'target' => $nomorAdmin,
                     'message' => $pesan,
-                ]);
+                    'countryCode' => '62',
+                ];
+                
+                // Add image if payment proof exists
+                if (isset($filename) && file_exists(public_path('uploads/payment_proofs/' . $filename))) {
+                    $imagePath = public_path('uploads/payment_proofs/' . $filename);
+                    Log::info("Sending image file: " . $imagePath);
+                    
+                    $response = Http::withHeaders([
+                        'Authorization' => $tokenFonnte,
+                    ])->attach('file', file_get_contents($imagePath), $filename, [
+                        'Content-Type' => 'image/jpeg',
+                    ])->post('https://api.fonnte.com/send', [
+                        'target' => $nomorAdmin,
+                        'message' => $pesan,
+                        'countryCode' => '62',
+                    ]);
+                } else {
+                    $response = Http::withHeaders([
+                        'Authorization' => $tokenFonnte,
+                    ])->post('https://api.fonnte.com/send', $data);
+                }
 
                 Log::info("Notifikasi WA bukti pembayaran terkirim ke {$nomorAdmin}. Response: " . $response->body());
             } catch (\Exception $e) {

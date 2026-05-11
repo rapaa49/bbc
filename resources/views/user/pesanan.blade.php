@@ -137,7 +137,7 @@
                 <p class="text-[11px] font-bold text-[#8B0000] uppercase tracking-[0.18em] mb-1 font-poppins">Riwayat</p>
                 <h1 class="text-2xl sm:text-[1.65rem] font-extrabold text-[#1a120b] tracking-tight leading-tight">Pesanan Saya</h1>
             </div>
-            <a href="{{ route('menu.public') }}" onclick="document.body.classList.add('public-skeleton-loading');" class="hidden sm:inline-flex items-center gap-2 text-xs font-bold text-[#8B0000] hover:text-[#6d0000] transition px-3 py-2 rounded-lg hover:bg-[#8B0000]/5">
+            <a href="{{ route('paket.index') }}" onclick="document.body.classList.add('public-skeleton-loading');" class="hidden sm:inline-flex items-center gap-2 text-xs font-bold text-[#8B0000] hover:text-[#6d0000] transition px-3 py-2 rounded-lg hover:bg-[#8B0000]/5">
                 <i class="fas fa-plus text-[10px]"></i> Pesan Lagi
             </a>
         </div>
@@ -280,7 +280,7 @@
                                     </a>
                                 @elseif($order->status === 'completed' && $isReviewed)
                                     <span class="inline-flex items-center gap-1 text-[11px] text-emerald-600 font-semibold mr-1"><i class="fas fa-check-circle text-[10px]"></i> Diulas</span>
-                                    <a href="{{ route('menu.public') }}" onclick="document.body.classList.add('public-skeleton-loading');" class="inline-flex items-center gap-1.5 px-4 py-2 border border-[#8B0000]/20 text-[#8B0000] text-[11px] font-bold rounded-lg hover:bg-[#8B0000]/5 transition-all">
+                                    <a href="{{ route('paket.index') }}" onclick="document.body.classList.add('public-skeleton-loading');" class="inline-flex items-center gap-1.5 px-4 py-2 border border-[#8B0000]/20 text-[#8B0000] text-[11px] font-bold rounded-lg hover:bg-[#8B0000]/5 transition-all">
                                         <i class="fas fa-redo text-[9px]"></i> Beli Lagi
                                     </a>
                                 @else

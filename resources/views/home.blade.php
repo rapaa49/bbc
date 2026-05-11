@@ -1538,7 +1538,7 @@
                     </p>
 
                     <div class="hero-cta-row">
-                        <a href="{{ route('menu.public') }}" class="hero-btn-primary">
+                        <a href="{{ route('paket.index') }}" class="hero-btn-primary">
                             <span>Pesan Sekarang</span>
                             <i class="fas fa-arrow-right"></i>
                         </a>
@@ -1752,7 +1752,7 @@
 
                                         <!-- Quick Add Overlay Icon -->
                                         <div class="absolute bottom-3 left-1/2 -top-[-100%] translate-y-4 -translate-x-1/2 opacity-0 group-hover:opacity-100 group-hover:translate-y-0 transition-all duration-500 z-20 w-[85%]">
-                                            <a href="{{ route('menu.public') }}" class="block w-full py-2 bg-orange-100/95 text-orange-900 border border-transparent text-center text-[10px] font-bold rounded-[0.5rem] shadow-lg hover:bg-red-700 hover:text-white transition-colors uppercase tracking-wider backdrop-blur-sm">
+                                            <a href="{{ route('paket.index') }}" class="block w-full py-2 bg-orange-100/95 text-orange-900 border border-transparent text-center text-[10px] font-bold rounded-[0.5rem] shadow-lg hover:bg-red-700 hover:text-white transition-colors uppercase tracking-wider backdrop-blur-sm">
                                                 Detail
                                             </a>
                                         </div>
@@ -1772,7 +1772,7 @@
                                                 </div>
                                             </div>
                                             <!-- Quick detail button -->
-                                            <a href="{{ route('menu.public') }}" class="w-9 h-9 bg-orange-100 text-orange-800 rounded-full flex items-center justify-center hover:bg-orange-200 transition-all duration-300 shadow-sm shrink-0 group/btn" title="Lihat Daftar Menu">
+                                            <a href="{{ route('paket.index') }}" class="w-9 h-9 bg-orange-100 text-orange-800 rounded-full flex items-center justify-center hover:bg-orange-200 transition-all duration-300 shadow-sm shrink-0 group/btn" title="Lihat Daftar Paket">
                                                 <i class="fas fa-arrow-right -rotate-45 group-hover/btn:rotate-0 transition-transform duration-300 text-sm"></i>
                                             </a>
                                         </div>

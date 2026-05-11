@@ -246,7 +246,7 @@
                     </div>
                 @endif
                 
-                <form action="/paket/{{ $paket->id }}" method="POST" enctype="multipart/form-data">
+                <form action="{{ route('paket.update', $paket->id) }}" method="POST" enctype="multipart/form-data">
                     @csrf
                     @method('PUT')
                     <div class="form-layout">
@@ -286,12 +286,13 @@
                             <div class="form-group">
                                 <div class="upload-area" id="uploadArea" style="overflow:hidden; padding:0; min-height:180px; display:flex; align-items:center; justify-content:center; position:relative;">
                                     <input type="file" name="image" id="imageInput" accept="image/*" onchange="previewImage(this)" style="z-index:20;">
+                                    <input type="hidden" name="remove_image" id="removeImageInput" value="0">
                                     <div id="uploadContent" style="padding:40px 20px; z-index:10; text-align:center; display:{{ $paket->image ? 'none' : 'block' }};">
                                         <div class="upload-icon"><i class="fas fa-file-upload"></i></div>
                                         <div class="upload-text"><strong>Unggah</strong> File</div>
                                         <div class="upload-subtext">JPG atau PNG, maksimal 10 MB</div>
                                     </div>
-                                    <img id="imagePreview" src="{{ $paket->image }}" style="display:{{ $paket->image ? 'block' : 'none' }}; width:100%; height:100%; object-fit:cover; position:absolute; top:0; left:0; z-index:5;" alt="Preview">
+                                    <img id="imagePreview" src="{{ $paket->image ? asset($paket->image) : '' }}" style="display:{{ $paket->image ? 'block' : 'none' }}; width:100%; height:100%; object-fit:cover; position:absolute; top:0; left:0; z-index:5;" alt="Preview">
                                     <button type="button" id="removeImageBtn" onclick="removeImage()" style="display:{{ $paket->image ? 'flex' : 'none' }}; position:absolute; top:12px; right:12px; z-index:30; background:#dc2626; color:white; border:none; border-radius:50%; width:32px; height:32px; cursor:pointer; box-shadow:0 4px 12px rgba(0,0,0,0.15); align-items:center; justify-content:center; transition: background 0.2s;"><i class="fas fa-times"></i></button>
                                 </div>
                             </div>
@@ -310,6 +311,7 @@
             const preview = document.getElementById('imagePreview');
             const content = document.getElementById('uploadContent');
             const removeBtn = document.getElementById('removeImageBtn');
+            const removeInput = document.getElementById('removeImageInput');
             if (input.files && input.files[0]) {
                 const reader = new FileReader();
                 reader.onload = function(e) {
@@ -317,6 +319,7 @@
                     preview.style.display = 'block';
                     if(content) content.style.display = 'none';
                     if(removeBtn) removeBtn.style.display = 'flex';
+                    if(removeInput) removeInput.value = '0';
                 }
                 reader.readAsDataURL(input.files[0]);
             }
@@ -327,6 +330,7 @@
             const preview = document.getElementById('imagePreview');
             const content = document.getElementById('uploadContent');
             const removeBtn = document.getElementById('removeImageBtn');
+            const removeInput = document.getElementById('removeImageInput');
             
             if(input) input.value = '';
             if(preview) {
@@ -335,6 +339,7 @@
             }
             if(content) content.style.display = 'block';
             if(removeBtn) removeBtn.style.display = 'none';
+            if(removeInput) removeInput.value = '1';
         }
     </script>
 </body>

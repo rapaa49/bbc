@@ -267,7 +267,6 @@ class MenuController extends Controller
             'description' => 'required|string',
             'price' => 'required|numeric',
             'category' => 'required|in:bakso,mie,paket,minuman',
-            'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
             'status' => 'required|in:active,inactive',
             'is_recommended' => 'nullable|boolean',
         ]);
@@ -277,9 +276,25 @@ class MenuController extends Controller
         // Handle image upload
         if ($request->hasFile('image')) {
             $image = $request->file('image');
-            $imageName = time() . '.' . $image->getClientOriginalExtension();
-            $image->move(public_path('images/menu'), $imageName);
+            
+            $extension = strtolower($image->getClientOriginalExtension());
+            if (empty($extension)) {
+                $extension = 'jpg';
+            }
+            
+            $imageName = time() . '_' . uniqid() . '.' . $extension;
+            
+            // Ensure directory exists
+            $uploadPath = public_path('images/menu');
+            if (!file_exists($uploadPath)) {
+                mkdir($uploadPath, 0777, true);
+            }
+            
+            // Move file
+            $image->move($uploadPath, $imageName);
             $validated['image'] = 'images/menu/' . $imageName;
+        } else {
+            $validated['image'] = null;
         }
 
         Menu::create($validated);
@@ -308,7 +323,6 @@ class MenuController extends Controller
             'description' => 'required|string',
             'price' => 'required|numeric',
             'category' => 'required|in:bakso,mie,paket,minuman',
-            'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
             'status' => 'required|in:active,inactive',
             'is_recommended' => 'nullable|boolean',
         ]);
@@ -317,15 +331,32 @@ class MenuController extends Controller
 
         // Handle image upload
         if ($request->hasFile('image')) {
+            $image = $request->file('image');
+            
             // Delete old image if exists
             if ($menu->image && file_exists(public_path($menu->image))) {
-                unlink(public_path($menu->image));
+                @unlink(public_path($menu->image));
             }
             
-            $image = $request->file('image');
-            $imageName = time() . '.' . $image->getClientOriginalExtension();
-            $image->move(public_path('images/menu'), $imageName);
+            $extension = strtolower($image->getClientOriginalExtension());
+            if (empty($extension)) {
+                $extension = 'jpg';
+            }
+            
+            $imageName = time() . '_' . uniqid() . '.' . $extension;
+            
+            // Ensure directory exists
+            $uploadPath = public_path('images/menu');
+            if (!file_exists($uploadPath)) {
+                mkdir($uploadPath, 0777, true);
+            }
+            
+            // Move file
+            $image->move($uploadPath, $imageName);
             $validated['image'] = 'images/menu/' . $imageName;
+        } else {
+            // Keep the old image if no new image is uploaded
+            unset($validated['image']);
         }
 
         $menu->update($validated);
