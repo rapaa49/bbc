@@ -93,7 +93,7 @@
 
         .btn-premium:hover {
             background-position: left bottom;
-            transform: translateY(-2px);
+
         }
 
         .btn-secondary {
@@ -306,8 +306,8 @@
                 {{-- Payment Card --}}
                 <div class="premium-card overflow-hidden">
                     <div class="bg-brand-brown p-5">
-                        <h3 class="text-white font-bold tracking-tight flex items-center gap-2">
-                            <i class="fas fa-credit-card text-red-400"></i> Pembayaran
+                        <h3 class="text-red-800 font-bold tracking-tight flex items-center gap-2">
+                            <i class="fas fa-credit-card text-red-800"></i> Pembayaran
                         </h3>
                     </div>
                     <div class="p-6 space-y-4">
@@ -348,7 +348,7 @@
                             </div>
                         @elseif($status === 'completed')
                             <div class="mt-6">
-                                <button type="button" onclick="openReviewModal()" class="w-full py-4 rounded-2xl bg-[linear-gradient(to_right,#8B0000_50%,#a50000_50%)] bg-[length:200%_100%] bg-right-bottom hover:bg-left-bottom text-white text-sm font-extrabold hover:-translate-y-0.5 transition-all duration-300 flex items-center justify-center gap-2 animate-pulse-subtle">
+                                <button type="button" onclick="openReviewModal()" class="w-full py-4 rounded-2xl bg-[linear-gradient(to_right,#8B0000_50%,#a50000_50%)] bg-[length:200%_100%] bg-right-bottom hover:bg-left-bottom text-white text-sm font-extrabold transition-all duration-300 flex items-center justify-center gap-2 animate-pulse-subtle">
                                     <i class="fas fa-star"></i> Berikan Ulasan
                                 </button>
                             </div>
@@ -404,7 +404,7 @@
                 
                 <div class="px-8 pb-8 flex gap-3">
                     <button type="button" onclick="closeQrisModal()" class="flex-1 py-4 rounded-2xl border-2 border-gray-100 text-stone-400 text-sm font-bold hover:bg-gray-50 transition-all">Nanti</button>
-                    <button onclick="openUploadProofModal()" class="flex-[1.5] py-4 rounded-2xl bg-[linear-gradient(to_right,#8B0000_50%,#a50000_50%)] bg-[length:200%_100%] bg-right-bottom hover:bg-left-bottom text-white text-sm font-bold hover:-translate-y-0.5 transition-all duration-300 flex items-center justify-center gap-2">
+                    <button onclick="openUploadProofModal()" class="flex-[1.5] py-4 rounded-2xl bg-[linear-gradient(to_right,#8B0000_50%,#a50000_50%)] bg-[length:200%_100%] bg-right-bottom hover:bg-left-bottom text-white text-sm font-bold transition-all duration-300 flex items-center justify-center gap-2">
                         <i class="fas fa-upload text-xs"></i> Upload Bukti
                     </button>
                 </div>
@@ -440,7 +440,7 @@
                     
                     <div class="grid grid-cols-2 gap-4">
                         <button type="button" onclick="closeUploadProofModal()" class="w-full py-4 rounded-2xl border-2 border-gray-100 text-stone-400 text-sm font-bold hover:bg-gray-50 transition-all">Batal</button>
-                        <button type="submit" id="btnSubmitProof" class="w-full py-4 rounded-2xl bg-[linear-gradient(to_right,#8B0000_50%,#a50000_50%)] bg-[length:200%_100%] bg-right-bottom hover:bg-left-bottom text-white text-sm font-bold hover:-translate-y-0.5 transition-all duration-300 flex items-center justify-center gap-2">
+                        <button type="submit" id="btnSubmitProof" class="w-full py-4 rounded-2xl bg-[linear-gradient(to_right,#8B0000_50%,#a50000_50%)] bg-[length:200%_100%] bg-right-bottom hover:bg-left-bottom text-white text-sm font-bold transition-all duration-300 flex items-center justify-center gap-2">
                             <i class="fas fa-paper-plane text-xs"></i> Kirim Bukti
                         </button>
                     </div>
@@ -484,7 +484,7 @@
 
                     <div class="grid grid-cols-2 gap-4">
                         <button type="button" onclick="closeReviewModal()" class="w-full py-4 rounded-2xl border-2 border-gray-100 text-stone-400 text-sm font-bold hover:bg-gray-50 transition-all">Nanti</button>
-                        <button type="submit" id="btnSubmitReview" class="w-full py-4 rounded-2xl bg-[linear-gradient(to_right,#8B0000_50%,#a50000_50%)] bg-[length:200%_100%] bg-right-bottom hover:bg-left-bottom text-white text-sm font-bold hover:-translate-y-0.5 transition-all duration-300 flex items-center justify-center gap-2">
+                        <button type="submit" id="btnSubmitReview" class="w-full py-4 rounded-2xl bg-[linear-gradient(to_right,#8B0000_50%,#a50000_50%)] bg-[length:200%_100%] bg-right-bottom hover:bg-left-bottom text-white text-sm font-bold transition-all duration-300 flex items-center justify-center gap-2">
                             <i class="fas fa-paper-plane text-xs"></i> Kirim Ulasan
                         </button>
                     </div>
@@ -579,7 +579,18 @@
                     if(data.success) {
                         btn.innerHTML = '<i class="fas fa-check"></i> Berhasil!';
                         document.getElementById('successSound').play();
-                        setTimeout(() => window.location.reload(), 1500);
+                        // Keep UI updated without a full page reload.
+                        setTimeout(() => {
+                            // Close modal if present
+                            const modal = document.getElementById('uploadProofModal');
+                            if (modal) modal.classList.add('hidden');
+                            // Optionally show a small success banner
+                            const banner = document.createElement('div');
+                            banner.className = 'fixed top-6 right-6 bg-emerald-600 text-white px-4 py-2 rounded-md shadow';
+                            banner.textContent = 'Bukti berhasil diunggah.';
+                            document.body.appendChild(banner);
+                            setTimeout(() => banner.remove(), 2500);
+                        }, 800);
                     } else {
                         alert(data.message || 'Gagal mengirim bukti.');
                         btn.disabled = false; btn.innerHTML = 'Kirim';

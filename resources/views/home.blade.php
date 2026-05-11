@@ -632,6 +632,7 @@
             height: 8px;
             border-radius: 50%;
             background: #8B0000;
+            animation: pulse-dot 2s ease-in-out infinite;
         }
 
         @keyframes pulse-dot {
@@ -699,8 +700,8 @@
 
         .hero-btn-primary:hover {
             background-position: left bottom;
-            transform: translateY(-1px);
-            
+
+            box-shadow: 0 10px 20px -5px rgba(139, 0, 0, 0.4);
         }
 
         .hero-btn-secondary {
@@ -1332,8 +1333,8 @@
 
         .package-cta:hover {
             background-position: left bottom;
-            transform: translateY(-1px);
-            
+
+            box-shadow: 0 10px 20px -5px rgba(139, 0, 0, 0.4);
         }
 
         .package-cta:active {
@@ -1393,7 +1394,7 @@
             background: #8B0000;
             color: #ffffff;
             border-color: #8B0000;
-            transform: translateY(-1px);
+
             box-shadow: 0 4px 12px rgba(139, 0, 0, 0.25);
         }
 
@@ -1537,7 +1538,7 @@
                     </p>
 
                     <div class="hero-cta-row">
-                        <a href="{{ route('paket.index') }}" class="hero-btn-primary">
+                        <a href="#paket" class="hero-btn-primary">
                             <span>Pesan Sekarang</span>
                             <i class="fas fa-arrow-right"></i>
                         </a>

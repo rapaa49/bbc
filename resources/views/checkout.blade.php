@@ -146,7 +146,7 @@
         }
 
         .btn-order:hover {
-            transform: translateY(-2px);
+
             background-position: left bottom;
         }
 
@@ -435,7 +435,7 @@
                 if (document.body.classList.contains('public-skeleton-loading')) {
                     // already loading
                 } else {
-                    document.body.classList.add('public-skeleton-loading');
+                    
                 }
             });
         })();

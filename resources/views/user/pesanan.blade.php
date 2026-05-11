@@ -139,7 +139,7 @@
                 <p class="text-[11px] font-bold text-[#8B0000] uppercase tracking-[0.18em] mb-1 font-poppins">Riwayat</p>
                 <h1 class="text-2xl sm:text-[1.65rem] font-extrabold text-[#1a120b] tracking-tight leading-tight">Pesanan Saya</h1>
             </div>
-            <a href="{{ route('paket.index') }}" onclick="document.body.classList.add('public-skeleton-loading');" class="hidden sm:inline-flex items-center gap-2 text-xs font-bold text-[#8B0000] hover:text-[#6d0000] transition px-3 py-2 rounded-lg hover:bg-[#8B0000]/5">
+            <a href="{{ route('paket.index') }}" class="hidden sm:inline-flex items-center gap-2 text-xs font-bold text-[#8B0000] hover:text-[#6d0000] transition px-3 py-2 rounded-lg hover:bg-[#8B0000]/5">
                 <i class="fas fa-plus text-[10px]"></i> Pesan Lagi
             </a>
         </div>
@@ -147,19 +147,19 @@
         {{-- ── Tabs ── --}}
         <div class="mb-5">
             <div class="order-tabs">
-                <a href="{{ route('my-orders', ['tab' => 'semua']) }}" onclick="document.body.classList.add('public-skeleton-loading');" class="tab-item {{ $tab === 'semua' ? 'active' : '' }}">
+                <a href="{{ route('my-orders', ['tab' => 'semua']) }}" class="tab-item {{ $tab === 'semua' ? 'active' : '' }}">
                     <i class="fas fa-layer-group"></i>Semua
                 </a>
-                <a href="{{ route('my-orders', ['tab' => 'belum-dibayar']) }}" onclick="document.body.classList.add('public-skeleton-loading');" class="tab-item {{ $tab === 'belum-dibayar' ? 'active' : '' }}">
+                <a href="{{ route('my-orders', ['tab' => 'belum-dibayar']) }}" class="tab-item {{ $tab === 'belum-dibayar' ? 'active' : '' }}">
                     <i class="fas fa-clock"></i>Belum Bayar
                 </a>
-                <a href="{{ route('my-orders', ['tab' => 'menunggu-konfirmasi']) }}" onclick="document.body.classList.add('public-skeleton-loading');" class="tab-item {{ $tab === 'menunggu-konfirmasi' ? 'active' : '' }}">
+                <a href="{{ route('my-orders', ['tab' => 'menunggu-konfirmasi']) }}" class="tab-item {{ $tab === 'menunggu-konfirmasi' ? 'active' : '' }}">
                     <i class="fas fa-hourglass-half"></i>Menunggu Konfirmasi
                 </a>
-                <a href="{{ route('my-orders', ['tab' => 'diproses']) }}" onclick="document.body.classList.add('public-skeleton-loading');" class="tab-item {{ $tab === 'diproses' ? 'active' : '' }}">
+                <a href="{{ route('my-orders', ['tab' => 'diproses']) }}" class="tab-item {{ $tab === 'diproses' ? 'active' : '' }}">
                     <i class="fas fa-fire"></i>Diproses
                 </a>
-                <a href="{{ route('my-orders', ['tab' => 'selesai']) }}" onclick="document.body.classList.add('public-skeleton-loading');" class="tab-item {{ $tab === 'selesai' ? 'active' : '' }}">
+                <a href="{{ route('my-orders', ['tab' => 'selesai']) }}" class="tab-item {{ $tab === 'selesai' ? 'active' : '' }}">
                     <i class="fas fa-check-circle"></i>Untuk Diulas
                 </a>
             </div>
@@ -283,16 +283,16 @@
                                             @endfor
                                         </div>
                                     </div>
-                                    <a href="{{ route('transaksi.show', $order->order_id) }}?action=review" onclick="document.body.classList.add('public-skeleton-loading');" class="inline-flex items-center gap-1.5 px-4 py-2.5 bg-[linear-gradient(to_right,#8B0000_50%,#a50000_50%)] bg-[length:200%_100%] bg-right-bottom hover:bg-left-bottom text-white text-[11px] font-bold rounded-xl hover:-translate-y-0.5 transition-all duration-300">
+                                    <a href="{{ route('transaksi.show', $order->order_id) }}?action=review" class="inline-flex items-center gap-1.5 px-4 py-2.5 bg-[linear-gradient(to_right,#8B0000_50%,#a50000_50%)] bg-[length:200%_100%] bg-right-bottom hover:bg-left-bottom text-white text-[11px] font-bold rounded-xl transition-all duration-300">
                                         <i class="fas fa-pencil-alt text-[9px]"></i> Tulis Ulasan
                                     </a>
                                 @elseif($order->status === 'completed' && $isReviewed)
                                     <span class="inline-flex items-center gap-1 text-[11px] text-emerald-600 font-semibold mr-2"><i class="fas fa-check-circle text-[10px]"></i> Sudah Diulas</span>
-                                    <a href="{{ route('menu.public') }}" onclick="document.body.classList.add('public-skeleton-loading');" class="inline-flex items-center gap-1.5 px-4 py-2 border border-[#8B0000]/20 text-[#8B0000] text-[11px] font-bold rounded-lg hover:bg-[#8B0000]/5 transition-all">
+                                    <a href="{{ route('menu.public') }}" class="inline-flex items-center gap-1.5 px-4 py-2 border border-[#8B0000]/20 text-[#8B0000] text-[11px] font-bold rounded-lg hover:bg-[#8B0000]/5 transition-all">
                                         <i class="fas fa-redo text-[9px]"></i> Pesan Lagi
                                     </a>
                                 @else
-                                    <a href="{{ route('transaksi.show', $order->order_id) }}" onclick="document.body.classList.add('public-skeleton-loading');" class="inline-flex items-center gap-1.5 px-4 py-2 border border-[#1a120b]/10 text-[#1a120b] text-[11px] font-bold rounded-lg hover:bg-[#1a120b]/[0.03] transition-all">
+                                    <a href="{{ route('transaksi.show', $order->order_id) }}" class="inline-flex items-center gap-1.5 px-4 py-2 border border-[#1a120b]/10 text-[#1a120b] text-[11px] font-bold rounded-lg hover:bg-[#1a120b]/[0.03] transition-all">
                                         Detail <i class="fas fa-arrow-right text-[9px] opacity-40"></i>
                                     </a>
                                 @endif
@@ -320,7 +320,7 @@
                     </div>
                     <h3 class="text-lg font-bold text-[#1a120b] mb-1.5">Belum ada pesanan</h3>
                     <p class="text-sm text-[#8a7b6a] mb-6 max-w-xs font-poppins">Anda belum pernah melakukan pemesanan untuk status ini. Yuk, mulai pesan sekarang!</p>
-                    <a href="{{ route('menu.public') }}" onclick="document.body.classList.add('public-skeleton-loading');" class="inline-flex items-center gap-2 px-6 py-3 bg-[linear-gradient(to_right,#8B0000_50%,#a50000_50%)] bg-[length:200%_100%] bg-right-bottom hover:bg-left-bottom text-white text-sm font-bold rounded-xl transition-all duration-300 hover:-translate-y-0.5">
+                    <a href="{{ route('menu.public') }}" class="inline-flex items-center gap-2 px-6 py-3 bg-[linear-gradient(to_right,#8B0000_50%,#a50000_50%)] bg-[length:200%_100%] bg-right-bottom hover:bg-left-bottom text-white text-sm font-bold rounded-xl transition-all duration-300">
                         <i class="fas fa-utensils text-xs"></i> Belanja Sekarang
                     </a>
                 </div>
@@ -381,7 +381,7 @@
                 container.dataset.rating = String(rating);
                 updateQuickStars(container, rating);
                 container.style.opacity = "1";
-                document.body.classList.add('public-skeleton-loading');
+                
                 setTimeout(() => {
                     window.location.href = "{{ route('my-orders', ['tab' => 'semua']) }}";
                 }, 800);

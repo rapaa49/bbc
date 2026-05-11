@@ -146,7 +146,7 @@
                         <h2 class="text-lg font-bold text-[#1a120b] mb-1.5">Keranjang Kamu Masih Kosong</h2>
                         <p class="text-sm text-[#8a7b6a] mb-6 max-w-xs font-poppins">Yuk, jelajahi paket lezat kami dan temukan favoritmu!</p>
                         <div class="flex flex-col sm:flex-row justify-center gap-3">
-                            <a href="{{ route('home') }}#paket" class="inline-flex items-center justify-center gap-2 bg-[linear-gradient(to_right,#8B0000_50%,#a50000_50%)] bg-[length:200%_100%] bg-right-bottom hover:bg-left-bottom text-white px-6 py-3 rounded-xl text-sm font-bold hover:-translate-y-0.5 transition-all duration-300">
+                            <a href="{{ route('home') }}#paket" class="inline-flex items-center justify-center gap-2 bg-[linear-gradient(to_right,#8B0000_50%,#a50000_50%)] bg-[length:200%_100%] bg-right-bottom hover:bg-left-bottom text-white px-6 py-3 rounded-xl text-sm font-bold transition-all duration-300">
                                 <i class="fas fa-box-open text-xs"></i> Lihat Paket
                             </a>
                         </div>
@@ -190,14 +190,14 @@
                                             {{-- Qty --}}
                                             <div class="qty-control">
                                                 <button type="button" onclick="changeQty('{{ $item['key'] }}', -1)" class="qty-btn">−</button>
-                                                <input id="qty-{{ $item['key'] }}" type="number" min="1" value="{{ (int) ($item['quantity'] ?? 1) }}" class="qty-input" onchange="setQty('{{ $item['key'] }}', this.value)" />
+                                                <input id="qty-{{ $item['key'] }}" type="number" min="1" value="{{ (int) ($item['quantity'] ?? 1) }}" data-price="{{ (float) ($item['price'] ?? 0) }}" class="qty-input" onchange="setQty('{{ $item['key'] }}', this.value)" />
                                                 <button type="button" onclick="changeQty('{{ $item['key'] }}', 1)" class="qty-btn">+</button>
                                             </div>
 
                                             {{-- Line total --}}
                                             <div class="text-right">
                                                 <p class="text-[10px] text-[#a89880] font-medium uppercase tracking-wider">Subtotal</p>
-                                                <p class="text-[15px] font-extrabold text-[#1a120b]">Rp {{ number_format((float) $lineTotal, 0, ',', '.') }}</p>
+                                                <p id="line-total-{{ $item['key'] }}" class="text-[15px] font-extrabold text-[#1a120b]">Rp {{ number_format((float) $lineTotal, 0, ',', '.') }}</p>
                                             </div>
                                         </div>
                                     </div>
@@ -216,7 +216,7 @@
                     <div class="space-y-3 text-sm">
                         <div class="flex items-center justify-between text-[#8a7b6a]">
                             <span class="font-medium">Subtotal Belanja</span>
-                            <span class="font-bold text-[#1a120b]">Rp {{ number_format((float) $subtotal, 0, ',', '.') }}</span>
+                            <span id="subtotal-belanja" class="font-bold text-[#1a120b]">Rp {{ number_format((float) $subtotal, 0, ',', '.') }}</span>
                         </div>
                         <div class="flex items-center justify-between text-[#8a7b6a]">
                             <span class="font-medium">Biaya Layanan</span>
@@ -226,14 +226,14 @@
                         <div class="pt-3 mt-1 border-t border-dashed border-[#ece3d5]">
                             <div class="flex items-center justify-between">
                                 <span class="text-[15px] text-[#1a120b] font-bold">Total</span>
-                                <span class="text-xl font-extrabold text-[#8B0000]">Rp {{ number_format((float) $subtotal, 0, ',', '.') }}</span>
+                                <span id="total-belanja" class="text-xl font-extrabold text-[#8B0000]">Rp {{ number_format((float) $subtotal, 0, ',', '.') }}</span>
                             </div>
                         </div>
                     </div>
 
                     <div class="mt-6 space-y-2.5">
                         @if(count($items) > 0)
-                            <a href="{{ route('checkout.index') }}" onclick="document.body.classList.add('public-skeleton-loading');" class="w-full inline-flex items-center justify-center gap-2 bg-[linear-gradient(to_right,#8B0000_50%,#a50000_50%)] bg-[length:200%_100%] bg-right-bottom hover:bg-left-bottom text-white px-5 py-3.5 rounded-xl text-sm font-bold hover:-translate-y-0.5 transition-all duration-300">
+                            <a href="{{ route('checkout.index') }}" class="w-full inline-flex items-center justify-center gap-2 bg-[linear-gradient(to_right,#8B0000_50%,#a50000_50%)] bg-[length:200%_100%] bg-right-bottom hover:bg-left-bottom text-white px-5 py-3.5 rounded-xl text-sm font-bold transition-all duration-300">
                                 Lanjut Pembayaran <i class="fas fa-arrow-right text-xs"></i>
                             </a>
                         @else
@@ -284,9 +284,35 @@
             setQty(key, next);
         }
 
+        function updateCartDOM() {
+            let total = 0;
+            document.querySelectorAll('.qty-input').forEach(input => {
+                const qty = parseInt(input.value || '1', 10);
+                const price = parseFloat(input.dataset.price || '0');
+                const lineTotal = qty * price;
+                total += lineTotal;
+                
+                const key = input.id.replace('qty-', '');
+                const lineTotalEl = document.getElementById(`line-total-${key}`);
+                if (lineTotalEl) {
+                    lineTotalEl.textContent = 'Rp ' + new Intl.NumberFormat('id-ID').format(lineTotal);
+                }
+            });
+
+            const formattedTotal = 'Rp ' + new Intl.NumberFormat('id-ID').format(total);
+            const subtotalEl = document.getElementById('subtotal-belanja');
+            if (subtotalEl) subtotalEl.textContent = formattedTotal;
+            
+            const totalEl = document.getElementById('total-belanja');
+            if (totalEl) totalEl.textContent = formattedTotal;
+        }
+
         function setQty(key, qty) {
             const quantity = Math.max(1, parseInt(qty || '1', 10));
-            document.body.classList.add('public-skeleton-loading');
+            // Update UI instantly
+            updateCartDOM();
+
+            // Background sync
             postJson('{{ route('cart.update') }}', { key, quantity })
                 .then(res => {
                     if (!res.ok) throw new Error('failed');
@@ -294,37 +320,80 @@
                 })
                 .then(() => {
                     updateCartCountBadge();
-                    window.location.reload();
                 })
-                .catch(() => window.location.reload());
+                .catch(() => {
+                    console.error('Cart update failed');
+                });
         }
 
         function removeItem(key) {
-            document.body.classList.add('public-skeleton-loading');
+            // Optimistically remove from UI
+            const input = document.getElementById('qty-' + key);
+            if (input) {
+                const card = input.closest('.cart-item-card');
+                if (card) {
+                    card.remove();
+                    updateCartDOM();
+                }
+            }
+
             postJson('{{ route('cart.remove') }}', { key })
                 .then(res => {
                     if (!res.ok) throw new Error('failed');
                     return res.json();
                 })
-                .then(() => {
+                .then((data) => {
                     updateCartCountBadge();
-                    window.location.reload();
+                    if (data && data.count === 0) {
+                        showEmptyCart();
+                    }
                 })
-                .catch(() => window.location.reload());
+                .catch(() => {
+                    console.error('Remove item failed');
+                });
         }
 
         function clearCart() {
-            document.body.classList.add('public-skeleton-loading');
             postJson('{{ route('cart.clear') }}')
                 .then(res => {
                     if (!res.ok) throw new Error('failed');
                     return res.json();
                 })
                 .then(() => {
-                    updateCartCountBadge();
-                    window.location.reload();
+                    showEmptyCart();
                 })
-                .catch(() => window.location.reload());
+                .catch(() => {
+                    console.error('Clear cart failed');
+                });
+        }
+
+        function showEmptyCart() {
+            // Replace items section with the empty state UI
+            const itemsSection = document.querySelector('section.lg\\:col-span-2');
+            if (itemsSection) {
+                itemsSection.innerHTML = `
+                    <div class="bg-white rounded-2xl border border-[#ece3d5] p-10 sm:p-14 flex flex-col items-center justify-center text-center">
+                        <div class="w-20 h-20 bg-[#f8f5f0] rounded-2xl flex items-center justify-center mb-5 border border-[#ece3d5]">
+                            <i class="fas fa-shopping-basket text-3xl text-[#c4b5a2]"></i>
+                        </div>
+                        <h2 class="text-lg font-bold text-[#1a120b] mb-1.5">Keranjang Kamu Masih Kosong</h2>
+                        <p class="text-sm text-[#8a7b6a] mb-6 max-w-xs font-poppins">Yuk, jelajahi paket lezat kami dan temukan favoritmu!</p>
+                        <div class="flex flex-col sm:flex-row justify-center gap-3">
+                            <a href="{{ route('home') }}#paket" class="inline-flex items-center justify-center gap-2 bg-[linear-gradient(to_right,#8B0000_50%,#a50000_50%)] bg-[length:200%_100%] bg-right-bottom hover:bg-left-bottom text-white px-6 py-3 rounded-xl text-sm font-bold transition-all duration-300">
+                                <i class="fas fa-box-open text-xs"></i> Lihat Paket
+                            </a>
+                        </div>
+                    </div>
+                `;
+            }
+
+            // Reset totals
+            const subtotalEl = document.getElementById('subtotal-belanja');
+            if (subtotalEl) subtotalEl.textContent = 'Rp 0';
+            const totalEl = document.getElementById('total-belanja');
+            if (totalEl) totalEl.textContent = 'Rp 0';
+
+            updateCartCountBadge();
         }
 
         document.addEventListener('DOMContentLoaded', () => {
@@ -333,3 +402,4 @@
     </script>
 </body>
 </html>
+

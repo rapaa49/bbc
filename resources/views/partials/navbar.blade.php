@@ -41,7 +41,7 @@
     }
 </style>
 <script>
-    if (document.body) { document.body.classList.add('public-skeleton-loading'); }
+    if (document.body) {  }
     (function() {
         function hide() { if (document.body) document.body.classList.remove('public-skeleton-loading'); }
         if (document.readyState === 'complete') { hide(); }
