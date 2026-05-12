@@ -23,23 +23,23 @@ class SessionExpiry
             $elapsed = now()->diffInMinutes(\Carbon\Carbon::createFromTimestamp($lastActivity));
 
             if ($elapsed > $timeoutMinutes) {
-                // Session idle timeout — check if remember-me cookie exists
-                if ($request->cookie('remember_me')) {
-                    // Let RememberMe middleware handle auto-login
-                    // Just destroy session, don't redirect
-                    Auth::guard('web')->logout();
-                    $request->session()->invalidate();
-                    $request->session()->regenerateToken();
-                } else {
-                    // No remember-me cookie, force logout and redirect
-                    Auth::guard('web')->logout();
-                    $request->session()->invalidate();
-                    $request->session()->regenerateToken();
+                // Session idle timeout — logout user
+                Auth::guard('web')->logout();
+                $request->session()->invalidate();
+                $request->session()->regenerateToken();
 
-                    if (!$request->expectsJson()) {
-                        return redirect()->route('showLogin')
-                            ->with('info', 'Sesi Anda telah berakhir. Silakan masuk kembali.');
-                    }
+                // If remember-me cookie exists, let RememberMe middleware
+                // handle auto-login on the next request cycle.
+                // For now, redirect to login with message.
+                if ($request->cookie('remember_me')) {
+                    // RememberMe middleware will run before protected routes,
+                    // so just let it flow. But on explicit timeout we
+                    // still destroy the session.
+                }
+
+                if (!$request->expectsJson()) {
+                    return redirect()->route('showLogin')
+                        ->with('info', 'Sesi Anda telah berakhir. Silakan masuk kembali.');
                 }
             }
         }

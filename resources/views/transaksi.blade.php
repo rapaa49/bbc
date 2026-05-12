@@ -579,11 +579,10 @@
                     if(data.success) {
                         btn.innerHTML = '<i class="fas fa-check"></i> Berhasil!';
                         document.getElementById('successSound').play();
-                        alert('Bukti pembayaran berhasil diupload! Menunggu konfirmasi admin.');
                         // Reload page to show updated status
                         setTimeout(() => {
                             window.location.reload();
-                        }, 500);
+                        }, 1000);
                     } else {
                         alert(data.message || 'Gagal mengirim bukti.');
                         btn.disabled = false; btn.innerHTML = 'Kirim';
