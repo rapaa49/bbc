@@ -20,6 +20,7 @@
             }
         }
     </script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <style>
         :root {
             --brand-red: #8B0000;
@@ -203,7 +204,19 @@
                             <img src="{{ asset('ulasan.jpg') }}" class="w-full h-[240px] object-cover object-top" />
                         </div>
                         <h2 class="text-xl font-extrabold text-brand-brown mb-2">Terima kasih sudah belanja!</h2>
-                        <p class="text-sm text-brand-brown-light font-medium mb-8">Pesanan Anda telah selesai. Berikan ulasan terbaik Anda untuk membantu kami berkembang!</p>
+                        <p class="text-sm text-brand-brown-light font-medium mb-8">Pesanan Anda telah selesai.</p>
+                        
+                        @if(!\App\Models\Testimonial::where('order_id', $pesanan->order_id)->exists())
+                            <div class="mt-4 w-full">
+                                <button type="button" onclick="openReviewModal()" class="w-full py-4 rounded-2xl bg-[linear-gradient(to_right,#8B0000_50%,#a50000_50%)] bg-[length:200%_100%] bg-right-bottom hover:bg-left-bottom text-white text-sm font-extrabold transition-all duration-300 flex items-center justify-center gap-2 animate-pulse-subtle">
+                                    <i class="fas fa-star text-amber-400"></i> Berikan Ulasan
+                                </button>
+                            </div>
+                        @else
+                            <div class="mt-4 p-4 bg-green-50 border border-green-100 rounded-2xl w-full">
+                                <p class="text-sm font-bold text-green-800"><i class="fas fa-check-circle mr-2"></i>Terima kasih atas ulasan Anda!</p>
+                            </div>
+                        @endif
                     @elseif($status === 'rejected')
                         <div class="transaction-image-wrapper overflow-hidden rounded-[24px] mb-6 shadow-lg max-w-[400px]">
                             <img src="{{ asset('konfirmasi.jpeg') }}" class="w-full h-full object-cover" />
@@ -346,12 +359,6 @@
                                     <i class="fas fa-qrcode"></i> Bayar Sekarang
                                 </button>
                             </div>
-                        @elseif($status === 'completed')
-                            <div class="mt-6">
-                                <button type="button" onclick="openReviewModal()" class="w-full py-4 rounded-2xl bg-[linear-gradient(to_right,#8B0000_50%,#a50000_50%)] bg-[length:200%_100%] bg-right-bottom hover:bg-left-bottom text-white text-sm font-extrabold transition-all duration-300 flex items-center justify-center gap-2 animate-pulse-subtle">
-                                    <i class="fas fa-star"></i> Berikan Ulasan
-                                </button>
-                            </div>
                         @endif
 
                         @php
@@ -449,7 +456,7 @@
         </div>
 
         {{-- Review Modal --}}
-        @if($status === 'completed')
+        @if($status === 'completed' && !\App\Models\Testimonial::where('order_id', $pesanan->order_id)->exists())
         <div id="reviewModal" class="fixed inset-0 bg-black/60 hidden items-center justify-center z-[120] px-4 backdrop-blur-sm">
             <div class="bg-white w-full max-w-md rounded-[32px] shadow-2xl overflow-hidden animate-slide-up border border-white/20">
                 <div class="px-8 py-6 flex flex-col items-center text-center bg-white border-b border-gray-50">
@@ -514,6 +521,7 @@
                 const m = document.getElementById('uploadProofModal');
                 m.classList.add('hidden'); m.classList.remove('flex');
             }
+
             function openReviewModal() {
                 const m = document.getElementById('reviewModal');
                 if(m) { m.classList.remove('hidden'); m.classList.add('flex'); }
@@ -579,17 +587,21 @@
                     if(data.success) {
                         btn.innerHTML = '<i class="fas fa-check"></i> Berhasil!';
                         document.getElementById('successSound').play();
-                        // Reload page to show updated status
-                        setTimeout(() => {
+                        Swal.fire({
+                            title: 'Terkirim!',
+                            text: 'Bukti pembayaran berhasil dikirim.',
+                            icon: 'success',
+                            confirmButtonColor: '#8B0000'
+                        }).then(() => {
                             window.location.reload();
-                        }, 1000);
+                        });
                     } else {
-                        alert(data.message || 'Gagal mengirim bukti.');
-                        btn.disabled = false; btn.innerHTML = 'Kirim';
+                        Swal.fire('Gagal', data.message || 'Gagal mengirim bukti.', 'error');
+                        btn.disabled = false; btn.innerHTML = '<i class="fas fa-upload text-xs"></i> Kirim Bukti';
                     }
                 } catch(err) {
-                    alert('Terjadi kesalahan server.');
-                    btn.disabled = false;
+                    Swal.fire('Error', 'Terjadi kesalahan server.', 'error');
+                    btn.disabled = false; btn.innerHTML = '<i class="fas fa-upload text-xs"></i> Kirim Bukti';
                 }
             }
 
@@ -615,14 +627,23 @@
                     const data = await res.json();
                     if(data.success) {
                         btn.innerHTML = '<i class="fas fa-check"></i> Berhasil!';
-                        setTimeout(() => { closeReviewModal(); alert('Terima kasih atas ulasan Anda!'); }, 1000);
+                        Swal.fire({
+                            title: 'Berhasil!',
+                            text: 'Terima kasih atas ulasan Anda!',
+                            icon: 'success',
+                            confirmButtonColor: '#8B0000'
+                        }).then(() => {
+                            window.location.reload();
+                        });
                     } else {
-                        alert('Gagal mengirim ulasan.');
+                        Swal.fire('Gagal', 'Gagal mengirim ulasan.', 'error');
                         btn.disabled = false;
+                        btn.innerHTML = '<i class="fas fa-paper-plane text-xs"></i> Kirim Ulasan';
                     }
                 } catch(err) {
-                    alert('Kesalahan server.');
+                    Swal.fire('Error', 'Kesalahan server.', 'error');
                     btn.disabled = false;
+                    btn.innerHTML = '<i class="fas fa-paper-plane text-xs"></i> Kirim Ulasan';
                 }
             }
 
@@ -630,16 +651,7 @@
             window.onload = function() {
                 const urlParams = new URLSearchParams(window.location.search);
                 if (urlParams.get('action') === 'review') {
-                    openReviewModal();
-                    const rating = urlParams.get('rating');
-                    if (rating) {
-                        setRating(parseInt(rating));
-                        // Focus textarea
-                        setTimeout(() => {
-                            const txt = document.getElementById('revContent');
-                            if(txt) txt.focus();
-                        }, 500);
-                    }
+                    // Do nothing on load so modal won't show automatically
                 }
             };
 
