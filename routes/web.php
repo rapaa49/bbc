@@ -45,6 +45,13 @@ Route::get('/user/login', [AuthController::class, 'showLogin'])->name('user.logi
 Route::get('/user/register', [AuthController::class, 'showRegister'])->name('user.register');
 Route::post('/user/register', [AuthController::class, 'register'])->name('user.register.submit')->middleware('guest');
 
+use Illuminate\Support\Facades\Artisan;
+
+Route::get('/run-migrate', function () {
+    Artisan::call('migrate', ['--force' => true]);
+    return 'Migrasi berhasil dijalankan! Silakan coba checkout lagi.';
+});
+
 Route::get('/', function () {
     if (auth()->check()) {
         $user = auth()->user();
