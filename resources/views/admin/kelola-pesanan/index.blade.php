@@ -713,7 +713,7 @@
         // Auto refresh halaman kelola pesanan setiap 3 detik
         setInterval(function() {
             window.location.reload();
-        }, 3000);
+        }, 30000);
     </script>
 </body>
 </html>
