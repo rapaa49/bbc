@@ -402,13 +402,7 @@
                             @forelse($menus as $menu)
                                 <tr>
                                     <td>
-                                        @if($menu->image)
-                                            <img src="{{ asset($menu->image) }}" alt="{{ $menu->name }}" class="menu-image" onerror="this.src='https://via.placeholder.com/52?text=No+Image'">
-                                        @else
-                                            <div class="menu-image" style="display:flex;align-items:center;justify-content:center;background:#f1f5f9;color:#94a3b8;font-size:10px;">
-                                                No Image
-                                            </div>
-                                        @endif
+                                        <img src="{{ $menu->image }}" alt="{{ $menu->name }}" class="menu-image">
                                     </td>
                                     <td>
                                         <strong style="color: var(--text);">{{ $menu->name }}</strong>
