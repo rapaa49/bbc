@@ -87,6 +87,10 @@
         animation: marqueeScroll 40s linear infinite;
     }
 
+    .testimonial-carousel-track.paused {
+        animation-play-state: paused;
+    }
+
     .testimonial-carousel-container:hover .testimonial-carousel-track {
         animation-play-state: paused;
     }
@@ -750,6 +754,24 @@
 
                 if (typeof window.initReviewReadMore === 'function') {
                     window.initReviewReadMore(track);
+                }
+
+                // Add click/touch to pause animation for mobile
+                const container = document.getElementById('testimonialCarousel');
+                if (container) {
+                    let isPaused = false;
+                    
+                    container.addEventListener('click', function() {
+                        // Only on touch devices (mobile)
+                        if ('ontouchstart' in window || navigator.maxTouchPoints > 0) {
+                            isPaused = !isPaused;
+                            if (isPaused) {
+                                track.classList.add('paused');
+                            } else {
+                                track.classList.remove('paused');
+                            }
+                        }
+                    });
                 }
             } catch (error) {
                 console.error('Testimonial carousel initialization error:', error);

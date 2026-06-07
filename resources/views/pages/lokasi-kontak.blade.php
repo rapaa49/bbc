@@ -290,29 +290,28 @@
                 </div>
 
                 <div class="bento-card p-6 sm:p-8 md:p-12">
-                    <form action="{{ route('contact.submit') }}" method="POST">
-                        @csrf
+                    <form id="contactForm" onsubmit="sendToWhatsApp(event)">
                         <div class="grid grid-cols-1 md:grid-cols-2 gap-5 md:gap-8">
                             <div class="space-y-1.5 md:space-y-2">
                                 <label class="text-[9px] md:text-[10px] font-black text-gray-400 uppercase tracking-[0.2em] ml-2">Nama Lengkap</label>
-                                <input type="text" name="name" required placeholder="Contoh: Budi Santoso" class="contact-input py-3 px-4 md:py-3.5 md:px-5">
+                                <input type="text" name="name" id="name" required placeholder="Contoh: Budi Santoso" class="contact-input py-3 px-4 md:py-3.5 md:px-5">
                             </div>
                             <div class="space-y-1.5 md:space-y-2">
                                 <label class="text-[9px] md:text-[10px] font-black text-gray-400 uppercase tracking-[0.2em] ml-2">Email Aktif</label>
-                                <input type="email" name="email" required placeholder="budi@email.com" class="contact-input py-3 px-4 md:py-3.5 md:px-5">
+                                <input type="email" name="email" id="email" required placeholder="budi@email.com" class="contact-input py-3 px-4 md:py-3.5 md:px-5">
                             </div>
                             <div class="space-y-1.5 md:space-y-2 md:col-span-2">
                                 <label class="text-[9px] md:text-[10px] font-black text-gray-400 uppercase tracking-[0.2em] ml-2">Nomor WhatsApp</label>
-                                <input type="tel" name="phone" required placeholder="0812xxxx" class="contact-input py-3 px-4 md:py-3.5 md:px-5">
+                                <input type="tel" name="phone" id="phone" required placeholder="0812xxxx" class="contact-input py-3 px-4 md:py-3.5 md:px-5">
                             </div>
                             <div class="space-y-1.5 md:space-y-2 md:col-span-2">
                                 <label class="text-[9px] md:text-[10px] font-black text-gray-400 uppercase tracking-[0.2em] ml-2">Isi Pesan</label>
-                                <textarea name="message" rows="4" required placeholder="Tuliskan pesan Anda di sini..." class="contact-input py-3 px-4 md:py-3.5 md:px-5 resize-none"></textarea>
+                                <textarea name="message" id="message" rows="4" required placeholder="Tuliskan pesan Anda di sini..." class="contact-input py-3 px-4 md:py-3.5 md:px-5 resize-none"></textarea>
                             </div>
                             <div class="md:col-span-2 pt-2 md:pt-4">
                                 <button type="submit" class="w-full bg-[#8B0000] text-white py-3.5 md:py-4 rounded-xl font-black text-[13px] sm:text-sm md:text-base hover:bg-[#6b0000] transition-all shadow-lg shadow-red-900/20 flex items-center justify-center gap-2 md:gap-3">
-                                    <i class="fas fa-paper-plane text-xs md:text-sm"></i>
-                                    Kirim Pesan Sekarang
+                                    <i class="fab fa-whatsapp text-xs md:text-sm"></i>
+                                    Kirim ke WhatsApp
                                 </button>
                             </div>
                         </div>
@@ -337,6 +336,31 @@
         }, observerOptions);
 
         document.querySelectorAll('.fade-in-up').forEach(el => observer.observe(el));
+
+        // Send to WhatsApp function
+        function sendToWhatsApp(event) {
+            event.preventDefault();
+
+            const name = document.getElementById('name').value;
+            const email = document.getElementById('email').value;
+            const phone = document.getElementById('phone').value;
+            const message = document.getElementById('message').value;
+
+            // Format pesan WhatsApp
+            const whatsappMessage = `Halo Bakso Bunderan Ciomas!%0A%0A` +
+                `*Pesan Baru dari Website*%0A%0A` +
+                `👤 *Nama:* ${name}%0A` +
+                `📧 *Email:* ${email}%0A` +
+                `📱 *No. WhatsApp:* ${phone}%0A` +
+                `💬 *Pesan:*%0A${message}%0A%0A` +
+                `Terima kasih telah menghubungi kami!`;
+
+            // Nomor WhatsApp tujuan (6281947260782)
+            const whatsappNumber = '6281947260782';
+
+            // Buka WhatsApp dengan pesan yang sudah diformat
+            window.open(`https://wa.me/${whatsappNumber}?text=${whatsappMessage}`, '_blank');
+        }
     </script>
 </body>
 </html>
