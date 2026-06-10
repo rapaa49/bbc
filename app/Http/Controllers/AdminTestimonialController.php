@@ -113,8 +113,8 @@ class AdminTestimonialController extends Controller
 
         if ($q !== '') {
             $ulasanQuery->where(function ($sub) use ($q) {
-                $sub->where('name', 'like', "%{$q}%")
-                    ->orWhere('review', 'like', "%{$q}%");
+                $sub->where('customer_name', 'like', "%{$q}%")
+                    ->orWhere('content', 'like', "%{$q}%");
             });
         }
 
@@ -134,7 +134,7 @@ class AdminTestimonialController extends Controller
             'admin_reply' => $validated['admin_reply'] ?? null,
         ]);
 
-        return redirect()->route('admin.testimoni.index')->with('success', 'Balasan ulasan berhasil diperbarui.');
+        return back()->with('success', 'Balasan ulasan berhasil diperbarui.');
     }
 
     public function destroyCustomer($id)
@@ -142,7 +142,7 @@ class AdminTestimonialController extends Controller
         $testimonial = Testimonial::findOrFail($id);
         $testimonial->delete();
 
-        return redirect()->route('admin.testimoni.index')->with('success', 'Ulasan pelanggan berhasil dihapus.');
+        return back()->with('success', 'Ulasan pelanggan berhasil dihapus.');
     }
 
     private function normalizeInfluencerName(?string $name): ?string

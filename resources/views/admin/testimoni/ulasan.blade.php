@@ -331,7 +331,7 @@
                     <tbody>
                     @forelse($customerTestimonials as $item)
                         <tr>
-                            <td style="font-weight: 500;">{{ $item->name }}</td>
+                            <td style="font-weight: 500;">{{ $item->customer_name }}</td>
                             <td>
                                 <span class="star-rating">
                                     @for($i = 1; $i <= 5; $i++)
@@ -340,7 +340,20 @@
                                 </span>
                                 <span style="margin-left: 4px; font-size: 12px; color: var(--text-secondary); font-weight: 500;">({{ $item->rating }})</span>
                             </td>
-                            <td class="review-text">{{ $item->review }}</td>
+                            <td class="review-text" style="max-width: 300px; word-wrap: break-word;">
+                                @if(strlen($item->content) > 100)
+                                    <div id="review-{{ $item->id }}-short">
+                                        {{ \Illuminate\Support\Str::limit($item->content, 100, '...') }}
+                                        <button type="button" onclick="toggleReview('{{ $item->id }}')" style="color: #2563eb; font-weight: 600; border: none; background: none; cursor: pointer; padding: 0; font-size: 12px; margin-top: 4px; display: block;">Lihat lebih banyak</button>
+                                    </div>
+                                    <div id="review-{{ $item->id }}-full" style="display: none;">
+                                        {{ $item->content }}
+                                        <button type="button" onclick="toggleReview('{{ $item->id }}')" style="color: #2563eb; font-weight: 600; border: none; background: none; cursor: pointer; padding: 0; font-size: 12px; margin-top: 4px; display: block;">Lebih sedikit</button>
+                                    </div>
+                                @else
+                                    {{ $item->content }}
+                                @endif
+                            </td>
                             <td>
                                 <form class="admin-reply-form" method="POST" action="{{ route('admin.testimoni.customer.reply', $item->id) }}">
                                     @csrf
@@ -372,5 +385,26 @@
 
     </main>
 </div>
+
+<script>
+    function toggleReview(id) {
+        var shortDiv = document.getElementById('review-' + id + '-short');
+        var fullDiv = document.getElementById('review-' + id + '-full');
+        
+        if (shortDiv.style.display === 'none') {
+            shortDiv.style.display = 'block';
+            fullDiv.style.display = 'none';
+        } else {
+            shortDiv.style.display = 'none';
+            fullDiv.style.display = 'block';
+        }
+    }
+
+    function confirmFormSubmit(e, formId, message) {
+        if(!confirm(message)) {
+            e.preventDefault();
+        }
+    }
+</script>
 </body>
 </html>
