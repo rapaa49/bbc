@@ -89,21 +89,8 @@
                 </div>
             </div>
 
-            <!-- Steps -->
-            <div class="auth-steps flex justify-center gap-8 mb-6 relative">
-                <div class="absolute top-[18px] left-1/2 -translate-x-1/2 w-[60px] h-0.5 bg-stone-200 z-0"></div>
-                <div class="flex flex-col items-center gap-1.5 relative z-10">
-                    <div class="auth-step-num w-9 h-9 rounded-full bg-brand text-white flex items-center justify-center text-[13px] font-semibold shadow-md shadow-brand/15">1</div>
-                    <span class="auth-step-label text-[11px] text-stone-500 font-medium tracking-wide">Email</span>
-                </div>
-                <div class="flex flex-col items-center gap-1.5 relative z-10">
-                    <div class="auth-step-num w-9 h-9 rounded-full bg-stone-100 text-stone-400 flex items-center justify-center text-[13px] font-semibold border-[1.5px] border-stone-200">2</div>
-                    <span class="auth-step-label text-[11px] text-stone-500 font-medium tracking-wide">Verifikasi</span>
-                </div>
-            </div>
-
             <!-- Title -->
-            <p class="auth-subtitle text-[13.5px] text-stone-500 text-center mb-6">Masukkan email admin Anda</p>
+            <p class="auth-subtitle text-[13.5px] text-stone-500 text-center mb-6">Masukkan username atau email admin Anda untuk mengganti password.</p>
 
             <div class="auth-divider h-px bg-gradient-to-r from-transparent via-stone-200 to-transparent mb-6"></div>
 
@@ -128,18 +115,34 @@
             @endif
 
             <!-- Form -->
-            <form action="{{ route('admin.password.send-otp') }}" method="POST">
+            <form action="{{ route('admin.password.update') }}" method="POST">
                 @csrf
 
-                <div class="auth-field mb-6">
-                    <label class="auth-label block text-xs font-semibold text-stone-700 mb-1 tracking-wide uppercase">Email Admin</label>
+                <div class="auth-field mb-5">
+                    <label class="auth-label block text-xs font-semibold text-stone-700 mb-1 tracking-wide uppercase">Username / Email Admin</label>
                     <div class="relative">
-                        <input type="email" name="email" class="field-input w-full py-3 pl-8 border-0 border-b-2 border-stone-200 bg-transparent text-sm text-stone-900 transition-all duration-300 focus:outline-none focus:border-b-brand placeholder:text-stone-400" required placeholder="admin@email.com" autocomplete="off" readonly onfocus="this.removeAttribute('readonly')">
-                        <i class="fas fa-envelope input-icon absolute left-1 top-1/2 -translate-y-1/2 text-stone-400 text-[15px] transition-colors duration-300"></i>
+                        <input type="text" name="username" class="field-input w-full py-3 pl-8 border-0 border-b-2 border-stone-200 bg-transparent text-sm text-stone-900 transition-all duration-300 focus:outline-none focus:border-b-brand placeholder:text-stone-400" required placeholder="admin / admin@email.com" autocomplete="off" readonly onfocus="this.removeAttribute('readonly')">
+                        <i class="fas fa-user input-icon absolute left-1 top-1/2 -translate-y-1/2 text-stone-400 text-[15px] transition-colors duration-300"></i>
                     </div>
                 </div>
 
-                <button type="submit" class="btn-submit w-full py-3.5 bg-brand text-white border-none rounded-xl text-sm font-semibold cursor-pointer tracking-wide relative overflow-hidden">Kirim Kode Verifikasi</button>
+                <div class="auth-field mb-5">
+                    <label class="auth-label block text-xs font-semibold text-stone-700 mb-1 tracking-wide uppercase">Password Baru</label>
+                    <div class="relative">
+                        <input type="password" name="password" class="field-input w-full py-3 pl-8 border-0 border-b-2 border-stone-200 bg-transparent text-sm text-stone-900 transition-all duration-300 focus:outline-none focus:border-b-brand placeholder:text-stone-400" required placeholder="Minimal 6 karakter" autocomplete="new-password">
+                        <i class="fas fa-lock input-icon absolute left-1 top-1/2 -translate-y-1/2 text-stone-400 text-[15px] transition-colors duration-300"></i>
+                    </div>
+                </div>
+
+                <div class="auth-field mb-6">
+                    <label class="auth-label block text-xs font-semibold text-stone-700 mb-1 tracking-wide uppercase">Konfirmasi Password Baru</label>
+                    <div class="relative">
+                        <input type="password" name="password_confirmation" class="field-input w-full py-3 pl-8 border-0 border-b-2 border-stone-200 bg-transparent text-sm text-stone-900 transition-all duration-300 focus:outline-none focus:border-b-brand placeholder:text-stone-400" required placeholder="Ulangi password baru" autocomplete="new-password">
+                        <i class="fas fa-check-double input-icon absolute left-1 top-1/2 -translate-y-1/2 text-stone-400 text-[15px] transition-colors duration-300"></i>
+                    </div>
+                </div>
+
+                <button type="submit" class="btn-submit w-full py-3.5 bg-brand text-white border-none rounded-xl text-sm font-semibold cursor-pointer tracking-wide relative overflow-hidden">Ubah Password</button>
             </form>
 
             <a href="{{ route('login') }}" class="auth-back flex items-center justify-center gap-2 mt-6 text-[13px] text-stone-500 no-underline font-medium hover:text-brand transition-colors duration-200">
@@ -152,8 +155,12 @@
 
     <script>
         setTimeout(function() {
-            const alert = document.getElementById('alertMsg');
-            if (alert) { alert.style.opacity = '0'; alert.style.transition = 'opacity 0.5s ease'; setTimeout(() => alert.remove(), 500); }
+            const alerts = document.querySelectorAll('.auth-alert');
+            alerts.forEach(function(alert) {
+                alert.style.opacity = '0';
+                alert.style.transition = 'opacity 0.5s ease';
+                setTimeout(() => alert.remove(), 500);
+            });
         }, 3000);
     </script>
 </body>

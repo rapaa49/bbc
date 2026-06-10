@@ -223,99 +223,26 @@ class AuthController extends Controller
         return view('auth.forgot-password');
     }
 
-    public function sendUserOtp(Request $request)
+    public function resetUserPassword(Request $request)
     {
         $request->validate([
             'email' => 'required|email',
-        ]);
-
-        $email = $request->input('email');
-
-        // Cek apakah email terdaftar sebagai user
-        $isUser = User::where('email', $email)->where('role', 'user')->exists();
-
-        if (!$isUser) {
-            return back()->with('error', 'Email tidak terdaftar. Silakan periksa kembali atau daftar akun baru.');
-        }
-
-        // Hapus OTP lama untuk email ini
-        PasswordReset::where('email', $email)->where('role', 'user')->delete();
-
-        // Generate OTP 6 digit
-        $otp = strtoupper(substr(bin2hex(random_bytes(3)), 0, 6));
-
-        // Simpan ke database
-        PasswordReset::create([
-            'email'      => $email,
-            'role'       => 'user',
-            'token'      => bin2hex(random_bytes(16)),
-            'otp'        => $otp,
-            'expires_at' => now()->addMinutes(15),
-        ]);
-
-        // Kirim email dengan error handling
-        try {
-            Mail::to($email)->send(new \App\Mail\UserOtpMail($otp, 15));
-            \Illuminate\Support\Facades\Log::info('User OTP email sent to: ' . $email . ' with OTP: ' . $otp);
-        } catch (\Exception $e) {
-            \Illuminate\Support\Facades\Log::error('Failed to send OTP email: ' . $e->getMessage());
-            return back()->with('error', 'Gagal mengirim email: ' . $e->getMessage());
-        }
-
-        // Simpan email di session untuk step 2
-        session(['user_reset_email' => $email]);
-
-        return redirect()->route('password.verify')
-            ->with('success', 'Kode verifikasi telah dikirim ke ' . $email . '. Cek inbox atau spam folder.');
-    }
-
-    public function showUserOtpVerify()
-    {
-        if (!session('user_reset_email')) {
-            return redirect()->route('password.request');
-        }
-        return view('auth.verify-user-otp');
-    }
-
-    public function verifyUserOtp(Request $request)
-    {
-        $request->validate([
-            'otp'      => 'required|string|size:6',
             'password' => 'required|string|min:6|confirmed',
         ]);
 
-        $email = session('user_reset_email');
-        $otp = strtoupper($request->input('otp'));
+        $email = $request->input('email');
         $newPassword = bcrypt($request->input('password'));
-
-        if (!$email) {
-            return redirect()->route('password.request')
-                ->with('error', 'Sesi telah expired. Silakan ulangi dari awal.');
-        }
-
-        // Cari record OTP
-        $record = PasswordReset::where('email', $email)
-            ->where('role', 'user')
-            ->where('otp', $otp)
-            ->first();
-
-        if (!$record || $record->isExpired() || $record->isUsed()) {
-            return back()->with('error', 'Kode verifikasi tidak valid atau sudah expired.');
-        }
 
         $user = User::where('email', $email)->where('role', 'user')->first();
 
-        if ($user) {
-            $user->password = $newPassword;
-            $user->save();
+        if (!$user) {
+            return back()->with('error', 'Email belum terdaftar.');
         }
 
-        // Tandai sebagai used
-        $record->update(['used_at' => now()]);
-        session()->forget('user_reset_email');
+        $user->password = $newPassword;
+        $user->save();
 
-        return redirect()->route('showLogin')
-            ->with('success', 'Password berhasil diubah. Silakan masuk dengan password baru Anda.');
+        return redirect()->route('showLogin')->with('success', 'Password berhasil diubah. Silakan masuk dengan password baru Anda.');
     }
 
     /* ───────── Admin Change Password (dari dashboard) ───────── */
@@ -355,120 +282,45 @@ class AuthController extends Controller
         return back()->with('success', 'Password berhasil diubah.');
     }
 
-    /* ───────── Admin Forgot Password (verifikasi via email OTP) ───────── */
+    /* ───────── Admin Forgot Password (langsung reset) ───────── */
 
     public function showAdminForgotPassword()
     {
         return view('auth.forgot-password-admin');
     }
 
-    // Step 1: Kirim OTP ke email admin
-    public function sendAdminOtp(Request $request)
+    public function resetAdminPassword(Request $request)
     {
         $request->validate([
-            'email' => 'required|email',
-        ]);
-
-        $email = $request->input('email');
-
-        // Cek apakah email terdaftar sebagai admin
-        $isAdmin = Admin::where('email', $email)->exists()
-            || User::where('email', $email)->where('role', 'admin')->exists();
-
-        if (!$isAdmin) {
-            return back()->with('error', 'Email tidak terdaftar sebagai admin. Silakan periksa kembali.');
-        }
-
-        // Hapus OTP lama untuk email ini
-        PasswordReset::where('email', $email)->where('role', 'admin')->delete();
-
-        // Generate OTP 6 digit
-        $otp = strtoupper(substr(bin2hex(random_bytes(3)), 0, 6));
-
-        // Simpan ke database
-        PasswordReset::create([
-            'email'      => $email,
-            'role'       => 'admin',
-            'token'      => bin2hex(random_bytes(16)),
-            'otp'        => $otp,
-            'expires_at' => now()->addMinutes(15),
-        ]);
-
-        // Kirim email dengan error handling
-        try {
-            Mail::to($email)->send(new AdminOtpMail($otp, 15));
-            \Illuminate\Support\Facades\Log::info('OTP email sent to: ' . $email . ' with OTP: ' . $otp);
-        } catch (\Exception $e) {
-            \Illuminate\Support\Facades\Log::error('Failed to send OTP email: ' . $e->getMessage());
-            return back()->with('error', 'Gagal mengirim email: ' . $e->getMessage());
-        }
-
-        // Simpan email di session untuk step 2
-        session(['admin_reset_email' => $email]);
-
-        return redirect()->route('admin.password.verify')
-            ->with('success', 'Kode verifikasi telah dikirim ke ' . $email . '. Cek inbox atau spam folder.');
-    }
-
-    // Step 2: Tampilkan form verifikasi OTP
-    public function showAdminOtpVerify()
-    {
-        if (!session('admin_reset_email')) {
-            return redirect()->route('admin.password.request');
-        }
-        return view('auth.verify-admin-otp');
-    }
-
-    // Step 2: Verifikasi OTP dan reset password
-    public function verifyAdminOtp(Request $request)
-    {
-        $request->validate([
-            'otp'      => 'required|string|size:6',
+            'username' => 'required|string',
             'password' => 'required|string|min:6|confirmed',
         ]);
 
-        $email = session('admin_reset_email');
-        $otp = strtoupper($request->input('otp'));
+        $username = $request->input('username');
         $newPassword = bcrypt($request->input('password'));
 
-        if (!$email) {
-            return redirect()->route('admin.password.request')
-                ->with('error', 'Sesi telah expired. Silakan ulangi dari awal.');
-        }
-
-        // Cari record OTP
-        $record = PasswordReset::where('email', $email)
-            ->where('role', 'admin')
-            ->where('otp', $otp)
-            ->first();
-
-        if (!$record || $record->isExpired() || $record->isUsed()) {
-            return back()->with('error', 'Kode verifikasi tidak valid atau sudah expired.');
-        }
-
-        // Cari admin
-        $admin = Admin::where('email', $email)->first();
+        $admin = Admin::where('username', $username)->orWhere('email', $username)->first();
         if (!$admin) {
-            $admin = User::where('email', $email)->where('role', 'admin')->first();
+            $admin = User::where(function($q) use ($username) {
+                $q->where('name', $username)->orWhere('email', $username);
+            })->where('role', 'admin')->first();
         }
 
-        if ($admin) {
-            $admin->password = $newPassword;
-            $admin->save();
+        if (!$admin) {
+            return back()->with('error', 'Username atau Email belum terdaftar.');
+        }
 
-            // Sync ke users table
-            if (isset($admin->email)) {
-                $userAdmin = User::where('email', $admin->email)->where('role', 'admin')->first();
-                if ($userAdmin) {
-                    $userAdmin->password = $newPassword;
-                    $userAdmin->save();
-                }
+        $admin->password = $newPassword;
+        $admin->save();
+
+        // Sync ke users table
+        if (isset($admin->email)) {
+            $userAdmin = User::where('email', $admin->email)->where('role', 'admin')->first();
+            if ($userAdmin) {
+                $userAdmin->password = $newPassword;
+                $userAdmin->save();
             }
         }
-
-        // Tandai sebagai used
-        $record->update(['used_at' => now()]);
-        session()->forget('admin_reset_email');
 
         return redirect()->route('showLogin')
             ->with('success', 'Password berhasil diubah. Silakan masuk dengan password baru Anda.');

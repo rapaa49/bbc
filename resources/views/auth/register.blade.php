@@ -178,6 +178,15 @@
             if (input.type === 'password') { input.type = 'text'; icon.className = 'far fa-eye'; }
             else { input.type = 'password'; icon.className = 'far fa-eye-slash'; }
         }
+
+        setTimeout(function() {
+            const alerts = document.querySelectorAll('.auth-alert');
+            alerts.forEach(function(alert) {
+                alert.style.opacity = '0';
+                alert.style.transition = 'opacity 0.5s ease';
+                setTimeout(() => alert.remove(), 500);
+            });
+        }, 3000);
     </script>
 </body>
 </html>

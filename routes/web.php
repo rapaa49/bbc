@@ -28,17 +28,13 @@ Route::post('/universal-login', [AuthController::class, 'universalLoginSubmit'])
 
 Route::post('/admin/logout', [AuthController::class, 'adminLogout'])->name('admin.logout');
 
-// Forgot Password (verifikasi via email OTP)
+// Forgot Password (langsung reset)
 Route::get('/forgot-password', [AuthController::class, 'showForgotPassword'])->name('password.request');
-Route::post('/forgot-password', [AuthController::class, 'sendUserOtp'])->name('password.email');
-Route::get('/forgot-password/verify', [AuthController::class, 'showUserOtpVerify'])->name('password.verify');
-Route::post('/forgot-password/verify', [AuthController::class, 'verifyUserOtp'])->name('password.verify.post');
+Route::post('/forgot-password', [AuthController::class, 'resetUserPassword'])->name('password.update');
 
-// Admin Forgot Password (verifikasi via email OTP)
+// Admin Forgot Password (langsung reset)
 Route::get('/forgot-password-admin', [AuthController::class, 'showAdminForgotPassword'])->name('admin.password.request');
-Route::post('/forgot-password-admin', [AuthController::class, 'sendAdminOtp'])->name('admin.password.send-otp');
-Route::get('/forgot-password-admin/verify', [AuthController::class, 'showAdminOtpVerify'])->name('admin.password.verify');
-Route::post('/forgot-password-admin/verify', [AuthController::class, 'verifyAdminOtp'])->name('admin.password.verify.post');
+Route::post('/forgot-password-admin', [AuthController::class, 'resetAdminPassword'])->name('admin.password.update');
 
 // Backwards-compatible user-specific routes
 Route::get('/user/login', [AuthController::class, 'showLogin'])->name('user.login');
